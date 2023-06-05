@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "913895996571",
+    "project_id": "jnotes-83478",
+    "storage_bucket": "jnotes-83478.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:913895996571:android:b5be7249c74f591fecda3e",
+        "android_client_info": {
+          "package_name": "com.jnotes"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "913895996571-douvc74mh48r9o6hsubds4ajj3294bgn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB5Ndd9yjYjnO3YIfQBvxE5KxIk_8nJHVY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "913895996571-douvc74mh48r9o6hsubds4ajj3294bgn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
