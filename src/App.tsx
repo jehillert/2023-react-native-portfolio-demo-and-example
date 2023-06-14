@@ -1,15 +1,17 @@
 import React from 'react';
 import {
-  SafeAreaView,
+  LogBox,
   ScrollView,
   StatusBar,
   Text,
   useColorScheme,
   View,
 } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
 import { Colors, Header } from 'react-native/Libraries/NewAppScreen';
-
 import { useMessagingSubscribe, useNotificationsPermission } from './hooks';
+
+LogBox.ignoreAllLogs();
 
 const App = () => {
   useNotificationsPermission();
@@ -22,7 +24,7 @@ const App = () => {
   };
 
   return (
-    <SafeAreaView style={backgroundStyle}>
+    <NavigationContainer>
       <StatusBar
         barStyle={isDarkMode ? 'light-content' : 'dark-content'}
         backgroundColor={backgroundStyle.backgroundColor}
@@ -38,7 +40,7 @@ const App = () => {
           <Text>hi</Text>
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </NavigationContainer>
   );
 };
 
