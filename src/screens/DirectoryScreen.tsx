@@ -7,10 +7,7 @@ const DirectoryScreen = () => {
 
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Button
-        onPress={() => navigation.navigate('Notifications')}
-        title="Go to notifications"
-      />
+      <Button onPress={() => navigation.navigate('Note')} title="Go to Note" />
     </View>
   );
 };

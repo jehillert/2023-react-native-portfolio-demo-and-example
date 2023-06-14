@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  LogBox,
-  ScrollView,
-  StatusBar,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
+import { LogBox, StatusBar, useColorScheme } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { Colors, Header } from 'react-native/Libraries/NewAppScreen';
 import { useMessagingSubscribe, useNotificationsPermission } from './hooks';

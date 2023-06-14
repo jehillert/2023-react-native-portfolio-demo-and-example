@@ -6,9 +6,9 @@ const Drawer = createDrawerNavigator();
 
 const DrawerNavigator = () => {
   return (
-    <Drawer.Navigator initialRouteName="Home">
-      <Drawer.Screen name="Home" component={DirectoryScreen} />
-      <Drawer.Screen name="Notifications" component={NoteScreen} />
+    <Drawer.Navigator initialRouteName="Directory">
+      <Drawer.Screen name="Directory" component={DirectoryScreen} />
+      <Drawer.Screen name="Note" component={NoteScreen} />
     </Drawer.Navigator>
   );
 };
