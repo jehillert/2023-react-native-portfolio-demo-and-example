@@ -10,6 +10,7 @@ import {
 import { NavigationContainer } from '@react-navigation/native';
 import { Colors, Header } from 'react-native/Libraries/NewAppScreen';
 import { useMessagingSubscribe, useNotificationsPermission } from './hooks';
+import { DrawerNavigator } from './navigation';
 
 LogBox.ignoreAllLogs();
 
@@ -29,17 +30,7 @@ const App = () => {
         barStyle={isDarkMode ? 'light-content' : 'dark-content'}
         backgroundColor={backgroundStyle.backgroundColor}
       />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Text>hi</Text>
-        </View>
-      </ScrollView>
+      <DrawerNavigator />
     </NavigationContainer>
   );
 };
