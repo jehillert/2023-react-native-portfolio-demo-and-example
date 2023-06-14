@@ -1,0 +1,42 @@
+React Native Firebase - Cloud Messaging
+
+https://www.npmjs.com/package/@react-native-firebase/messaging
+https://rnfirebase.io/messaging/usage
+
+iOS Setup
+https://rnfirebase.io/messaging/usage/ios-setup
+
+1. Signing & Capabilities
+- Push Notifications
+- Background Modes
+  > Backgroudn fetch
+  > Remote notifications
+
+2. Link APN (Apple Push Notification) with FCM (Firebase Cloud Messaging)
+need for foreground and background
+Required Steps
+1. Registering a key.
+   > Apple Developer Account
+   		==> Certificates, IDs & Profiles
+   		==> keys
+     	==> generate a key, note the key ID, and download
+   > Firebase Console:
+   		==> Project settings
+   		==> Cloud Messaging tab
+   		==> iOS app configuration
+   		==> upload the key & enter ID
+2. Registering an App Identifier.
+   > Apple Developer Account
+   		==> Certificates, IDs & Profiles
+   		==> Identifiers
+   		==> check Push Notifications & save
+3. Generating a provisioning profile.
+   • PURPOSE: A provisioning profile enables signed communicate between Apple and your application. Since messaging can only be used on real devices, a signed certificate ensures that the app being installed on a device is genuine and has the correct permissions enabled.
+   > Apple Developer Account
+   		==> Certificates, IDs & Profiles
+   		==> Profiles
+   		==> Generate a Profile
+   		==> chk iOS App development
+   		==> Select the App ID & CONTINUE
+   		==> Create certificate if don't have one yet & CONTINUE
+   > xcode should reflect the provisioning profile now
