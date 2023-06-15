@@ -1,2 +1,5 @@
 Top left of drawer, have 5 most recent files?
-Have Reminders page?
+
+RemindersScreen
+
+button "Remind me"  ==> turns note into a push notification.
