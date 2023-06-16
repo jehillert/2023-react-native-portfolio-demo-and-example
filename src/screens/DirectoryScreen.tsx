@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
-import React from 'react';
 import { Button, View } from 'react-native';
+import React from 'react';
 
 const DirectoryScreen = () => {
   const navigation = useNavigation();
