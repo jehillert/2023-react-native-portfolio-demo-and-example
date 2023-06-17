@@ -1,7 +1,9 @@
-import {} from 'styled-components';
-import { theme } from './theme';
+import 'styled-components/native';
+import theme, { ColorPalette, Typography } from './theme';
 
-declare module 'styled-components' {
-  type Theme = typeof theme;
-  export interface DefaultTheme extends Theme {}
+declare module 'styled-components/native' {
+  export interface DefaultTheme {
+    colors: ColorPalette;
+    typography: Typography;
+  }
 }
