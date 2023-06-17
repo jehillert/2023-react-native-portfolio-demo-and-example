@@ -46,6 +46,7 @@
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = jnotes/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-jnotes-jnotesTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-jnotes-jnotesTests.release.xcconfig"; path = "Target Support Files/Pods-jnotes-jnotesTests/Pods-jnotes-jnotesTests.release.xcconfig"; sourceTree = "<group>"; };
 		952462AD2A3823C4005D308E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		959691542A3D473400898CFE /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		95A0ECC02A2DFC2E0039982D /* jnotes.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = jnotes.entitlements; path = jnotes/jnotes.entitlements; sourceTree = "<group>"; };
 		B2252E611DE65B19EF9FD2BE /* Pods_jnotes_jnotesTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_jnotes_jnotesTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
@@ -122,6 +123,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				959691542A3D473400898CFE /* Config.xcconfig */,
 				952462AD2A3823C4005D308E /* GoogleService-Info.plist */,
 				13B07FAE1A68108700A75B9A /* jnotes */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
@@ -572,6 +574,7 @@
 		};
 		83CBBA201A601CBA00E9B192 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 959691542A3D473400898CFE /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
@@ -644,6 +647,7 @@
 		};
 		83CBBA211A601CBA00E9B192 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 959691542A3D473400898CFE /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;

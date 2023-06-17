@@ -1,7 +1,6 @@
 import { useLayoutEffect, useRef, useState } from 'react';
 import { View } from 'react-native';
 import { useKeyboard } from './useKeyboard';
-import { RichEditor } from 'react-native-pell-rich-editor';
 
 export type WatchablePrimitive = boolean | number | string | null | undefined;
 
@@ -25,7 +24,10 @@ type Props = {
   variant: 'ref' | 'state';
 };
 
-const useViewDimensions = (variant = 'ref', watchValues = []) => {
+const useViewDimensions = (
+  variant = 'ref',
+  watchValues = [],
+): [React.RefObject<View>, ViewRect] => {
   const ref = useRef<View>(null);
   const initialViewRect = { x: 0, y: 0, width: 0, height: 0 };
   const dimensionsRef = useRef<ViewRect>(initialViewRect);

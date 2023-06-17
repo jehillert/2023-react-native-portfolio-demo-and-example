@@ -1,6 +1,18 @@
-# MISCELLANEOUS
+# Miscellaneous
+#
 __dnd__/
 google-services.json
+.env
+.env.debug
+.env.development
+.env.production
+.env.staging
+.env.test
+
+# react-native-config codegen
+#
+ios/tmp.xcconfig
+
 # OSX
 #
 .DS_Store

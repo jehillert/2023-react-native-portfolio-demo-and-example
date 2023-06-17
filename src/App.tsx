@@ -1,7 +1,8 @@
 import React from 'react';
+import { DefaultTheme, ThemeProvider } from 'styled-components/native';
 import { LogBox, StatusBar, useColorScheme } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import { Colors, Header } from 'react-native/Libraries/NewAppScreen';
+import { Colors } from 'react-native/Libraries/NewAppScreen';
 import { useMessagingSubscribe, useNotificationsPermission } from './hooks';
 import { DrawerNavigator } from './navigation';
 import { config as linkingConfig } from './linking';
@@ -9,6 +10,11 @@ import { Text } from './components';
 import { theme } from './theme';
 
 LogBox.ignoreAllLogs();
+
+const linking = {
+  prefixes: ['https://hillert.dev', 'jnotes://'],
+  config: linkingConfig,
+};
 
 const App = () => {
   useNotificationsPermission();
