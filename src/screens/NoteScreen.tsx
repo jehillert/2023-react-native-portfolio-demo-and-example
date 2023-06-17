@@ -1,3 +1,6 @@
+// testing
+// https://coolsoftware.dev/blog/testing-react-native-webview-with-react-native-testing-library/
+
 import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components/native';
 import {
