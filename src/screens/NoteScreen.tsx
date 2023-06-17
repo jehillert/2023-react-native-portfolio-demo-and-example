@@ -1,10 +1,8 @@
 import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components/native';
 import {
-  Text,
   Platform,
   KeyboardAvoidingView as BaseKeyboardAvoidingView,
-  SafeAreaView,
   ScrollView,
   ColorValue,
   StyleSheet,
@@ -16,37 +14,48 @@ import {
   RichToolbar,
 } from 'react-native-pell-rich-editor';
 import { useKeyboard, useViewDimensions } from '../hooks';
+import { Text } from '../components';
+import { windowHeight } from '../constants';
 
-const EditorScrollView = styled(ScrollView)`
+const EditorScrollView = styled(ScrollView)<{ $height: number }>`
+  height: ${({ $height }) => $height}px;
   background-color: yellow;
 `;
 
 const EditorContainer = styled(View)`
-  background-color: blue;
-  height: 100px;
+  border: 1px blue solid;
+  height: 100%;
 `;
 
-const KeyboardAvoidingView = styled(BaseKeyboardAvoidingView)`
-  background-color: lightgreen;
+const KeyboardAvoidingView = styled(BaseKeyboardAvoidingView)<{
+  $height: number;
+}>`
+  height: ${({ $height }) => $height}px;
+  background-color: darkgrey;
 `;
 
 const handleHead = ({ tintColor }: { tintColor: ColorValue }) => (
-  <Text style={{ color: tintColor }}>H1</Text>
+  <Text.H1 style={{ color: tintColor }}>H1</Text.H1>
 );
 
 const NoteScreen = () => {
   const richText = useRef<RichEditor>(null);
-  const { keyboardShown } = useKeyboard();
-  const [toolbarRef, dimensions] = useViewDimensions();
+  const { keyboardShown, keyboardHeight } = useKeyboard();
+  const [toolbarContainerRef, dimensions] = useViewDimensions();
+  const { height: toolbarHeight } = dimensions;
+  const heightAboveKeyboard = windowHeight - toolbarHeight - keyboardHeight;
 
   useEffect(() => {}, []);
 
   return (
     <>
-      <EditorScrollView>
+      <EditorScrollView $height={heightAboveKeyboard}>
         <KeyboardAvoidingView
+          $height={heightAboveKeyboard}
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-          <Text>Description:</Text>
+          <View>
+            <Text.H6>Description:</Text.H6>
+          </View>
           <EditorContainer>
             <RichEditor
               ref={richText}
@@ -59,9 +68,8 @@ const NoteScreen = () => {
         </KeyboardAvoidingView>
       </EditorScrollView>
       {keyboardShown && (
-        <View>
+        <View ref={toolbarContainerRef}>
           <RichToolbar
-            ref={richToolbarRef}
             editor={richText}
             actions={[
               actions.undo,
