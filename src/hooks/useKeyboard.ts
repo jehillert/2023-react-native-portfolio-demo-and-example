@@ -9,13 +9,15 @@ const emptyCoordinates = Object.freeze({
   width: 0,
   height: 0,
 });
+
 const initialValue = {
   start: emptyCoordinates,
   end: emptyCoordinates,
 };
 
-function useKeyboard() {
+const useKeyboard = () => {
   const [shown, setShown] = useState(false);
+
   const [coordinates, setCoordinates] = useState<{
     start: undefined | KeyboardMetrics;
     end: KeyboardMetrics;
@@ -65,6 +67,6 @@ function useKeyboard() {
     coordinates,
     keyboardHeight,
   };
-}
+};
 
 export { useKeyboard };
