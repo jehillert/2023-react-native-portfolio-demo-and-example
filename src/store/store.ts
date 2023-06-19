@@ -27,6 +27,5 @@ if (process.env.NODE_ENV === 'development' && (module as any).hot) {
 let persistor = persistStore(store);
 
 export { persistor, store };
-
 export type AppDispatch = typeof store.dispatch;
 export type RootState = ReturnType<typeof store.getState>;
