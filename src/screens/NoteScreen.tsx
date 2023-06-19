@@ -1,12 +1,12 @@
 // testing
 // https://coolsoftware.dev/blog/testing-react-native-webview-with-react-native-testing-library/
-
 import React, { useRef } from 'react';
-import { Text as RNText, ColorValue } from 'react-native';
+import { Text as RNText, ColorValue, StyleProp, ViewStyle } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { actions, RichEditor, RichToolbar } from 'react-native-pell-rich-editor';
 import { useKeyboard } from '../hooks';
 import { Text } from '../components';
+import { isAndroid } from '../constants';
 
 const handleHead = ({ tintColor }: { tintColor: ColorValue }) => (
   <RNText style={{ color: tintColor }}>H1</RNText>
@@ -15,15 +15,16 @@ const handleHead = ({ tintColor }: { tintColor: ColorValue }) => (
 const NoteScreen = () => {
   const richText = useRef<RichEditor>(null);
   const { keyboardShown, keyboardHeight } = useKeyboard();
+  const kbAwareSVStyles: StyleProp<ViewStyle> = {
+    position: 'absolute',
+    height: isAndroid ? '100%' : undefined,
+    width: '100%',
+    top: 0,
+    bottom: keyboardHeight,
+  };
 
   return (
-    <KeyboardAwareScrollView
-      contentContainerStyle={{
-        position: 'absolute',
-        width: '100%',
-        top: 0,
-        bottom: keyboardHeight,
-      }}>
+    <KeyboardAwareScrollView contentContainerStyle={kbAwareSVStyles}>
       <Text.H6>Description:</Text.H6>
       <RichEditor
         ref={richText}
