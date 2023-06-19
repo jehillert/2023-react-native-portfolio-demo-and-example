@@ -1,3 +1,5 @@
+import { DefaultTheme } from 'styled-components/native';
+
 type ColorPalette = typeof lightTheme.colors;
 
 type Typography = typeof typography;
@@ -14,7 +16,7 @@ const colorNeutralThemeProps = {
   typography,
 };
 
-const lightTheme = {
+const lightTheme: DefaultTheme = {
   colors: {
     common: {
       black: '#000',
@@ -94,7 +96,7 @@ const lightTheme = {
   ...colorNeutralThemeProps,
 };
 
-const darkTheme: ColorPalette = {
+const darkTheme: DefaultTheme = {
   colors: {
     common: {
       black: '#000',
@@ -181,4 +183,5 @@ const theme = {
 };
 
 export type { ColorPalette, Typography };
+export { lightTheme, darkTheme };
 export default theme;

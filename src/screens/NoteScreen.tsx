@@ -1,6 +1,7 @@
 // testing
 // https://coolsoftware.dev/blog/testing-react-native-webview-with-react-native-testing-library/
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
+import { useIsFocused } from '@react-navigation/native';
 import { Text as RNText, ColorValue, StyleProp, ViewStyle } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { actions, RichEditor, RichToolbar } from 'react-native-pell-rich-editor';
@@ -14,7 +15,8 @@ const handleHead = ({ tintColor }: { tintColor: ColorValue }) => (
 
 const NoteScreen = () => {
   const richText = useRef<RichEditor>(null);
-  const { keyboardShown, keyboardHeight } = useKeyboard();
+  const isFocused = useIsFocused();
+  const { keyboardHeight } = useKeyboard();
   const kbAwareSVStyles: StyleProp<ViewStyle> = {
     position: 'absolute',
     height: isAndroid ? '100%' : undefined,
@@ -22,6 +24,13 @@ const NoteScreen = () => {
     top: 0,
     bottom: keyboardHeight,
   };
+
+  useEffect(() => {
+    if (richText?.current) {
+      isFocused && richText.current.focusContentEditor;
+      !isFocused && richText?.current?.blurContentEditor;
+    }
+  }, [isFocused]);
 
   return (
     <KeyboardAwareScrollView contentContainerStyle={kbAwareSVStyles}>
@@ -33,10 +42,11 @@ const NoteScreen = () => {
         }}
         useContainer={false}
       />
-      {keyboardShown && (
+      {!!richText?.current?.isKeyboardOpen && (
         <RichToolbar
           editor={richText}
           actions={[
+            actions.insertImage,
             actions.undo,
             actions.redo,
             actions.setBold,
