@@ -71,7 +71,5 @@
 	<array>
 		<string>Roboto-Regular.ttf</string>
 	</array>
-	<key>CFBundleGetInfoString</key>
-	<string>ITSAppUsesNonExemptEncryption</string>
 </dict>
 </plist>
