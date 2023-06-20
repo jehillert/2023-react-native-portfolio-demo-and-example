@@ -6,7 +6,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
-  // whitelist: [],
+  whitelist: ['notes', 'settings'],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -26,6 +26,7 @@ if (process.env.NODE_ENV === 'development' && (module as any).hot) {
 
 let persistor = persistStore(store);
 
-export { persistor, store };
 export type AppDispatch = typeof store.dispatch;
 export type RootState = ReturnType<typeof store.getState>;
+
+export { persistor, store };

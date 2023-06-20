@@ -71,5 +71,7 @@
 	<array>
 		<string>Roboto-Regular.ttf</string>
 	</array>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 </dict>
 </plist>

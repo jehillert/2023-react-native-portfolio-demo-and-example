@@ -32,16 +32,14 @@ const NoteScreen = () => {
     }
   }, [isFocused]);
 
+  const handleEditorContentChange = (descriptionText: string) => {
+    console.log('descriptionText:', descriptionText);
+  };
+
   return (
     <KeyboardAwareScrollView contentContainerStyle={kbAwareSVStyles}>
       <Text.H6>Description:</Text.H6>
-      <RichEditor
-        ref={richText}
-        onChange={descriptionText => {
-          console.log('descriptionText:', descriptionText);
-        }}
-        useContainer={false}
-      />
+      <RichEditor ref={richText} onChange={handleEditorContentChange} useContainer={false} />
       {!!richText?.current?.isKeyboardOpen && (
         <RichToolbar
           editor={richText}
