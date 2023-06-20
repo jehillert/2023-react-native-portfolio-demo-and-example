@@ -47,7 +47,7 @@
 		</dict>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string/>
+	<string></string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>
@@ -71,5 +71,7 @@
 	<array>
 		<string>Roboto-Regular.ttf</string>
 	</array>
+	<key>CFBundleGetInfoString</key>
+	<string>ITSAppUsesNonExemptEncryption</string>
 </dict>
 </plist>
