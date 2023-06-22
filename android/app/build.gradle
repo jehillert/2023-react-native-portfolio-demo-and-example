@@ -121,10 +121,10 @@ android {
         }
         release {
             if (project.hasProperty('MYAPP_UPLOAD_STORE_FILE')) {
-                storeFile file(PROJECT.ENV.("GETMYAPP_UPLOAD_STORE_FILE"))
-                storePassword PROJECT.ENV.("GETMYAPP_UPLOAD_STORE_PASSWORD")
-                keyAlias PROJECT.ENV.("GETMYAPP_UPLOAD_KEY_ALIAS")
-                keyPassword PROJECT.ENV.("GETMYAPP_UPLOAD_KEY_PASSWORD")
+                storeFile file(project.env.get("GETMYAPP_UPLOAD_STORE_FILE"))
+                storePassword project.env.get("GETMYAPP_UPLOAD_STORE_PASSWORD")
+                keyAlias project.env.get("GETMYAPP_UPLOAD_KEY_ALIAS")
+                keyPassword project.env.get("GETMYAPP_UPLOAD_KEY_PASSWORD")
             }
         }
     }
