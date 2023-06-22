@@ -1,3 +1,8 @@
+## README
+React-native-config instructions are misleading. This "extra step" must be added immediately after line 1 of `android/app/build.gradle`:
+```
+apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
+```
 ## IOS
 | LANGUAGE        | INVOCATION                                                                                           |
 |-----------------|------------------------------------------------------------------------------------------------------|
