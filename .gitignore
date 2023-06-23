@@ -8,6 +8,8 @@ google-services.json
 .env.production
 .env.staging
 .env.test
+.logs/
+.credentials/
 
 # react-native-config codegen
 #
@@ -48,7 +50,7 @@ local.properties
 .cxx/
 *.keystore
 !debug.keystore
-
+gradle.deps
 # node.js
 #
 node_modules/
