@@ -7,10 +7,9 @@ Have people install VS Code extension that lets shell commands be run from markd
 ##  Android Gotchyas
 > You have to do an internal channel first.
 > If you create any other testing channel (and given it a release), that will break deployment.  So you need to pause all testing channels except for 'internal'
->
+> signingConfigs.debug by default for relase variant: https://stackoverflow.com/a/61180311/8257006
 
 ##  iOS Gotchyas
-
 ##  Bitrise Gotchyas
 
 Privacy Policy
