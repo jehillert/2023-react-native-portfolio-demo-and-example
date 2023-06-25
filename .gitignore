@@ -3,14 +3,10 @@
 __dnd__/
 google-services.json
 .env
-.env.debug
-.env.development
-.env.production
-.env.staging
-.env.test
+.env.*
 .logs/
 .credentials/
-
+.bitrise.secrets.yml
 # react-native-config codegen
 #
 ios/tmp.xcconfig

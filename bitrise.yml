@@ -3,16 +3,55 @@ format_version: '11'
 default_step_lib_source: https://github.com/bitrise-io/bitrise-steplib.git
 project_type: react-native
 workflows:
+  Setup:
+    description: |
+      PART I
+      Get current build number from gradle file.
+      Increment current build number by 1.
+      Set incremented build number as $LATEST_BUILD env var.
+      Update Secrets file with $LATEST_BUILD.
+
+      PART 2
+      Get repository and build JS bundle.
+    steps:
+      - version-extractor-android@0: {}
+      - script@1:
+          inputs:
+            - content: |-
+                #!/bin/bash
+
+                # Setup
+                set -e
+                set -o pipefail
+                set -x
+
+                # Get Latest Build Number
+                INCREMENTED_BUILD_NUMBER = $(($EXTRACTED_ANDROID_VERSION_CODE+1))
+                envman add --key LATEST_BUILD --value "$INCREMENTED_BUILD_NUMBER"
+
+                # Define the file path
+                file=".bitrise.test.yml"
+
+                # Create a temporary file
+                temp_file=".bitrise.secrets_temp.yml"
+
+                # Read the first line from the original file and write it to the temporary file
+                head -n 1 "$file" > "$temp_file"
+
+                # Write the new line to the temporary file
+                echo "  - LATEST_BUILD: $INCREMENTED_BUILD_NUMBER" >> "$temp_file"
+
+                # Skip the first two lines and append the remaining lines from the original file to the temporary file
+                tail -n +3 "$file" >> "$temp_file"
+
+                # Replace the original file with the temporary file
+                mv "$temp_file" "$file"
   BuildJSBundle:
     description: 'Tests, builds and deploys the app using *Deploy to Google Play and
       Apple App stores.
 
       '
     steps:
-      - file-downloader@1:
-          inputs:
-            - destination: '$WORKDIR/.env'
-            - source: '$BITRISEIO_ENV_URL'
       - file-downloader@1:
           inputs:
             - destination: android/app/google-services.json
@@ -29,9 +68,7 @@ workflows:
             - verbose_log: 'yes'
             - workdir: '$WORKDIR'
     envs:
-      - opts:
-          is_expand: false
-        BITRISE_DISTRIBUTION_METHOD: app-store
+      - BITRISE_DISTRIBUTION_METHOD: app-store
   BuildAndDeployAndroid:
     description: 'Tests, builds and deploys the app using *Deploy to Google Play and
       Apple App stores.
@@ -46,6 +83,7 @@ workflows:
             - build_gradle_path: '$PROJECT_LOCATION/$MODULE/build.gradle'
             - version_code_offset: '1'
             - new_version_name: '$APP_VERSION'
+            - new_version_code: $LATEST_BUILD
       - android-build@1:
           inputs:
             - project_location: '$PROJECT_LOCATION'
@@ -58,9 +96,7 @@ workflows:
             - track: internal
             - service_account_json_key_path: 'file://$WORKDIR/.credentials/BitriseIoServiceAcountJsonKey/pc-api-5247139680794635180-677-a1dd030597a2.json'
     envs:
-      - opts:
-          is_expand: false
-        BITRISE_DISTRIBUTION_METHOD: app-store
+      - BITRISE_DISTRIBUTION_METHOD: app-store
   BuildAndDeployIOS:
     description: 'Tests, builds and deploys the app using *Deploy to Google Play and
       Apple App stores.
@@ -73,29 +109,31 @@ workflows:
       - set-xcode-build-number@1:
           inputs:
             - build_short_version_string: '$APP_VERSION'
+            - build_version: '$LATEST_BUILD'
             - build_version_offset: '1'
             - plist_path: ios/jnotes/Info.plist
       - xcode-archive@4:
           inputs:
-            - project_path: '$BITRISE_PROJECT_PATH'
-            - scheme: '$BITRISE_SCHEME'
-            - distribution_method: '$BITRISE_DISTRIBUTION_METHOD'
-            - configuration: Release
             - automatic_code_signing: api-key
+            - api_key_path: '$APP_STORE_API_KEY_PATH'
+            - api_key_id: '$APP_STORE_API_ID'
+            - api_key_issuer_id: '$APP_STORE_API_ISSUER_ID'
+            - keychain_path: $KEYCHAIN_PATH
+            - keychain_password: $KEYCHAIN_PASSWORD
+            - certificate_url_list: $APPLE_IOS_CERTIFICATE_URL_LIST
+            - passphrase_list: $APPLE_IOS_CERTIFICATE_PASSPHRASE_LIST
       - deploy-to-itunesconnect-application-loader@1:
           inputs:
             - password: '$APPLE_ID_PASSWORD'
             - app_password: '$APP_SPECIFIC_PASSWORD'
             - itunescon_user: '$APPLE_ID_EMAIL'
     envs:
-      - opts:
-          is_expand: false
-        BITRISE_DISTRIBUTION_METHOD: app-store
+      - BITRISE_DISTRIBUTION_METHOD: app-store
   Release:
     before_run: []
     after_run:
       - BuildJSBundle
-      - BuildAndDeployAndroid
+      # - BuildAndDeployAndroid
       - BuildAndDeployIOS
 meta:
   bitrise.io:
@@ -103,30 +141,14 @@ meta:
     machine_type_id: g2-m1.4core
 app:
   envs:
-    - opts:
-        is_expand: false
-      BITRISE_PROJECT_PATH: ios/jnotes.xcworkspace
-    - opts:
-        is_expand: false
-      BITRISE_SCHEME: jnotes
-    - opts:
-        is_expand: false
-      PROJECT_LOCATION: android
-    - opts:
-        is_expand: false
-      MODULE: app
-    - opts:
-        is_expand: false
-      VARIANT: release
-    - opts:
-        is_expand: false
-      WORKDIR: '.'
-    - opts:
-        is_expand: false
-      APP_VERSION: '1.1'
-    - opts:
-        is_expand: false
-      ANDROID_PACKAGE_NAME: com.jnotes
+    - APP_VERSION: '1.3.0'
+    - BITRISE_PROJECT_PATH: ios/jnotes.xcworkspace
+    - BITRISE_SCHEME: jnotes
+    - PROJECT_LOCATION: android
+    - MODULE: app
+    - VARIANT: release
+    - WORKDIR: '.'
+    - ANDROID_PACKAGE_NAME: com.jnotes
 trigger_map:
   - push_branch: main
     workflow: Release

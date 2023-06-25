@@ -3,6 +3,16 @@ README:
 Maybe as a separate repository, this file will do all the steps from start to finish (Valid as of June 2023)
 Have people install VS Code extension that lets shell commands be run from markdown.  And they can use it to work their way through this.
 
+
+##  Android Gotchyas
+> You have to do an internal channel first.
+> If you create any other testing channel (and given it a release), that will break deployment.  So you need to pause all testing channels except for 'internal'
+>
+
+##  iOS Gotchyas
+
+##  Bitrise Gotchyas
+
 Privacy Policy
 Follow recommendations here:
 
