@@ -14,7 +14,7 @@ workflows:
       PART 2
       Get repository and build JS bundle.
     steps:
-      - version-extractor-android@0: {}
+      # - version-extractor-android@0: {}
       - script@1:
           inputs:
             - content: |-
@@ -26,11 +26,14 @@ workflows:
                 set -x
 
                 # Get Latest Build Number
-                INCREMENTED_BUILD_NUMBER = $(($EXTRACTED_ANDROID_VERSION_CODE+1))
+                # INCREMENTED_BUILD_NUMBER=$(($EXTRACTED_ANDROID_VERSION_CODE+1))
+                echo "$LATEST_BUILD"
+                INCREMENTED_BUILD_NUMBER=$(($LATEST_BUILD+1))
+                echo "$INCREMENTED_BUILD_NUMBER"
                 envman add --key LATEST_BUILD --value "$INCREMENTED_BUILD_NUMBER"
 
                 # Define the file path
-                file=".bitrise.test.yml"
+                file=".bitrise.secrets.yml"
 
                 # Create a temporary file
                 temp_file=".bitrise.secrets_temp.yml"
@@ -46,18 +49,18 @@ workflows:
 
                 # Replace the original file with the temporary file
                 mv "$temp_file" "$file"
-  BuildJSBundle:
-    description: 'Tests, builds and deploys the app using *Deploy to Google Play and
-      Apple App stores.
-
-      '
-    steps:
       - file-downloader@1:
           inputs:
             - destination: android/app/google-services.json
             - source: '$BITRISEIO_GOOGLE_SERVICES_JSON_URL'
       - activate-ssh-key@4: {}
       - git-clone@8: {}
+  BuildJSBundle:
+    description: 'Tests, builds and deploys the app using *Deploy to Google Play and
+      Apple App stores.
+
+      '
+    steps:
       - yarn@0.1:
           inputs:
             - command: ''
@@ -110,7 +113,6 @@ workflows:
           inputs:
             - build_short_version_string: '$APP_VERSION'
             - build_version: '$LATEST_BUILD'
-            - build_version_offset: '1'
             - plist_path: ios/jnotes/Info.plist
       - xcode-archive@4:
           inputs:
@@ -132,6 +134,7 @@ workflows:
   Release:
     before_run: []
     after_run:
+      - Setup
       - BuildJSBundle
       # - BuildAndDeployAndroid
       - BuildAndDeployIOS
@@ -141,7 +144,7 @@ meta:
     machine_type_id: g2-m1.4core
 app:
   envs:
-    - APP_VERSION: '1.3.0'
+    - APP_VERSION: '1.4.0'
     - BITRISE_PROJECT_PATH: ios/jnotes.xcworkspace
     - BITRISE_SCHEME: jnotes
     - PROJECT_LOCATION: android
