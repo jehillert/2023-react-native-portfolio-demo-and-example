@@ -3,6 +3,35 @@ format_version: '11'
 default_step_lib_source: https://github.com/bitrise-io/bitrise-steplib.git
 project_type: react-native
 workflows:
+  BuildJSBundle:
+    description: 'Tests, builds and deploys the app using *Deploy to Google Play and
+      Apple App stores.
+
+      '
+    steps:
+      - file-downloader@1:
+          inputs:
+            - destination: '$WORKDIR/.env'
+            - source: '$BITRISEIO_ENV_URL'
+      - file-downloader@1:
+          inputs:
+            - destination: android/app/google-services.json
+            - source: '$BITRISEIO_GOOGLE_SERVICES_JSON_URL'
+      - activate-ssh-key@4: {}
+      - git-clone@8: {}
+      - yarn@0.1:
+          inputs:
+            - command: ''
+            - verbose_log: 'yes'
+      - yarn@0.1:
+          inputs:
+            - command: test
+            - verbose_log: 'yes'
+            - workdir: '$WORKDIR'
+    envs:
+      - opts:
+          is_expand: false
+        BITRISE_DISTRIBUTION_METHOD: app-store
   BuildAndDeployAndroid:
     description: 'Tests, builds and deploys the app using *Deploy to Google Play and
       Apple App stores.
@@ -26,7 +55,7 @@ workflows:
       - google-play-deploy@3:
           inputs:
             - package_name: '$ANDROID_PACKAGE_NAME'
-            - track: beta
+            - track: internal
             - service_account_json_key_path: 'file://$WORKDIR/.credentials/BitriseIoServiceAcountJsonKey/pc-api-5247139680794635180-677-a1dd030597a2.json'
     envs:
       - opts:
@@ -58,35 +87,6 @@ workflows:
             - password: '$APPLE_ID_PASSWORD'
             - app_password: '$APP_SPECIFIC_PASSWORD'
             - itunescon_user: '$APPLE_ID_EMAIL'
-    envs:
-      - opts:
-          is_expand: false
-        BITRISE_DISTRIBUTION_METHOD: app-store
-  BuildJSBundle:
-    description: 'Tests, builds and deploys the app using *Deploy to Google Play and
-      Apple App stores.
-
-      '
-    steps:
-      - file-downloader@1:
-          inputs:
-            - destination: '$WORKDIR/.env'
-            - source: '$BITRISEIO_ENV_URL'
-      - file-downloader@1:
-          inputs:
-            - destination: android/app/google-services.json
-            - source: '$BITRISEIO_GOOGLE_SERVICES_JSON_URL'
-      - activate-ssh-key@4: {}
-      - git-clone@8: {}
-      - yarn@0.1:
-          inputs:
-            - command: ''
-            - verbose_log: 'yes'
-      - yarn@0.1:
-          inputs:
-            - command: test
-            - verbose_log: 'yes'
-            - workdir: '$WORKDIR'
     envs:
       - opts:
           is_expand: false
