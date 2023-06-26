@@ -14,7 +14,6 @@ workflows:
       PART 2
       Get repository and build JS bundle.
     steps:
-      # - version-extractor-android@0: {}
       - script@1:
           inputs:
             - content: |-
@@ -49,6 +48,14 @@ workflows:
 
                 # Replace the original file with the temporary file
                 mv "$temp_file" "$file"
+      - script@1:
+          inputs:
+            - content: |-
+                #!/bin/bash
+
+                PROJECT=./ios/jnotes.xcodeproj/project.pbxproj
+                sed -i '' -e 's/CURRENT_PROJECT_VERSION \= [^\;]*\;/CURRENT_PROJECT_VERSION = '$LATEST_BUILD';/' $PROJECT
+                build_number=`sed -n '/CURRENT_PROJECT_VERSION/{s/CURRENT_PROJECT_VERSION = //;s/;//;s/^[[:space:]]*//;p;q;}' $PROJECT`
       - file-downloader@1:
           inputs:
             - destination: android/app/google-services.json
@@ -86,7 +93,7 @@ workflows:
             - build_gradle_path: '$PROJECT_LOCATION/$MODULE/build.gradle'
             - version_code_offset: '1'
             - new_version_name: '$APP_VERSION'
-            - new_version_code: $LATEST_BUILD
+            - new_version_code: '$LATEST_BUILD'
       - android-build@1:
           inputs:
             - project_location: '$PROJECT_LOCATION'
@@ -97,7 +104,7 @@ workflows:
           inputs:
             - package_name: '$ANDROID_PACKAGE_NAME'
             - track: internal
-            - service_account_json_key_path: 'file://$WORKDIR/.credentials/BitriseIoServiceAcountJsonKey/pc-api-5247139680794635180-677-a1dd030597a2.json'
+            - service_account_json_key_path: '$SERVICE_ACCOUNT_JSON_KEY_PATH'
     envs:
       - BITRISE_DISTRIBUTION_METHOD: app-store
   BuildAndDeployIOS:
@@ -116,14 +123,18 @@ workflows:
             - plist_path: ios/jnotes/Info.plist
       - xcode-archive@4:
           inputs:
+            - distribution_method: $BITRISE_DISTRIBUTION_METHOD
             - automatic_code_signing: api-key
             - api_key_path: '$APP_STORE_API_KEY_PATH'
             - api_key_id: '$APP_STORE_API_ID'
             - api_key_issuer_id: '$APP_STORE_API_ISSUER_ID'
-            - keychain_path: $KEYCHAIN_PATH
-            - keychain_password: $KEYCHAIN_PASSWORD
-            - certificate_url_list: $APPLE_IOS_CERTIFICATE_URL_LIST
-            - passphrase_list: $APPLE_IOS_CERTIFICATE_PASSPHRASE_LIST
+            - keychain_path: '$KEYCHAIN_PATH'
+            - keychain_password: '$KEYCHAIN_PASSWORD'
+            - certificate_url_list: '$APPLE_IOS_DIST_CERTIFICATE_URL_LIST'
+            # - passphrase_list: ''
+            # - certificate_url_list: '$APPLE_IOS_DIST_CERTIFICATE_URL_LIST|$APPLE_IOS_DEV_CERTIFICATE_URL_LIST'
+            # - passphrase_list: '$APPLE_IOS_CERTIFICATE_PASSPHRASE_LIST'
+            # - fallback_provisioning_profile_url_list: '$PROVISIONING_PROFILE_URL'
       - deploy-to-itunesconnect-application-loader@1:
           inputs:
             - password: '$APPLE_ID_PASSWORD'
@@ -135,7 +146,7 @@ workflows:
     before_run: []
     after_run:
       - Setup
-      - BuildJSBundle
+      # - BuildJSBundle
       # - BuildAndDeployAndroid
       - BuildAndDeployIOS
 meta:
