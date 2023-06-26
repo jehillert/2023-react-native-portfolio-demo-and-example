@@ -126,6 +126,11 @@ android {
                 storePassword project.env.get("MYAPP_UPLOAD_STORE_PASSWORD")
                 keyAlias project.env.get("MYAPP_UPLOAD_KEY_ALIAS")
                 keyPassword project.env.get("MYAPP_UPLOAD_KEY_PASSWORD")
+            } else {
+                keyAlias System.getenv("BITRISEIO_ANDROID_KEYSTORE_ALIAS")
+                keyPassword System.getenv("BITRISEIO_ANDROID_KEYSTORE_PRIVATE_KEY_PASSWORD")
+                storeFile file(System.getenv("HOME") + "/keystores/jnotes-upload-key.keystore")
+                storePassword System.getenv("BITRISEIO_ANDROID_KEYSTORE_PASSWORD")
             }
         }
     }
