@@ -5,14 +5,10 @@ project_type: react-native
 workflows:
   Setup:
     description: |
-      PART I
       Get current build number from gradle file.
       Increment current build number by 1.
       Set incremented build number as $LATEST_BUILD env var.
       Update Secrets file with $LATEST_BUILD.
-
-      PART 2
-      Get repository and build JS bundle.
     steps:
       - script@1:
           inputs:
@@ -25,7 +21,6 @@ workflows:
                 set -x
 
                 # Get Latest Build Number
-                # INCREMENTED_BUILD_NUMBER=$(($EXTRACTED_ANDROID_VERSION_CODE+1))
                 echo "$LATEST_BUILD"
                 INCREMENTED_BUILD_NUMBER=$(($LATEST_BUILD+1))
                 echo "$INCREMENTED_BUILD_NUMBER"
@@ -77,8 +72,6 @@ workflows:
             - command: test
             - verbose_log: 'yes'
             - workdir: '$WORKDIR'
-    envs:
-      - BITRISE_DISTRIBUTION_METHOD: app-store
   BuildAndDeployAndroid:
     description: 'Tests, builds and deploys the app using *Deploy to Google Play and
       Apple App stores.
@@ -105,8 +98,6 @@ workflows:
             - package_name: '$ANDROID_PACKAGE_NAME'
             - track: internal
             - service_account_json_key_path: '$SERVICE_ACCOUNT_JSON_KEY_PATH'
-    envs:
-      - BITRISE_DISTRIBUTION_METHOD: app-store
   BuildAndDeployIOS:
     description: 'Tests, builds and deploys the app using *Deploy to Google Play and
       Apple App stores.
@@ -131,24 +122,20 @@ workflows:
             - keychain_path: '$KEYCHAIN_PATH'
             - keychain_password: '$KEYCHAIN_PASSWORD'
             - certificate_url_list: '$APPLE_IOS_DIST_CERTIFICATE_URL_LIST'
-            # - passphrase_list: ''
-            # - certificate_url_list: '$APPLE_IOS_DIST_CERTIFICATE_URL_LIST|$APPLE_IOS_DEV_CERTIFICATE_URL_LIST'
-            # - passphrase_list: '$APPLE_IOS_CERTIFICATE_PASSPHRASE_LIST'
-            # - fallback_provisioning_profile_url_list: '$PROVISIONING_PROFILE_URL'
       - deploy-to-itunesconnect-application-loader@1:
           inputs:
             - password: '$APPLE_ID_PASSWORD'
             - app_password: '$APP_SPECIFIC_PASSWORD'
             - itunescon_user: '$APPLE_ID_EMAIL'
-    envs:
-      - BITRISE_DISTRIBUTION_METHOD: app-store
   Release:
     before_run: []
     after_run:
       - Setup
-      # - BuildJSBundle
-      # - BuildAndDeployAndroid
+      - BuildJSBundle
+      - BuildAndDeployAndroid
       - BuildAndDeployIOS
+    envs:
+      - BITRISE_DISTRIBUTION_METHOD: app-store
 meta:
   bitrise.io:
     stack: osx-xcode-14.2.x-ventura
