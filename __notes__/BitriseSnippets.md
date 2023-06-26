@@ -1,3 +1,17 @@
+```bash
+#!/bin/bash
+set -ex
+
+# specify local download path
+export file_local_path=download/path/to/my/file
+
+# download the file
+wget -O "$file_local_path" "$BITRISEIO_MY_FILE_ID_URL"
+echo "file downloaded to: $file_local_path"
+
+# OPTIONALLY: export the file's local path, to be able to use it in subsequent steps as an input value
+envman add --key BITRISEIO_MY_FILE_LOCAL_PATH --value "$file_local_path"
+```
 ```yml
       - script@1:
           inputs:

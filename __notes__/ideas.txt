@@ -3,3 +3,13 @@ Top left of drawer, have 5 most recent files?
 RemindersScreen
 
 button "Remind me"  ==> turns note into a push notification.
+
+
+https://github.com/zoontek/react-native-bootsplash
+zoontek/react-native-bootsplash: 🚀 Show a splash screen during app startup. Hide it when you are ready.
+
+https://github.com/mrousavy/react-native-mmkv
+mrousavy/react-native-mmkv: ⚡️ The fastest key/value storage for React Native. ~30x faster than AsyncStorage!
+
+
+https://www.obytes.com/blog
