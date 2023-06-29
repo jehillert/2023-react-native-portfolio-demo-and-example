@@ -1,11 +1,30 @@
 import { configureStore } from '@reduxjs/toolkit';
+import { persistStore, persistReducer, Storage } from 'redux-persist';
+import { MMKV } from 'react-native-mmkv';
 import rootReducer from './root-reducer';
-import { persistStore, persistReducer } from 'redux-persist';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+
+// NOTE: can share data between your apps. https://github.com/mrousavy/react-native-mmkv#app-groups.
+// NOTE: data can be encrypted. but remember to change answers about encryption ion ios/google play
+const storage = new MMKV();
+
+export const reduxStorage: Storage = {
+  setItem: (key, value) => {
+    storage.set(key, value);
+    return Promise.resolve(true);
+  },
+  getItem: key => {
+    const value = storage.getString(key);
+    return Promise.resolve(value);
+  },
+  removeItem: key => {
+    storage.delete(key);
+    return Promise.resolve();
+  },
+};
 
 const persistConfig = {
   key: 'root',
-  storage: AsyncStorage,
+  storage: reduxStorage,
   whitelist: ['notes', 'settings'],
 };
 
