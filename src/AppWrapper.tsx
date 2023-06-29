@@ -3,6 +3,7 @@ import { useTheme } from 'styled-components/native';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { config as linkingConfig } from './linking';
 import { Text } from './components';
+import { RootNavigation } from './navigation';
 
 type Props = {
   children: ReactNode;
@@ -36,6 +37,7 @@ const AppWrapper = ({ children }: Props) => {
     <NavigationContainer
       linking={linking}
       fallback={<Text.H6>Loading...</Text.H6>}
+      ref={RootNavigation.navigationRef}
       theme={navTheme}>
       {children}
     </NavigationContainer>
