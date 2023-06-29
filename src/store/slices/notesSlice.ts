@@ -1,10 +1,6 @@
 // redux-toolkit.js.org/api/createEntityAdapter#selectid
 // https://redux.js.org/usage/structuring-reducers/normalizing-state-shape
-import {
-  createSlice,
-  createEntityAdapter,
-  PayloadAction,
-} from '@reduxjs/toolkit';
+import { createSlice, createEntityAdapter } from '@reduxjs/toolkit';
 import { uuid } from '../../utils';
 import { AppThunk } from '../store';
 import { selectUntitledNoteCount } from '../selectors';
@@ -43,28 +39,21 @@ const notesSlice = createSlice({
 });
 
 const createNote =
-  (note: Note): AppThunk =>
+  (path: string = '/'): AppThunk =>
   (dispatch, getState) => {
-    const { id: _id, content, path: _path, title: _title } = note;
-    const id = _id ? _id : uuid();
-    const path = _path ?? '/';
+    const id = uuid();
+    const untitledNoteCount = selectUntitledNoteCount(getState());
+    const newUntitledNoteCount = untitledNoteCount + 1;
+    const title = `note-${newUntitledNoteCount}`;
 
-    let title = _title;
-
-    if (!title) {
-      const untitledNoteCount = selectUntitledNoteCount(getState());
-      const newUntitledNoteCount = untitledNoteCount + 1;
-      title = `note-${newUntitledNoteCount}`;
-      dispatch(untitledNoteCountSet(newUntitledNoteCount));
-    }
-
+    dispatch(untitledNoteCountSet(newUntitledNoteCount));
     dispatch(activeNoteIdSet(id));
 
     const newNote = {
       id,
-      content,
-      path,
       title,
+      path,
+      content: '',
     };
 
     dispatch(noteAdded(newNote));
@@ -84,6 +73,6 @@ export const {
   noteUpserted,
 } = notesSlice.actions;
 
+export type { Note };
 export { createNote };
-
 export default notesSlice.reducer;

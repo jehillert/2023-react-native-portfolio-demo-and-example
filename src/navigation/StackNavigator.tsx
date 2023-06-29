@@ -7,7 +7,8 @@ const Stack = createNativeStackNavigator();
 
 const StackNavigator = () => {
   return (
-    <Stack.Navigator screenOptions={{ headerStyle: { backgroundColor: 'tomato' } }}>
+    <Stack.Navigator
+      screenOptions={{ headerStyle: { backgroundColor: 'tomato' } }}>
       <Stack.Screen name={Screens.DIRECTORY} component={DirectoryScreen} />
       <Stack.Screen
         name={Screens.NOTE}

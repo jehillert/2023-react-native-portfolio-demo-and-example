@@ -2,13 +2,23 @@
 // https://coolsoftware.dev/blog/testing-react-native-webview-with-react-native-testing-library/
 import React, { useCallback, useEffect, useRef } from 'react';
 import { useIsFocused } from '@react-navigation/native';
-import { Text as RNText, ColorValue, StyleProp, ViewStyle, Button } from 'react-native';
+import {
+  Text as RNText,
+  ColorValue,
+  StyleProp,
+  ViewStyle,
+  Button,
+} from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { actions, RichEditor, RichToolbar } from 'react-native-pell-rich-editor';
+import {
+  actions,
+  RichEditor,
+  RichToolbar,
+} from 'react-native-pell-rich-editor';
 import { useKeyboard } from '../hooks';
-import { isAndroid } from '../constants';
+import { emptyNote, isAndroid } from '../constants';
 import { useAppDispatch, useAppSelector } from '../hooks/useRedux';
-import { selectNotes } from '../store/selectors';
+import { selectActiveNoteId, selectNoteById } from '../store/selectors';
 
 const handleHead = ({ tintColor }: { tintColor: ColorValue }) => (
   <RNText style={{ color: tintColor }}>H1</RNText>
@@ -16,7 +26,8 @@ const handleHead = ({ tintColor }: { tintColor: ColorValue }) => (
 
 const NoteScreen = () => {
   const dispatch = useAppDispatch();
-  const notes = useAppSelector(selectNotes);
+  const activeNoteId = useAppSelector(selectActiveNoteId);
+  const activeNote = activeNoteId ? selectNoteById(activeNoteId) : emptyNote;
   const richText = useRef<RichEditor>(null);
   const contentRef = useRef('');
   const isFocused = useIsFocused();

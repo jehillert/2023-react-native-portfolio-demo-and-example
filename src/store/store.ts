@@ -1,4 +1,5 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { ThunkAction, configureStore } from '@reduxjs/toolkit';
+import { AnyAction } from 'redux';
 import { persistStore, persistReducer, Storage } from 'redux-persist';
 import { MMKV } from 'react-native-mmkv';
 import rootReducer from './root-reducer';
@@ -30,9 +31,12 @@ const persistConfig = {
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
+const createDebugger = require('redux-flipper').default;
+
 const store = configureStore({
   reducer: persistedReducer,
-  middleware: getDefaultMiddleware => getDefaultMiddleware({ serializableCheck: false }),
+  middleware: getDefaultMiddleware =>
+    getDefaultMiddleware({ serializableCheck: false }).concat(createDebugger()),
   devTools: process.env.NODE_ENV !== 'production',
 });
 
@@ -45,7 +49,18 @@ if (process.env.NODE_ENV === 'development' && (module as any).hot) {
 
 let persistor = persistStore(store);
 
-export type AppDispatch = typeof store.dispatch;
-export type RootState = ReturnType<typeof store.getState>;
+type AppDispatch = typeof store.dispatch;
 
+type RootState = ReturnType<typeof store.getState>;
+
+type AppThunk<ReturnType = void> = ThunkAction<
+  ReturnType,
+  RootState,
+  unknown,
+  AnyAction
+>;
+
+type AsyncAppThunkWReturn<SomeReturnType> = AppThunk<Promise<SomeReturnType>>;
+
+export type { AppDispatch, RootState, AppThunk, AsyncAppThunkWReturn };
 export { persistor, store };

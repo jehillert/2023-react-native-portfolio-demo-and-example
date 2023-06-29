@@ -14,7 +14,7 @@ type CommonNavParams = { id?: string } | undefined;
 type DrawerParamList = {
   [Screens.DIRECTORY]: CommonNavParams;
   [Screens.HOME]: undefined;
-  [Screens.NOTE]: { activeNoteId: string } & CommonNavParams;
+  [Screens.NOTE]: CommonNavParams;
   [Screens.MARKUP]: CommonNavParams;
 };
 
@@ -24,7 +24,10 @@ type StackParamList = {
   [Screens.MARKUP]: CommonNavParams;
 };
 
-type DrawerNavScreenProps<T extends keyof DrawerParamList> = DrawerScreenProps<DrawerParamList, T>;
+type DrawerNavScreenProps<T extends keyof DrawerParamList> = DrawerScreenProps<
+  DrawerParamList,
+  T
+>;
 
 type DirectoryScreenProps = CompositeScreenProps<
   NativeStackScreenProps<StackParamList, Screens.DIRECTORY>,

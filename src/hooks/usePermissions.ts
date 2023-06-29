@@ -18,7 +18,10 @@ const useNotificationsPermission = () => {
 
     isIos && requestUserPermission();
 
-    isAndroid && PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS);
+    isAndroid &&
+      PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS,
+      );
   }, []);
 };
 

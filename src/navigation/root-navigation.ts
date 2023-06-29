@@ -19,7 +19,8 @@ const openDrawer = () => {
 };
 
 const toggleDrawer = () => {
-  !!navigationRef?.current && navigationRef?.current?.dispatch(DrawerActions.toggleDrawer());
+  !!navigationRef?.current &&
+    navigationRef?.current?.dispatch(DrawerActions.toggleDrawer());
 };
 
 export { navigationRef, closeDrawer, openDrawer, toggleDrawer };

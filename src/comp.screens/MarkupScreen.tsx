@@ -4,7 +4,11 @@ import React, { useEffect, useRef } from 'react';
 import { useIsFocused } from '@react-navigation/native';
 import { Text as RNText, ColorValue, StyleProp, ViewStyle } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { actions, RichEditor, RichToolbar } from 'react-native-pell-rich-editor';
+import {
+  actions,
+  RichEditor,
+  RichToolbar,
+} from 'react-native-pell-rich-editor';
 import { useKeyboard } from '../hooks';
 import { Text } from '../comp.common';
 import { isAndroid } from '../constants';

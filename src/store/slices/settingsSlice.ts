@@ -37,7 +37,10 @@ const settingsSlice = createSlice({
     themeIdSet(state, { payload: theme }: PayloadAction<ThemeSelection>) {
       state.themeId = theme;
     },
-    toolbarActionsSet(state, { payload: toolbarActions }: PayloadAction<ToolbarAction[]>) {
+    toolbarActionsSet(
+      state,
+      { payload: toolbarActions }: PayloadAction<ToolbarAction[]>,
+    ) {
       state.toolbarActions = toolbarActions;
     },
   },

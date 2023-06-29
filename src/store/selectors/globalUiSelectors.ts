@@ -2,4 +2,7 @@ import { RootState } from '../store';
 
 const selectActiveNoteId = (state: RootState) => state.globalUi.activeNoteId;
 
-export { selectActiveNoteId };
+const selectUntitledNoteCount = (state: RootState) =>
+  state.globalUi.untitledNoteCount;
+
+export { selectActiveNoteId, selectUntitledNoteCount };
