@@ -1,32 +1,51 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+// redux-toolkit.js.org/api/createEntityAdapter#selectid
+// https://redux.js.org/usage/structuring-reducers/normalizing-state-shape
+import { createSlice, createEntityAdapter } from '@reduxjs/toolkit';
 
 type Note = {
-  id: string;
-  path: string;
   content: string;
+  id?: string;
+  path?: string;
+  title: string;
 };
 
-interface INotes {
-  notes: Note[];
-}
-
-const initialState: INotes = {
-  notes: [],
-};
+export const notesAdapter = createEntityAdapter<Note>({
+  sortComparer: (a, b) => a.title.localeCompare(b.title),
+});
 
 const notesSlice = createSlice({
   name: 'notes',
-  initialState,
+  initialState: notesAdapter.getInitialState(),
   reducers: {
-    addNote(state, { payload: note }: PayloadAction<Note>) {
-      state.notes.push(note);
-    },
-    deleteNote(state, { payload: targetId }: PayloadAction<string>) {
-      const targetIndex = state.notes.findIndex(note => note.id === targetId);
-      state.notes.splice(targetIndex, 1);
+    allNotesRemoved: notesAdapter.removeAll,
+    noteAdded: notesAdapter.addOne, // Fails if note already exists.
+    noteRemoved: notesAdapter.removeOne,
+    noteReplaced: notesAdapter.setOne,
+    notesAdded: notesAdapter.addMany, // Fails if note already exists.
+    notesRemoved: notesAdapter.removeMany,
+    notesReplaced: notesAdapter.setMany,
+    notesUpdated: notesAdapter.updateMany, // For adding properties not yet defined (optional Note properties)
+    notesUpserted: notesAdapter.upsertMany, // Updates existing properties (shallow merge of old with new)
+    noteUpdated: notesAdapter.updateOne, // For adding properties not yet defined (optional Note properties)
+    noteUpserted: notesAdapter.upsertOne, // Updates existing properties (shallow merge of old with new)
+    allNotesReplaced(state, action) {
+      notesAdapter.setAll(state, action.payload.notes);
     },
   },
 });
 
-export const { addNote, deleteNote } = notesSlice.actions;
+export const {
+  allNotesRemoved,
+  noteAdded,
+  noteRemoved,
+  noteReplaced,
+  notesAdded,
+  notesRemoved,
+  notesReplaced,
+  notesUpdated,
+  notesUpserted,
+  noteUpdated,
+  noteUpserted,
+} = notesSlice.actions;
+
 export default notesSlice.reducer;
