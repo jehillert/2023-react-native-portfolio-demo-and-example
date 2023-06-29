@@ -2,7 +2,7 @@ import React, { ReactNode } from 'react';
 import { useTheme } from 'styled-components/native';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { config as linkingConfig } from './linking';
-import { Text } from './components';
+import { Text } from './comp.common';
 import { RootNavigation } from './navigation';
 
 type Props = {

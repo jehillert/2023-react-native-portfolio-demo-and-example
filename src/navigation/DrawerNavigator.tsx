@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import { DirectoryScreen, NoteScreen } from '../screens';
-import { DrawerParamList } from '.';
+import { DirectoryScreen, NoteScreen } from '../comp.screens';
+import { DrawerParamList, Screens, StackNavigator } from '.';
 
 const Drawer = createDrawerNavigator<DrawerParamList>();
 
@@ -10,9 +10,10 @@ const Drawer = createDrawerNavigator<DrawerParamList>();
  */
 const DrawerNavigator = () => {
   return (
-    <Drawer.Navigator initialRouteName="Directory">
-      <Drawer.Screen name="Directory" component={DirectoryScreen} />
-      <Drawer.Screen name="Note" component={NoteScreen} />
+    <Drawer.Navigator
+      initialRouteName={Screens.HOME}
+      screenOptions={{ swipeEnabled: false, headerShown: false }}>
+      <Drawer.Screen name={Screens.HOME} component={StackNavigator} />
     </Drawer.Navigator>
   );
 };
