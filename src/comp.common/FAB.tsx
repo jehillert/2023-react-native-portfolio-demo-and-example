@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import { TouchableOpacity, TouchableOpacityProps, View } from 'react-native';
+import { TouchableOpacity, TouchableOpacityProps } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { PanelFab } from '../assets';
+import { CircledDoubleArrows } from '../assets';
 import { useKeyboard } from '../hooks';
 import { richToolbarHeight } from '../constants';
 
@@ -48,7 +48,7 @@ const FAB = ({
       unitX={unitX}
       unitY={unitY}
       {...rest}>
-      <PanelFab />
+      <CircledDoubleArrows />
     </FabContainer>
   );
 };
