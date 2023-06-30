@@ -1,8 +1,9 @@
-import { ThunkAction, configureStore } from '@reduxjs/toolkit';
 import { AnyAction } from 'redux';
-import { persistStore, persistReducer, Storage } from 'redux-persist';
 import { MMKV } from 'react-native-mmkv';
+import { ThunkAction, configureStore } from '@reduxjs/toolkit';
+import { persistStore, persistReducer, Storage } from 'redux-persist';
 import rootReducer from './root-reducer';
+import Reactotron from '../../ReactotronConfig';
 
 // NOTE: can share data between your apps. https://github.com/mrousavy/react-native-mmkv#app-groups.
 // NOTE: data can be encrypted. but remember to change answers about encryption ion ios/google play
@@ -31,13 +32,17 @@ const persistConfig = {
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-const createDebugger = require('redux-flipper').default;
+let enhancers = [];
+
+if (Reactotron) {
+}
 
 const store = configureStore({
   reducer: persistedReducer,
   middleware: getDefaultMiddleware =>
-    getDefaultMiddleware({ serializableCheck: false }).concat(createDebugger()),
+    getDefaultMiddleware({ serializableCheck: false }),
   devTools: process.env.NODE_ENV !== 'production',
+  enhancers: [Reactotron.createEnhancer()],
 });
 
 if (process.env.NODE_ENV === 'development' && (module as any).hot) {
@@ -63,4 +68,4 @@ type AppThunk<ReturnType = void> = ThunkAction<
 type AsyncAppThunkWReturn<SomeReturnType> = AppThunk<Promise<SomeReturnType>>;
 
 export type { AppDispatch, RootState, AppThunk, AsyncAppThunkWReturn };
-export { persistor, store };
+export { persistor, storage, store };

@@ -19,6 +19,8 @@ import { useKeyboard } from '../hooks';
 import { emptyNote, isAndroid } from '../constants';
 import { useAppDispatch, useAppSelector } from '../hooks/useRedux';
 import { selectActiveNoteId, selectNoteById } from '../store/selectors';
+import { FAB } from '../comp.common';
+import { openDrawer } from '../navigation';
 
 const handleHead = ({ tintColor }: { tintColor: ColorValue }) => (
   <RNText style={{ color: tintColor }}>H1</RNText>
@@ -57,6 +59,10 @@ const NoteScreen = () => {
 
   const handleSave = () => {};
 
+  const handleFabPress = () => {
+    openDrawer();
+  };
+
   return (
     <KeyboardAwareScrollView contentContainerStyle={kbAwareSVStyles}>
       <Button title="save" onPress={handleSave} />
@@ -88,6 +94,7 @@ const NoteScreen = () => {
           iconMap={{ [actions.heading1]: handleHead }}
         />
       )}
+      <FAB onPress={handleFabPress} quadrant={2} isRichToolbar />
     </KeyboardAwareScrollView>
   );
 };

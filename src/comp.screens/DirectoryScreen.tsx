@@ -12,9 +12,6 @@ const DirectoryScreen = () => {
   const navigation = useNavigation();
   const activeNoteId = useAppSelector(selectActiveNoteId);
 
-  useEffect(() => {
-    console.log(JSON.stringify(store, undefined, 2));
-  }, []);
   const navigateToNote = () => navigation.navigate(Screens.NOTE);
 
   const handleCreateNote = () => {
