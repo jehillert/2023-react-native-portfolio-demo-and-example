@@ -10,17 +10,4 @@ export function navigate(name: Screens, params: any) {
   }
 }
 
-const closeDrawer = () => {
-  navigationRef.current?.dispatch(DrawerActions.closeDrawer());
-};
-
-const openDrawer = () => {
-  navigationRef.current?.dispatch(DrawerActions.openDrawer());
-};
-
-const toggleDrawer = () => {
-  !!navigationRef?.current &&
-    navigationRef?.current?.dispatch(DrawerActions.toggleDrawer());
-};
-
-export { navigationRef, closeDrawer, openDrawer, toggleDrawer };
+export { navigationRef };

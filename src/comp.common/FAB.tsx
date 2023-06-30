@@ -4,31 +4,7 @@ import { TouchableOpacity, TouchableOpacityProps, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { PanelFab } from '../assets';
 import { useKeyboard } from '../hooks';
-import { windowWidth, windowHeight, richToolbarHeight } from '../constants';
-
-// INCLUDE PIXEL RATIO HERE
-// THIS IS AN IMPORTANT COMPONENT, DON'T USE LIBRARIES
-// MAKE POSITIONING EASY
-// CONSIDER MAKING DRAGABLE
-
-/*
-TONIGHTS AGENDA
-0 - saving new notes
-0 - dummy data by default
-
-globally availaable toolbar width?
-
-1 - good FAB button
-2 - draggable list.
- > good general one that can handle the document map and the settings buttons
- > then sub-components from there.
- > similar to your action button list, should take an array of anything
-4 - access to panels
-
-resize your icon and get it right
-
-deploy
-*/
+import { richToolbarHeight } from '../constants';
 
 type Quadrant = 1 | 2 | 3 | 4;
 

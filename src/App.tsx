@@ -6,7 +6,7 @@ import { LogBox, StatusBar, useColorScheme } from 'react-native';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 
 import { useMessagingSubscribe, useNotificationsPermission } from './hooks';
-import { DrawerNavigator } from './navigation';
+import { StackNavigator } from './navigation';
 import { theme } from './theme';
 import AppWrapper from './AppWrapper';
 import { persistor, store } from './store/store';
@@ -33,7 +33,7 @@ const App = () => {
             backgroundColor={backgroundStyle.backgroundColor}
           />
           <AppWrapper>
-            <DrawerNavigator />
+            <StackNavigator />
           </AppWrapper>
         </ThemeProvider>
       </PersistGate>

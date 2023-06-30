@@ -18,9 +18,15 @@ import {
 import { useKeyboard } from '../hooks';
 import { emptyNote, isAndroid } from '../constants';
 import { useAppDispatch, useAppSelector } from '../hooks/useRedux';
-import { selectActiveNoteId, selectNoteById } from '../store/selectors';
 import { FAB } from '../comp.common';
-import { openDrawer } from '../navigation';
+import { DrawerLeft, DrawerRight } from '../comp.drawers';
+import { rightDrawerOpened, leftDrawerOpened } from '../store/slices';
+import {
+  selectActiveNoteId,
+  selectLeftDrawerOpen,
+  selectNoteById,
+  selectRightDrawerOpen,
+} from '../store/selectors';
 
 const handleHead = ({ tintColor }: { tintColor: ColorValue }) => (
   <RNText style={{ color: tintColor }}>H1</RNText>
@@ -29,6 +35,8 @@ const handleHead = ({ tintColor }: { tintColor: ColorValue }) => (
 const NoteScreen = () => {
   const dispatch = useAppDispatch();
   const activeNoteId = useAppSelector(selectActiveNoteId);
+  const openRight = useAppSelector(selectRightDrawerOpen);
+  const openLeft = useAppSelector(selectLeftDrawerOpen);
   const activeNote = activeNoteId ? selectNoteById(activeNoteId) : emptyNote;
   const richText = useRef<RichEditor>(null);
   const contentRef = useRef('');
@@ -57,45 +65,53 @@ const NoteScreen = () => {
     contentRef.current = html;
   }, []);
 
+  const handleOpenRight = () => dispatch(rightDrawerOpened(true));
+
+  const handleOpenLeft = () => dispatch(leftDrawerOpened(true));
+
   const handleSave = () => {};
 
-  const handleFabPress = () => {
-    openDrawer();
-  };
+  const handleFabPress = () => {};
 
   return (
-    <KeyboardAwareScrollView contentContainerStyle={kbAwareSVStyles}>
-      <Button title="save" onPress={handleSave} />
-      <RichEditor
-        ref={richText}
-        initialFocus
-        onChange={handleEditorContentChange}
-        useContainer={false}
-      />
-      {!!richText?.current?.isKeyboardOpen && (
-        <RichToolbar
-          editor={richText}
-          actions={[
-            actions.insertImage,
-            actions.undo,
-            actions.redo,
-            actions.setBold,
-            actions.setItalic,
-            actions.setUnderline,
-            actions.outdent,
-            actions.indent,
-            actions.alignLeft,
-            actions.alignCenter,
-            actions.alignRight,
-            actions.blockquote,
-            actions.checkboxList,
-            actions.heading1,
-          ]}
-          iconMap={{ [actions.heading1]: handleHead }}
-        />
-      )}
-      <FAB onPress={handleFabPress} quadrant={2} isRichToolbar />
-    </KeyboardAwareScrollView>
+    <>
+      <DrawerLeft>
+        <DrawerRight>
+          <KeyboardAwareScrollView contentContainerStyle={kbAwareSVStyles}>
+            <Button title="save" onPress={handleSave} />
+            <RichEditor
+              ref={richText}
+              initialFocus
+              onChange={handleEditorContentChange}
+              useContainer={false}
+            />
+            {!!richText?.current?.isKeyboardOpen && (
+              <RichToolbar
+                editor={richText}
+                actions={[
+                  actions.insertImage,
+                  actions.undo,
+                  actions.redo,
+                  actions.setBold,
+                  actions.setItalic,
+                  actions.setUnderline,
+                  actions.outdent,
+                  actions.indent,
+                  actions.alignLeft,
+                  actions.alignCenter,
+                  actions.alignRight,
+                  actions.blockquote,
+                  actions.checkboxList,
+                  actions.heading1,
+                ]}
+                iconMap={{ [actions.heading1]: handleHead }}
+              />
+            )}
+            <FAB onPress={handleFabPress} quadrant={2} isRichToolbar />
+          </KeyboardAwareScrollView>
+        </DrawerRight>
+      </DrawerLeft>
+    </>
   );
 };
 
