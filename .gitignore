@@ -1,12 +1,12 @@
-# Miscellaneous
-#
-__dnd__/
+# miscellaneous
+__notes__/
+# sensitive
 google-services.json
+.bitrise.secrets.yml
+.credentials/
 .env
 .env.*
 .logs/
-.credentials/
-.bitrise.secrets.yml
 # react-native-config codegen
 #
 ios/tmp.xcconfig
