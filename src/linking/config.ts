@@ -1,12 +1,12 @@
 export const config = {
   screens: {
-    Home: {
+    Directory: {
       path: 'directory/:id?',
       parse: {
         id: (id: String) => `${id}`,
       },
     },
-    Billing: {
+    Note: {
       path: 'note/:id?',
       parse: {
         id: (id: String) => `${id}`,

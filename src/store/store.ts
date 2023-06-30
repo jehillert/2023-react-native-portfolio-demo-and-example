@@ -32,17 +32,16 @@ const persistConfig = {
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-let enhancers = [];
-
-if (Reactotron) {
-}
+let enhancers = Reactotron?.createEnhancer
+  ? [Reactotron?.createEnhancer()]
+  : [];
 
 const store = configureStore({
   reducer: persistedReducer,
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({ serializableCheck: false }),
   devTools: process.env.NODE_ENV !== 'production',
-  enhancers: [Reactotron.createEnhancer()],
+  enhancers,
 });
 
 if (process.env.NODE_ENV === 'development' && (module as any).hot) {

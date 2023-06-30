@@ -1,9 +1,14 @@
 import React, { ReactNode } from 'react';
 import { useTheme } from 'styled-components/native';
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
-import { config as linkingConfig } from './linking';
+
 import { Text } from './comp.common';
 import { RootNavigation } from './navigation';
+import { store, persistor } from './store/store';
+import { config as linkingConfig } from './linking';
 
 type Props = {
   children: ReactNode;
@@ -34,13 +39,19 @@ const AppWrapper = ({ children }: Props) => {
     : DefaultTheme;
 
   return (
-    <NavigationContainer
-      linking={linking}
-      fallback={<Text.H6>Loading...</Text.H6>}
-      ref={RootNavigation.navigationRef}
-      theme={navTheme}>
-      {children}
-    </NavigationContainer>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <GestureHandlerRootView style={{ flex: 1 }}>
+          <NavigationContainer
+            linking={linking}
+            fallback={<Text.H6>Loading...</Text.H6>}
+            ref={RootNavigation.navigationRef}
+            theme={navTheme}>
+            {children}
+          </NavigationContainer>
+        </GestureHandlerRootView>
+      </PersistGate>
+    </Provider>
   );
 };
 
