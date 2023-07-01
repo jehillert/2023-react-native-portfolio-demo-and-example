@@ -11,7 +11,6 @@ const useDebounce = (callback: AnyCallback, milliseconds = 500) => {
 
   const debouncedCallback = useMemo(() => {
     const func = () => {
-      console.log('debouncy bouncy');
       ref?.current?.();
     };
 
