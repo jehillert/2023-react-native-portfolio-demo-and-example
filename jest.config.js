@@ -1,9 +1,13 @@
 /** @type {import('jest').Config} */
 const config = {
   preset: 'react-native',
+  // moduleNameMapper: {
+  //   '\\.svg': '<rootDir>/__mocks__/svgMock.js',
+  // },
   moduleNameMapper: {
-    '\\.svg': '<rootDir>/__mocks__/svgMock.js',
+    '/.svg/': '/Users/jeh/dev/jnotes/__mocks__/svgMock.js',
   },
+  resolver: undefined,
   setupFilesAfterEnv: [
     '<rootDir>/setup-jest.js',
     './__mocks__/react-navigation-mocks.js',
