@@ -24,7 +24,7 @@ type Props = {
   unitY?: OffsetUnit;
 } & TouchableOpacityProps;
 
-const Fab = ({
+const DrawerFab = ({
   quadrant = 1,
   isRichToolbar = false,
   offsetX = 16,
@@ -93,4 +93,4 @@ const FabContainer = styled(TouchableOpacity)<{
   z-index: 1000;
 `;
 
-export default Fab;
+export default DrawerFab;

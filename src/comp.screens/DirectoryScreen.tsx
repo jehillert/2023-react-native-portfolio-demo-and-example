@@ -12,6 +12,7 @@ import {
   selectActiveNoteId,
   selectNoteIds,
   selectNotes,
+  selectSortedNotes,
 } from '../store/selectors';
 import {
   Note,
@@ -27,8 +28,8 @@ const DirectoryScreen = () => {
   const dispatch = useAppDispatch();
   const navigation = useNavigation();
   const noteIds = selectNoteIds();
-  const notes = selectNotes();
   const activeNoteId = useAppSelector(selectActiveNoteId);
+  const sortedNotes = useAppSelector(selectSortedNotes);
 
   const navigateToNote = () => navigation.navigate(Screens.NOTE);
 
@@ -39,6 +40,8 @@ const DirectoryScreen = () => {
 
   const handleDragEnd = ({ data }: { data: Note[] }) => {
     notesAdapter.sortComparer = false;
+    const newIds = setIds(data.map(item => item.id));
+    console.log(newIds);
     dispatch(setIds(data.map(item => item.id)));
   };
 
@@ -65,7 +68,7 @@ const DirectoryScreen = () => {
   return (
     <View style={{ flex: 1 }}>
       <DraggableFlatList
-        data={notes}
+        data={sortedNotes}
         renderItem={renderItem}
         keyExtractor={(item: Note) => `draggable-item-${item.id}`}
         onDragEnd={handleDragEnd}

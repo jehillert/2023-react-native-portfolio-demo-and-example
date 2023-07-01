@@ -18,7 +18,7 @@ import {
 import { useKeyboard } from '../hooks';
 import { emptyNote, isAndroid } from '../constants';
 import { useAppDispatch, useAppSelector } from '../hooks/useRedux';
-import { Fab } from '../comp.common';
+import { DrawerFab } from '../comp.common';
 import { DrawerLeft, DrawerRight } from '../comp.drawers';
 import { rightDrawerOpened, leftDrawerOpened } from '../store/slices';
 import {
@@ -107,7 +107,7 @@ const NoteScreen = () => {
                 iconMap={{ [actions.heading1]: handleHead }}
               />
             )}
-            <Fab onPress={handleFabPress} quadrant={2} isRichToolbar />
+            <DrawerFab onPress={handleFabPress} quadrant={2} isRichToolbar />
           </KeyboardAwareScrollView>
         </DrawerRight>
       </DrawerLeft>
