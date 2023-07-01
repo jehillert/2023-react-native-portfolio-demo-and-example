@@ -18,9 +18,10 @@ import {
 import { useAppDispatch, useAppSelector } from '../hooks/useRedux';
 import { DrawerLeft, DrawerRight } from '../comp.drawers';
 import { isAndroid } from '../constants';
-import { DrawerFab } from '../comp.common';
 import { useDebounce, useKeyboard } from '../hooks';
 import { selectActiveNoteId, selectNoteById } from '../store/selectors';
+import { FloatingActionGroup } from '../comp.utility';
+import { CircledDoubleArrows } from '../assets';
 
 const handleHead = ({ tintColor }: { tintColor: ColorValue }) => (
   <RNText style={{ color: tintColor }}>H1</RNText>
@@ -105,12 +106,13 @@ const NoteScreen = () => {
                 iconMap={{ [actions.heading1]: handleHead }}
               />
             )}
-            <DrawerFab
+            <FloatingActionGroup
               onPress={handleFabPress}
               onLongPress={handleLongPress}
               quadrant={2}
-              isRichToolbar
-            />
+              isRichToolbar>
+              <CircledDoubleArrows />
+            </FloatingActionGroup>
           </KeyboardAwareScrollView>
         </DrawerRight>
       </DrawerLeft>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { DirectoryScreen, MarkupScreen, NoteScreen } from '../comp.screens';
+import { DirectoryScreen, NoteScreen } from '../comp.screens';
 import { Screens } from './types';
 
 const Stack = createNativeStackNavigator();
@@ -13,12 +13,7 @@ const StackNavigator = () => {
       <Stack.Screen
         name={Screens.NOTE}
         component={NoteScreen}
-        options={({ route }) => ({ title: route?.name })}
-      />
-      <Stack.Screen
-        name={Screens.MARKUP}
-        component={MarkupScreen}
-        options={({ route }) => ({ title: route?.name })}
+        options={({ route }) => ({ title: 'Notes' })}
       />
     </Stack.Navigator>
   );

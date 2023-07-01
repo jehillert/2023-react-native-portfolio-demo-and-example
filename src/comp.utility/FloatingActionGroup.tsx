@@ -10,6 +10,14 @@ type Quadrant = 1 | 2 | 3 | 4;
 
 type OffsetUnit = '%' | 'px';
 
+type FabContainerProps = {
+  quadrant: Quadrant;
+  offsetX: number;
+  offsetY: number;
+  unitX: OffsetUnit;
+  unitY: OffsetUnit;
+};
+
 /**
  * @prop quadrant - the corner to position the fab
  * @prop offsetX - the horizontal offset from the nearest side (left/right)
@@ -55,13 +63,7 @@ const FloatingActionGroup = ({
   );
 };
 
-const FabContainer = styled(TouchableOpacity)<{
-  quadrant: Quadrant;
-  offsetX: number;
-  offsetY: number;
-  unitX: OffsetUnit;
-  unitY: OffsetUnit;
-}>`
+const FabContainer = styled(TouchableOpacity)<FabContainerProps>`
   position: absolute;
   ${({ quadrant, offsetX, offsetY, unitX, unitY }) => {
     switch (quadrant) {
@@ -91,8 +93,8 @@ const FabContainer = styled(TouchableOpacity)<{
   }}
   justify-content: flex-end;
   align-items: flex-end;
-  elevation: 10;
   z-index: 1000;
 `;
 
+export type { Props };
 export default FloatingActionGroup;
