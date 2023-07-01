@@ -1,32 +1,26 @@
 // testing
 // https://coolsoftware.dev/blog/testing-react-native-webview-with-react-native-testing-library/
-import React, { useCallback, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useIsFocused } from '@react-navigation/native';
-import {
-  Text as RNText,
-  ColorValue,
-  StyleProp,
-  ViewStyle,
-  Button,
-} from 'react-native';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { Text as RNText, ColorValue, StyleProp, ViewStyle } from 'react-native';
 import {
   actions,
   RichEditor,
   RichToolbar,
 } from 'react-native-pell-rich-editor';
-import { useKeyboard } from '../hooks';
-import { emptyNote, isAndroid } from '../constants';
-import { useAppDispatch, useAppSelector } from '../hooks/useRedux';
-import { DrawerFab } from '../comp.common';
-import { DrawerLeft, DrawerRight } from '../comp.drawers';
-import { rightDrawerOpened, leftDrawerOpened } from '../store/slices';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+
 import {
-  selectActiveNoteId,
-  selectLeftDrawerOpen,
-  selectNoteById,
-  selectRightDrawerOpen,
-} from '../store/selectors';
+  rightDrawerOpened,
+  leftDrawerOpened,
+  updateNote,
+} from '../store/slices';
+import { useAppDispatch, useAppSelector } from '../hooks/useRedux';
+import { DrawerLeft, DrawerRight } from '../comp.drawers';
+import { isAndroid } from '../constants';
+import { DrawerFab } from '../comp.common';
+import { useDebounce, useKeyboard } from '../hooks';
+import { selectActiveNoteId, selectNoteById } from '../store/selectors';
 
 const handleHead = ({ tintColor }: { tintColor: ColorValue }) => (
   <RNText style={{ color: tintColor }}>H1</RNText>
@@ -34,14 +28,17 @@ const handleHead = ({ tintColor }: { tintColor: ColorValue }) => (
 
 const NoteScreen = () => {
   const dispatch = useAppDispatch();
-  const activeNoteId = useAppSelector(selectActiveNoteId);
-  const openRight = useAppSelector(selectRightDrawerOpen);
-  const openLeft = useAppSelector(selectLeftDrawerOpen);
-  const activeNote = activeNoteId ? selectNoteById(activeNoteId) : emptyNote;
-  const richText = useRef<RichEditor>(null);
-  const contentRef = useRef('');
   const isFocused = useIsFocused();
-  const { keyboardHeight } = useKeyboard();
+  const keyboardHeight = useKeyboard().keyboardHeight;
+
+  const activeNoteId = useAppSelector(selectActiveNoteId);
+  const activeNote = useAppSelector(() => selectNoteById(activeNoteId));
+  const savedContent = activeNote?.content ?? '';
+  const contentRef = useRef(savedContent);
+  const editorRef = useRef<RichEditor>(null);
+
+  let content = contentRef?.current;
+
   const kbAwareSVStyles: StyleProp<ViewStyle> = {
     position: 'absolute',
     height: isAndroid ? '100%' : undefined,
@@ -51,43 +48,44 @@ const NoteScreen = () => {
   };
 
   useEffect(() => {
-    if (richText?.current) {
-      isFocused && richText.current.focusContentEditor;
-      !isFocused && richText?.current?.blurContentEditor;
+    console.log(savedContent);
+  }, [savedContent]);
+
+  const debouncedRequest = useDebounce(() =>
+    dispatch(updateNote({ id: activeNoteId, content: content })),
+  );
+
+  useEffect(() => {
+    if (editorRef?.current) {
+      isFocused && editorRef.current.focusContentEditor;
+      !isFocused && editorRef?.current?.blurContentEditor;
     }
   }, [isFocused]);
 
-  const handleEditorContentChange = (descriptionText: string) => {
-    console.log('descriptionText:', descriptionText);
+  const handleContentChange = (html: string) => {
+    content = html;
+    debouncedRequest();
   };
 
-  const handleContentChange = useCallback((html: string) => {
-    contentRef.current = html;
-  }, []);
+  const handleFabPress = () => dispatch(rightDrawerOpened(true));
 
-  const handleOpenRight = () => dispatch(rightDrawerOpened(true));
-
-  const handleOpenLeft = () => dispatch(leftDrawerOpened(true));
-
-  const handleSave = () => {};
-
-  const handleFabPress = () => {};
+  const handleLongPress = () => dispatch(leftDrawerOpened(true));
 
   return (
     <>
       <DrawerLeft>
         <DrawerRight>
           <KeyboardAwareScrollView contentContainerStyle={kbAwareSVStyles}>
-            <Button title="save" onPress={handleSave} />
             <RichEditor
-              ref={richText}
+              ref={editorRef}
               initialFocus
-              onChange={handleEditorContentChange}
+              onChange={handleContentChange}
               useContainer={false}
+              initialContentHTML={savedContent}
             />
-            {!!richText?.current?.isKeyboardOpen && (
+            {!!editorRef?.current?.isKeyboardOpen && (
               <RichToolbar
-                editor={richText}
+                editor={editorRef}
                 actions={[
                   actions.insertImage,
                   actions.undo,
@@ -107,7 +105,12 @@ const NoteScreen = () => {
                 iconMap={{ [actions.heading1]: handleHead }}
               />
             )}
-            <DrawerFab onPress={handleFabPress} quadrant={2} isRichToolbar />
+            <DrawerFab
+              onPress={handleFabPress}
+              onLongPress={handleLongPress}
+              quadrant={2}
+              isRichToolbar
+            />
           </KeyboardAwareScrollView>
         </DrawerRight>
       </DrawerLeft>

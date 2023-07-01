@@ -1,26 +1,28 @@
 import { createSelector } from '@reduxjs/toolkit';
-import { notesAdapter } from '../slices';
+import { Note, notesAdapter } from '../slices';
 import { RootState, store } from '../store';
 
 const notesSelectors = notesAdapter.getSelectors<RootState>(
   state => state.notes,
 );
 
+const { selectAll, selectEntities, selectById, selectIds, selectTotal } =
+  notesSelectors;
+
 const selectActiveNoteId = (state: RootState) => state.notes.activeNoteId;
 
-const selectNoteIds = () => notesSelectors.selectIds(store.getState());
+const selectNoteIds = () => selectIds(store.getState());
 
-const selectNotes = () => notesSelectors.selectAll(store.getState());
+const selectNotes = () => selectAll(store.getState());
 
 const selectUntitledNoteCount = (state: RootState) =>
   state.notes.untitledNoteCount;
 
-const selectNoteById = (id: string) =>
-  notesSelectors.selectById(store.getState(), id);
+const selectNoteById = (id: string) => selectById(store.getState(), id);
 
 const selectSortedNotes = createSelector(
-  notesSelectors.selectIds,
-  notesSelectors.selectAll,
+  selectIds,
+  selectAll,
   (noteIds, notes) => {
     return noteIds.length
       ? (noteIds.map(id => notes.find(note => note.id === id)) as Note[])

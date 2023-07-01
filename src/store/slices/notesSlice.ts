@@ -10,12 +10,12 @@ import { AppThunk } from '../store';
 import { selectUntitledNoteCount } from '../selectors';
 
 type Note = {
-  content: string;
+  content?: string;
   id: string;
   path?: string;
-  title: string;
-  dateCreated: number;
-  dateUpdated: number | null;
+  title?: string;
+  dateCreated?: number;
+  dateUpdated?: number | null;
 };
 
 export const notesAdapter = createEntityAdapter<Note>({
