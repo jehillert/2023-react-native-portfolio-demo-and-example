@@ -36,6 +36,7 @@
     "react-native-svg": "^13.9.0",
     "react-native-svg-transformer": "^1.0.0",
     "react-native-uuid": "^2.0.1",
+    "react-native-vector-icons": "^9.2.0",
     "react-native-webview": "^13.2.2",
     "react-redux": "^8.1.0",
     "reactotron-redux": "^3.1.3",

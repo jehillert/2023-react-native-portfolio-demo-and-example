@@ -70,6 +70,8 @@
 	<key>UIAppFonts</key>
 	<array>
 		<string>Roboto-Regular.ttf</string>
+		<string>MaterialCommunityIcons.ttf</string>
+		<string>MaterialIcons.ttf</string>
 	</array>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
