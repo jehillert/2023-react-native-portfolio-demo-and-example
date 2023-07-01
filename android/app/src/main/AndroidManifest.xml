@@ -7,12 +7,38 @@
         <action android:name="android.intent.action.MAIN"/>
         <category android:name="android.intent.category.LAUNCHER"/>
       </intent-filter>
-      <intent-filter android:autoVerify="true" android:label="filter_react_native">
+      <!-- <intent-filter android:autoVerify="true" android:label="filter_react_native">
         <action android:name="android.intent.action.VIEW"/>
         <category android:name="android.intent.category.DEFAULT"/>
         <category android:name="android.intent.category.BROWSABLE"/>
         <data android:scheme="jnotes" android:host="directory" />
+      </intent-filter> -->
+      <intent-filter>
+        <action android:name="android.intent.action.SEND" />
+        <category android:name="android.intent.category.DEFAULT" />
+        <data android:mimeType="text/plain" />
       </intent-filter>
+      <intent-filter android:autoVerify="true">
+        <action android:name="android.intent.action.VIEW" />
+        <category android:name="android.intent.category.DEFAULT" />
+        <category android:name="android.intent.category.BROWSABLE" />
+
+        <!-- If a user clicks on a shared link that uses the "http" scheme, your
+              app should be able to delegate that traffic to "https". -->
+        <data android:scheme="http" />
+        <data android:scheme="https" />
+
+        <!-- Include one or more domains that should be verified. -->
+        <!-- <data android:host="droidfood.example.com" /> -->
+      </intent-filter>
+      <!-- <intent-filter android:autoVerify="true">
+        <action android:name="android.intent.action.VIEW" />
+        <category android:name="android.intent.category.DEFAULT" />
+        <category android:name="android.intent.category.BROWSABLE" />
+        <data android:scheme="http" />
+        <data android:scheme="https" />
+        <data android:host="com.jnotes" />
+      </intent-filter> -->
       <!-- <intent-filter android:autoVerify="true">
         <action android:name="android.intent.action.VIEW"/>
         <category android:name="android.intent.category.DEFAULT"/>

@@ -75,5 +75,10 @@
 	</array>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
+	<key>NSExtensionActivationRule</key>
+	<dict>
+		<key>NSExtensionActivationSupportsText</key>
+		<true/>
+	</dict>
 </dict>
 </plist>

@@ -8,7 +8,12 @@ import { useTheme } from 'styled-components/native';
 import { RootNavigation } from '.';
 import { Text } from '../comp.common';
 import { config as linkingConfig } from '../linking';
-import { useMessagingSubscribe, useNotificationsPermission } from '../hooks';
+import {
+  useInitialURL,
+  useLinking,
+  useMessagingSubscribe,
+  useNotificationsPermission,
+} from '../hooks';
 
 const linking = {
   prefixes: ['https://hillert.dev', 'jnotes://'],
@@ -20,6 +25,11 @@ const Stack = createNativeStackNavigator();
 const StackNavigator = () => {
   useNotificationsPermission();
   useMessagingSubscribe();
+  // not gonna work until you add android assetLinks.json (https://medium.com/@ertemishakk/deep-linking-with-react-native-c7fbaac25127)
+  useLinking();
+  // not gonna work until you add android assetLinks.json (https://medium.com/@ertemishakk/deep-linking-with-react-native-c7fbaac25127)
+  useInitialURL();
+
   const theme = useTheme();
   const colors = theme?.colors;
 
