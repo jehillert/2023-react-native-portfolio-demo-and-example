@@ -18,7 +18,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 
 import { useAppDispatch, useAppSelector } from '../hooks/useRedux';
 import { DrawerLeft, DrawerRight } from '../comp.drawers';
-import { highlights, isAndroid, shades } from '../constants';
+import { isAndroid, shades } from '../constants';
 import { useDebounce, useKeyboard } from '../hooks';
 import {
   selectActiveNoteId,
@@ -26,10 +26,6 @@ import {
   selectNoteById,
   selectRightDrawerOpen,
 } from '../store/selectors';
-import {
-  FloatingActionGroup as DrawerFab,
-  FloatingActionGroup,
-} from '../comp.utility';
 import { CircledDoubleArrows } from '../assets';
 import { Fab } from '../comp.common';
 import {
@@ -70,7 +66,6 @@ const NoteScreen = () => {
   const savedContent = activeNote?.content ?? '';
   const contentRef = useRef(savedContent);
   const editorRef = useRef<RichEditor>(null);
-
   let content = contentRef?.current;
 
   const kbAwareSVStyles: StyleProp<ViewStyle> = {
@@ -111,9 +106,6 @@ const NoteScreen = () => {
     dispatch(leftDrawerOpened(true));
   }, [leftDrawerOpen]);
 
-  const shadePalette = <ColorPalette colors={shades} />;
-  const highlightPalette = <ColorPalette colors={highlights} />;
-
   return (
     <>
       <DrawerLeft>
@@ -148,6 +140,7 @@ const NoteScreen = () => {
                 iconMap={{ [actions.heading1]: handleHead }}
               />
             )}
+            <ColorPalette colors={shades} />
             {showFab && (
               <Fab
                 onPress={handleFabPress}
@@ -157,10 +150,6 @@ const NoteScreen = () => {
                 Icon={CircledDoubleArrows}
               />
             )}
-            <FloatingActionGroup quadrant={4}>
-              {highlightPalette}
-            </FloatingActionGroup>
-            <FloatingActionGroup>{shadePalette}</FloatingActionGroup>
           </KeyboardAwareScrollView>
         </DrawerRight>
       </DrawerLeft>
