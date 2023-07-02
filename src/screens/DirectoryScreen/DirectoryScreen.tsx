@@ -6,17 +6,17 @@ import DraggableFlatList, {
   ScaleDecorator,
 } from 'react-native-draggable-flatlist';
 
-import { selectActiveNoteId, selectSortedNotes } from '../store/selectors';
-import { useAppDispatch, useAppSelector } from '../hooks/useRedux';
-import { Screens } from '../navigation';
-import { Text } from '../comp.common';
+import { selectActiveNoteId, selectSortedNotes } from '../../store/selectors';
+import { useAppDispatch, useAppSelector } from '../../hooks/useRedux';
+import { Screens } from '../../navigation';
+import { Text } from '../../components';
 import {
   Note,
   createNote,
   notesAdapter,
   setActiveNoteId,
   setIds,
-} from '../store/slices';
+} from '../../store/slices';
 
 const DirectoryScreen = () => {
   const dispatch = useAppDispatch();

@@ -1,6 +1,6 @@
 import React from 'react';
 import { CircledDoubleArrows } from '../assets';
-import { FloatingActionGroup, FloatingActionGroupProps } from '../comp.utility';
+import { FloatingActionGroup, FloatingActionGroupProps } from '../utility';
 
 type Props = FloatingActionGroupProps;
 

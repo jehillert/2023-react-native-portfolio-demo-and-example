@@ -1,9 +1,9 @@
 import React, { ReactNode } from 'react';
 import { Text } from 'react-native';
 import { Drawer } from 'react-native-drawer-layout';
-import { useAppDispatch, useAppSelector } from '../hooks/useRedux';
-import { selectRightDrawerOpen } from '../store/selectors';
-import { rightDrawerOpened } from '../store/slices';
+import { useAppDispatch, useAppSelector } from '../../hooks/useRedux';
+import { selectRightDrawerOpen } from '../../store/selectors';
+import { rightDrawerOpened } from '../../store/slices';
 
 type Props = {
   children: ReactNode;

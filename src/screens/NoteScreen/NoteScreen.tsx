@@ -1,6 +1,7 @@
 // testing
 // https://coolsoftware.dev/blog/testing-react-native-webview-with-react-native-testing-library/
 import React, { useCallback, useEffect, useRef } from 'react';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useIsFocused } from '@react-navigation/native';
 import {
   Keyboard,
@@ -14,26 +15,26 @@ import {
   RichEditor,
   RichToolbar,
 } from 'react-native-pell-rich-editor';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
-import { useAppDispatch, useAppSelector } from '../hooks/useRedux';
-import { DrawerLeft, DrawerRight } from '../comp.drawers';
-import { isAndroid, shades } from '../constants';
-import { useDebounce, useKeyboard } from '../hooks';
+import ColorPalette from '../../components/ColorPalette';
+import DrawerRight from './DrawerRight';
+import DrawerLeft from './DrawerLeft';
+import { useAppDispatch, useAppSelector } from '../../hooks/useRedux';
+import { useDebounce, useKeyboard } from '../../hooks';
+import { isAndroid, shades } from '../../constants';
+import { CircledDoubleArrows } from '../../assets';
+import { Fab } from '../../components';
 import {
   selectActiveNoteId,
   selectLeftDrawerOpen,
   selectNoteById,
   selectRightDrawerOpen,
-} from '../store/selectors';
-import { CircledDoubleArrows } from '../assets';
-import { Fab } from '../comp.common';
+} from '../../store/selectors';
 import {
   rightDrawerOpened,
   leftDrawerOpened,
   updateNote,
-} from '../store/slices';
-import ColorPalette from '../comp.common/ColorPalette';
+} from '../../store/slices';
 
 const handleHead = ({ tintColor }: { tintColor: ColorValue }) => (
   <RNText style={{ color: tintColor }}>H1</RNText>

@@ -6,7 +6,7 @@ import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { useTheme } from 'styled-components/native';
 
 import { RootNavigation } from '.';
-import { Text } from '../comp.common';
+import { Text } from '../components';
 import { config as linkingConfig } from '../linking';
 import {
   useInitialURL,

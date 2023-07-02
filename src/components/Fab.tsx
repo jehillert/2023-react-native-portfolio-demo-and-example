@@ -1,10 +1,9 @@
 import React from 'react';
 import { StyleProp, ViewStyle } from 'react-native';
 import { useTheme } from 'styled-components/native';
-
-import { FloatingActionGroup, FloatingActionGroupProps } from '../comp.utility';
-
 import { SvgProps } from 'react-native-svg';
+
+import { FloatingActionGroup, FloatingActionGroupProps } from './utility';
 
 type Props = {
   Icon: React.FC<SvgProps>;

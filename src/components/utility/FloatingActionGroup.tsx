@@ -2,8 +2,8 @@ import React, { ReactNode } from 'react';
 import styled from 'styled-components/native';
 import { Pressable, PressableProps } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { useKeyboard } from '../hooks';
-import { richToolbarHeight } from '../constants';
+import { useKeyboard } from '../../hooks';
+import { richToolbarHeight } from '../../constants';
 
 type Quadrant = 1 | 2 | 3 | 4;
 
@@ -18,9 +18,11 @@ type FabContainerProps = {
 };
 
 /**
+ * children
  * @prop quadrant - the corner to position the fab
  * @prop offsetX - the horizontal offset from the nearest side (left/right)
  * @prop offsetY - the vertical offset from the nearest side (top/bottom)
+ * @prop isRichToolbar - is element meant to rest above a richToolbar at bottom of screen
  */
 type Props = {
   children?: ReactNode;
@@ -28,8 +30,6 @@ type Props = {
   isRichToolbar?: boolean;
   offsetX?: number;
   offsetY?: number;
-  unitX?: OffsetUnit;
-  unitY?: OffsetUnit;
 } & PressableProps;
 
 const FloatingActionGroup = ({
@@ -64,27 +64,27 @@ const FloatingActionGroup = ({
 
 const FabContainer = styled(Pressable)<FabContainerProps>`
   position: absolute;
-  ${({ quadrant, offsetX, offsetY, unitX, unitY }) => {
+  ${({ quadrant, offsetX, offsetY }) => {
     switch (quadrant) {
       case 1:
         return `
-          top: ${offsetY}${unitY};
-          right: ${offsetX}${unitX};
+          top: ${offsetY}px;
+          right: ${offsetX}px;
         `;
       case 2:
         return `
-          bottom: ${offsetY}${unitY};
-          right: ${offsetX}${unitX};
+          bottom: ${offsetY}px;
+          right: ${offsetX}px;
         `;
       case 3:
         return `
-          bottom: ${offsetY}${unitY};
-          left: ${offsetX}${unitX};
+          bottom: ${offsetY}px;
+          left: ${offsetX}px;
         `;
       case 4:
         return `
-          top: ${offsetY}${unitY};
-          left: ${offsetX}${unitX};
+          top: ${offsetY}px;
+          left: ${offsetX}px;
         `;
       default:
         break;

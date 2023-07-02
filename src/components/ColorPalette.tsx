@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components/native';
 import { Pressable, PressableProps } from 'react-native';
+import { FloatingActionGroup } from './utility';
 import { Shades } from '../constants';
-import { FloatingActionGroup } from '../comp.utility';
 import { SizeUnits } from '../types';
 
 type Props = {
