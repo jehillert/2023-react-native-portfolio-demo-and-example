@@ -1,8 +1,14 @@
 // testing
 // https://coolsoftware.dev/blog/testing-react-native-webview-with-react-native-testing-library/
-import React, { useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import { useIsFocused } from '@react-navigation/native';
-import { Text as RNText, ColorValue, StyleProp, ViewStyle } from 'react-native';
+import {
+  Keyboard,
+  Text as RNText,
+  ColorValue,
+  StyleProp,
+  ViewStyle,
+} from 'react-native';
 import {
   actions,
   RichEditor,
@@ -10,31 +16,53 @@ import {
 } from 'react-native-pell-rich-editor';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
+import { useAppDispatch, useAppSelector } from '../hooks/useRedux';
+import { DrawerLeft, DrawerRight } from '../comp.drawers';
+import { isAndroid } from '../constants';
+import { useDebounce, useKeyboard } from '../hooks';
+import {
+  selectActiveNoteId,
+  selectLeftDrawerOpen,
+  selectNoteById,
+  selectRightDrawerOpen,
+} from '../store/selectors';
+import { FloatingActionGroup as DrawerFab } from '../comp.utility';
+import { CircledDoubleArrows } from '../assets';
+import { Fab } from '../comp.common';
 import {
   rightDrawerOpened,
   leftDrawerOpened,
   updateNote,
 } from '../store/slices';
-import { useAppDispatch, useAppSelector } from '../hooks/useRedux';
-import { DrawerLeft, DrawerRight } from '../comp.drawers';
-import { isAndroid } from '../constants';
-import { useDebounce, useKeyboard } from '../hooks';
-import { selectActiveNoteId, selectNoteById } from '../store/selectors';
-import { FloatingActionGroup as DrawerFab } from '../comp.utility';
-import { CircledDoubleArrows } from '../assets';
-import { Fab } from '../comp.common';
 
 const handleHead = ({ tintColor }: { tintColor: ColorValue }) => (
   <RNText style={{ color: tintColor }}>H1</RNText>
 );
 
 const NoteScreen = () => {
+  /*
+   handleUnhandledTouches(){
+   Keyboard.dismiss
+   return false;
+ }
+
+ render(){
+    <View style={{ flex: 1 }} onStartShouldSetResponder={this.handleUnhandledTouches}>
+       <MyApp>
+    </View>
+  }
+  */
+
   const dispatch = useAppDispatch();
   const isFocused = useIsFocused();
   const keyboardHeight = useKeyboard().keyboardHeight;
 
   const activeNoteId = useAppSelector(selectActiveNoteId);
   const activeNote = useAppSelector(() => selectNoteById(activeNoteId));
+  const leftDrawerOpen = useAppSelector(selectLeftDrawerOpen);
+  const rightDrawerOpen = useAppSelector(selectRightDrawerOpen);
+
+  const showFab = !leftDrawerOpen && !rightDrawerOpen;
   const savedContent = activeNote?.content ?? '';
   const contentRef = useRef(savedContent);
   const editorRef = useRef<RichEditor>(null);
@@ -69,9 +97,15 @@ const NoteScreen = () => {
     debouncedRequest();
   };
 
-  const handleFabPress = () => dispatch(rightDrawerOpened(true));
+  const handleFabPress = useCallback(() => {
+    Keyboard.dismiss();
+    dispatch(rightDrawerOpened(true));
+  }, [rightDrawerOpen]);
 
-  const handleLongPress = () => dispatch(leftDrawerOpened(true));
+  const handleLongPress = useCallback(() => {
+    Keyboard.dismiss();
+    dispatch(leftDrawerOpened(true));
+  }, [leftDrawerOpen]);
 
   return (
     <>
@@ -107,13 +141,15 @@ const NoteScreen = () => {
                 iconMap={{ [actions.heading1]: handleHead }}
               />
             )}
-            <Fab
-              onPress={handleFabPress}
-              onLongPress={handleLongPress}
-              quadrant={2}
-              isRichToolbar
-              Icon={CircledDoubleArrows}
-            />
+            {showFab && (
+              <Fab
+                onPress={handleFabPress}
+                onLongPress={handleLongPress}
+                quadrant={2}
+                isRichToolbar
+                Icon={CircledDoubleArrows}
+              />
+            )}
           </KeyboardAwareScrollView>
         </DrawerRight>
       </DrawerLeft>
