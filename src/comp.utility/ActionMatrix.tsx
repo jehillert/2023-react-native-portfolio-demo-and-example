@@ -38,28 +38,40 @@ const ActionMatrix = ({
         focusable={false}
         pointerEvents="box-none"
         size={size}
+        key={index}
       />
     ) : (
-      <ElementContainer size={size}>{element}</ElementContainer>
+      <ElementContainer key={index} size={size}>
+        {element}
+      </ElementContainer>
     );
 
     matrix[row].push(elementTsx);
   });
 
   return (
-    <>
-      {matrix.map(row => (
-        <RowContainer>{row}</RowContainer>
+    <MatrixContainer>
+      {matrix.map((row, index) => (
+        <RowContainer key={index} size={size}>
+          {row}
+        </RowContainer>
       ))}
-    </>
+    </MatrixContainer>
   );
 };
 
-const RowContainer = styled(View)`
+const MatrixContainer = styled(View)`
+  background-color: red;
+`;
+
+const RowContainer = styled(View)<{ size: number }>`
   flex-direction: row;
+  height: ${({ size }) => size}%;
+  background-color: lightblue;
 `;
 
 const ElementContainer = styled(View)<{ size: number }>`
+  background-color: yellow;
   justify-content: center;
   align-items: center;
   height: ${({ size }) => size}%;

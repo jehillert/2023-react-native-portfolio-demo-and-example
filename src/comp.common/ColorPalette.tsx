@@ -14,13 +14,12 @@ type Props = {
 const ColorPalette = ({
   colors,
   nodesPerRow = 3,
-  sizeAsPercentOfAxis = 15,
+  sizeAsPercentOfAxis = 30,
   axis = 'horizontal',
   ...rest
 }: Props) => {
-  const isHighlight = colors[0].length === 2;
-
   const ColorElements = colors.map(color => {
+    const isHighlight = Array.isArray(color);
     const fg = `
       color: ${color[1]};
     `;
@@ -32,11 +31,11 @@ const ColorPalette = ({
     `;
 
     return isHighlight ? (
-      <Pressable css={bg} {...rest}>
+      <Pressable key={color[0]} css={bg} {...rest}>
         <Text.ButtonSmall css={fg}>a</Text.ButtonSmall>
       </Pressable>
     ) : (
-      <Pressable {...rest} />
+      <Pressable key={color} {...rest} />
     );
   });
 

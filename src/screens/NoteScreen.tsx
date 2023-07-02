@@ -18,7 +18,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 
 import { useAppDispatch, useAppSelector } from '../hooks/useRedux';
 import { DrawerLeft, DrawerRight } from '../comp.drawers';
-import { isAndroid } from '../constants';
+import { highlights, isAndroid, shades } from '../constants';
 import { useDebounce, useKeyboard } from '../hooks';
 import {
   selectActiveNoteId,
@@ -26,7 +26,10 @@ import {
   selectNoteById,
   selectRightDrawerOpen,
 } from '../store/selectors';
-import { FloatingActionGroup as DrawerFab } from '../comp.utility';
+import {
+  FloatingActionGroup as DrawerFab,
+  FloatingActionGroup,
+} from '../comp.utility';
 import { CircledDoubleArrows } from '../assets';
 import { Fab } from '../comp.common';
 import {
@@ -34,6 +37,7 @@ import {
   leftDrawerOpened,
   updateNote,
 } from '../store/slices';
+import ColorPalette from '../comp.common/ColorPalette';
 
 const handleHead = ({ tintColor }: { tintColor: ColorValue }) => (
   <RNText style={{ color: tintColor }}>H1</RNText>
@@ -107,6 +111,9 @@ const NoteScreen = () => {
     dispatch(leftDrawerOpened(true));
   }, [leftDrawerOpen]);
 
+  const shadePalette = <ColorPalette colors={shades} />;
+  const highlightPalette = <ColorPalette colors={highlights} />;
+
   return (
     <>
       <DrawerLeft>
@@ -150,6 +157,10 @@ const NoteScreen = () => {
                 Icon={CircledDoubleArrows}
               />
             )}
+            <FloatingActionGroup quadrant={4}>
+              {highlightPalette}
+            </FloatingActionGroup>
+            <FloatingActionGroup>{shadePalette}</FloatingActionGroup>
           </KeyboardAwareScrollView>
         </DrawerRight>
       </DrawerLeft>

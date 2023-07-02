@@ -2,7 +2,7 @@ const black = '#000000';
 const white = '#ffffff';
 
 type Shades = string[];
-type Highlights = [string, string][];
+type Highlights = string[][];
 
 const shades = [
   '#B499D3',
