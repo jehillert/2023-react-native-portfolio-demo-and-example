@@ -1,8 +1,7 @@
 import React, { ReactNode } from 'react';
 import styled from 'styled-components/native';
-import { TouchableOpacity, TouchableOpacityProps } from 'react-native';
+import { Pressable, PressableProps } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { CircledDoubleArrows } from '../assets';
 import { useKeyboard } from '../hooks';
 import { richToolbarHeight } from '../constants';
 
@@ -24,14 +23,14 @@ type FabContainerProps = {
  * @prop offsetY - the vertical offset from the nearest side (top/bottom)
  */
 type Props = {
-  children: ReactNode;
+  children?: ReactNode;
   quadrant?: Quadrant;
   isRichToolbar?: boolean;
   offsetX?: number;
   offsetY?: number;
   unitX?: OffsetUnit;
   unitY?: OffsetUnit;
-} & TouchableOpacityProps;
+} & PressableProps;
 
 const FloatingActionGroup = ({
   children,
@@ -63,7 +62,7 @@ const FloatingActionGroup = ({
   );
 };
 
-const FabContainer = styled(TouchableOpacity)<FabContainerProps>`
+const FabContainer = styled(Pressable)<FabContainerProps>`
   position: absolute;
   ${({ quadrant, offsetX, offsetY, unitX, unitY }) => {
     switch (quadrant) {

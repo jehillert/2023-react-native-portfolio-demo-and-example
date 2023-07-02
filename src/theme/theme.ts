@@ -1,4 +1,5 @@
 import { DefaultTheme } from 'styled-components/native';
+import { isIos } from '../constants';
 
 type ColorPalette = typeof lightTheme.colors;
 
@@ -12,7 +13,29 @@ const typography = {
   fontWeightBold: 700,
 };
 
-const colorNeutralThemeProps = {
+const fabShadow = `
+    background-color: #007bff;
+    padding-vertical: 10;
+    padding-horizontal: 20;
+    border-radius: 8px;
+    ${
+      isIos
+        ? `
+      shadow-color: #000000;
+      shadow-offset: {width: 0, height: 2};
+      shadow-opacity: 0.3;
+      shadow-radius: 4;
+      `
+        : `elevation: 5`
+    }
+`;
+
+const shadow = {
+  fab: fabShadow,
+};
+
+const otherThemeProps = {
+  shadow,
   typography,
 };
 
@@ -93,7 +116,7 @@ const lightTheme: DefaultTheme = {
       focus: 'rgba(0, 0, 0, 0.12)',
     },
   },
-  ...colorNeutralThemeProps,
+  ...otherThemeProps,
 };
 
 const darkTheme: DefaultTheme = {
@@ -174,7 +197,7 @@ const darkTheme: DefaultTheme = {
       focus: 'rgba(255, 255, 255, 0.12)',
     },
   },
-  ...colorNeutralThemeProps,
+  ...otherThemeProps,
 };
 
 const theme = {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { DirectoryScreen, NoteScreen } from '../comp.screens';
+import { DirectoryScreen, NoteScreen } from '../screens';
 import { Screens } from './types';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { useTheme } from 'styled-components/native';

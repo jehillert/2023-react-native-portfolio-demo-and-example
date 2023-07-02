@@ -1,19 +1,15 @@
 import React from 'react';
-import styled from 'styled-components/native';
+import { Button, TouchableOpacity, View } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import DraggableFlatList, {
   RenderItemParams,
   ScaleDecorator,
 } from 'react-native-draggable-flatlist';
-import { Button, TouchableOpacity, View } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 
+import { selectActiveNoteId, selectSortedNotes } from '../store/selectors';
 import { useAppDispatch, useAppSelector } from '../hooks/useRedux';
-import {
-  selectActiveNoteId,
-  selectNoteIds,
-  selectNotes,
-  selectSortedNotes,
-} from '../store/selectors';
+import { Screens } from '../navigation';
+import { Text } from '../comp.common';
 import {
   Note,
   createNote,
@@ -21,13 +17,10 @@ import {
   setActiveNoteId,
   setIds,
 } from '../store/slices';
-import { Screens } from '../navigation';
-import { Text } from '../comp.common';
 
 const DirectoryScreen = () => {
   const dispatch = useAppDispatch();
   const navigation = useNavigation();
-  const noteIds = selectNoteIds();
   const activeNoteId = useAppSelector(selectActiveNoteId);
   const sortedNotes = useAppSelector(selectSortedNotes);
 
