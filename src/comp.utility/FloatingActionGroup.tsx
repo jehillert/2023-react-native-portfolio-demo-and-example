@@ -95,5 +95,5 @@ const FabContainer = styled(Pressable)<FabContainerProps>`
   z-index: 1000;
 `;
 
-export type { Props };
+export type { OffsetUnit, Props };
 export default FloatingActionGroup;

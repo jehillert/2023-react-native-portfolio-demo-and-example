@@ -1,52 +1,51 @@
 import React from 'react';
-import { Pressable, PressableProps, View } from 'react-native';
-import { Shades, Highlights } from '../constants';
-import { ActionMatrix } from '../comp.utility';
-import Text from './Text';
+import styled from 'styled-components/native';
+import { Pressable, PressableProps } from 'react-native';
+import { Shades } from '../constants';
+import { FloatingActionGroup } from '../comp.utility';
+import { SizeUnits } from '../types';
 
 type Props = {
-  colors: Shades | Highlights;
-  nodesPerRow?: number;
-  sizeAsPercentOfAxis?: number;
-  axis?: 'horizontal' | 'vertical';
+  colors: Shades;
+  colorsPerRow?: number;
+  size?: number;
+  sizeUnits?: SizeUnits;
 } & PressableProps;
 
 const ColorPalette = ({
   colors,
-  nodesPerRow = 3,
-  sizeAsPercentOfAxis = 30,
-  axis = 'horizontal',
+  colorsPerRow = 3,
+  size = 30,
+  sizeUnits = 'px',
   ...rest
 }: Props) => {
   const ColorElements = colors.map(color => {
-    const isHighlight = Array.isArray(color);
-    const fg = `
-      color: ${color[1]};
-    `;
-
-    const bg = `
-      background-color: ${color[0]};
-      height: ${sizeAsPercentOfAxis}%;
-      width: ${sizeAsPercentOfAxis}%;
-    `;
-
-    return isHighlight ? (
-      <Pressable key={color[0]} css={bg} {...rest}>
-        <Text.ButtonSmall css={fg}>a</Text.ButtonSmall>
-      </Pressable>
-    ) : (
-      <Pressable key={color} {...rest} />
+    return (
+      <ColorElement
+        key={color}
+        size={size}
+        color={color}
+        sizeUnits={sizeUnits}
+        {...rest}
+      />
     );
   });
 
   return (
-    <ActionMatrix
-      axis={axis}
-      elements={ColorElements}
-      nodesPerRow={nodesPerRow}
-      sizeAsPercentOfAxis={sizeAsPercentOfAxis}
-    />
+    <FloatingActionGroup quadrant={1}>{ColorElements}</FloatingActionGroup>
   );
 };
+
+const ColorElement = styled(Pressable)<{
+  color: string;
+  size: number;
+  sizeUnits: SizeUnits;
+}>`
+  background-color: ${({ color }) => color};
+  height: ${({ size, sizeUnits }) => `${size}${sizeUnits}`};
+  width: ${({ size, sizeUnits }) => `${size}${sizeUnits}`};
+  border-radius: ${({ size, sizeUnits }) => `${size}${sizeUnits}`};
+  margin: 8px;
+`;
 
 export default ColorPalette;
