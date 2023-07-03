@@ -1,3 +1,4 @@
+// TODO: for ios, cancel onPress when swipe begins
 import React from 'react';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
@@ -118,6 +119,7 @@ const DirectoryScreen = () => {
         keyExtractor={(item: Note) => `draggable-item-${item.id}`}
         onDragEnd={handleDragEnd}
         ItemSeparatorComponent={SpacerView}
+        bounces={false}
       />
       <Fab
         onPress={handleCreateNote}

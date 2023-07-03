@@ -22,6 +22,7 @@
     "lodash.debounce": "^4.0.8",
     "react": "18.2.0",
     "react-native": "0.71.8",
+    "react-native-code-push": "^8.0.2",
     "react-native-config": "^1.5.1",
     "react-native-draggable-flatlist": "^4.0.1",
     "react-native-drawer-layout": "^3.2.1",

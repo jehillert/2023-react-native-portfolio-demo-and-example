@@ -41,19 +41,6 @@ const handleHead = ({ tintColor }: { tintColor: ColorValue }) => (
 );
 
 const NoteScreen = () => {
-  /*
-   handleUnhandledTouches(){
-   Keyboard.dismiss
-   return false;
- }
-
- render(){
-    <View style={{ flex: 1 }} onStartShouldSetResponder={this.handleUnhandledTouches}>
-       <MyApp>
-    </View>
-  }
-  */
-
   const dispatch = useAppDispatch();
   const isFocused = useIsFocused();
   const keyboardHeight = useKeyboard().keyboardHeight;
@@ -115,8 +102,8 @@ const NoteScreen = () => {
             <RichEditor
               ref={editorRef}
               initialFocus
-              onChange={handleContentChange}
               useContainer={false}
+              onChange={handleContentChange}
               initialContentHTML={savedContent}
             />
             {!!editorRef?.current?.isKeyboardOpen && (

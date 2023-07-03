@@ -14,11 +14,14 @@ const fabShadow = `
       isIos
         ? `
       shadow-color: #000000;
-      shadow-offset: {width: 0, height: 2};
-      shadow-opacity: 0.3;
-      shadow-radius: 4;
+      shadow-offset: {
+        width: 5px;
+        height: -4px;
+      };
+      shadow-opacity: 0.4;
+      shadow-radius: 3;
       `
-        : `elevation: 5`
+        : `elevation: 5;`
     }
 `;
 

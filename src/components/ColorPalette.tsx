@@ -1,6 +1,11 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import { Pressable, PressableProps, View, ViewStyle } from 'react-native';
+import {
+  TouchableOpacity,
+  TouchableOpacityProps,
+  View,
+  ViewStyle,
+} from 'react-native';
 import { Positioner, PositionerProps } from './utility';
 import { Shades } from '../constants';
 
@@ -8,7 +13,7 @@ const PaletteView = styled(View)<{ row: boolean }>`
   flex-flow: ${({ row }) => (row ? `row` : `column`)} nowrap;
 `;
 
-const ColorElement = styled(Pressable)<{
+const ColorElement = styled(TouchableOpacity)<{
   color: string;
   size: number;
 }>`
@@ -17,6 +22,7 @@ const ColorElement = styled(Pressable)<{
   width: ${({ size }) => `${size}px`};
   border-radius: ${({ size }) => `${size}px`};
   margin: 8px;
+  ${({ theme }) => theme.shadow.fab}
 `;
 
 type Props = {
@@ -24,7 +30,7 @@ type Props = {
   row?: boolean;
   size?: number;
   positioning: PositionerProps;
-} & PressableProps;
+} & TouchableOpacityProps;
 
 const ColorPalette = ({
   colors,
@@ -34,7 +40,17 @@ const ColorPalette = ({
   ...rest
 }: Props) => {
   const ColorElements = colors.map(color => {
-    return <ColorElement key={color} size={size} color={color} {...rest} />;
+    const handlePress = () => {};
+
+    return (
+      <ColorElement
+        onPress={handlePress}
+        key={color}
+        size={size}
+        color={color}
+        {...rest}
+      />
+    );
   });
 
   return (

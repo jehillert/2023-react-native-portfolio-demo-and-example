@@ -21,6 +21,7 @@ const DrawerLeft = ({ children }: Props) => {
       open={open}
       onOpen={handleOpen}
       onClose={handleClose}
+      drawerType="front"
       drawerPosition={'left'}
       renderDrawerContent={() => {
         return <Text>Drawer content</Text>;
