@@ -23,7 +23,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks/useRedux';
 import { useDebounce, useKeyboard } from '../../hooks';
 import { isAndroid, shades } from '../../constants';
 import { CircledDoubleArrows } from '../../assets';
-import { Fab } from '../../components';
+import { SvgFab } from '../../components';
 import {
   selectActiveNoteId,
   selectLeftDrawerOpen,
@@ -143,10 +143,10 @@ const NoteScreen = () => {
             )}
             <ColorPalette colors={shades} row positioning={{ quadrant: 1 }} />
             {showFab && (
-              <Fab
+              <SvgFab
                 onPress={handleFabPress}
                 onLongPress={handleLongPress}
-                Icon={CircledDoubleArrows}
+                SvgIcon={CircledDoubleArrows}
                 positioning={{ isRichToolbar: true, quadrant: 2 }}
               />
             )}

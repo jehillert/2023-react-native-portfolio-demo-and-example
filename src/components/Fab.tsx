@@ -1,25 +1,46 @@
 import React from 'react';
 import { Pressable, PressableProps, StyleProp, ViewStyle } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { IconProps } from 'react-native-vector-icons/Icon';
 import { SvgProps } from 'react-native-svg';
 
 import { Positioner, PositionerProps } from './utility';
-import { IconProps } from 'react-native-vector-icons/Icon';
 
-type Props = {
-  Icon: React.FC<SvgProps | IconProps>;
+type SvgFabProps = {
+  SvgIcon: React.FC<SvgProps>;
   iconProps?: SvgProps;
   iconStyle?: StyleProp<ViewStyle>;
   positioning: PositionerProps;
 } & PressableProps;
 
-const Fab = ({ Icon, iconProps, positioning, ...rest }: Props) => {
+const SvgFab = ({
+  SvgIcon,
+  iconProps,
+  positioning,
+  ...pressableProps
+}: SvgFabProps) => {
   return (
     <Positioner {...positioning}>
-      <Pressable {...rest}>
+      <Pressable {...pressableProps}>
+        <SvgIcon {...iconProps} />
+      </Pressable>
+    </Positioner>
+  );
+};
+
+type FabProps = {
+  iconProps: IconProps;
+  positioning: PositionerProps;
+} & PressableProps;
+
+const Fab = ({ iconProps, positioning, ...pressableProps }: FabProps) => {
+  return (
+    <Positioner {...positioning}>
+      <Pressable {...pressableProps}>
         <Icon {...iconProps} />
       </Pressable>
     </Positioner>
   );
 };
 
-export default Fab;
+export { Fab, SvgFab };

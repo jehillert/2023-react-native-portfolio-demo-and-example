@@ -1,15 +1,5 @@
 import { DefaultTheme } from 'styled-components/native';
-import { isIos } from '../constants';
-
-type ColorPalette = typeof lightTheme.colors;
-type Typography = typeof typography;
-type Shadow = typeof shadow;
-
-type AppTheme = {
-  colors: ColorPalette;
-  typography: Typography;
-  shadow: Shadow;
-};
+import { isAndroid, isIos } from '../constants';
 
 const typography = {
   fontFamily: 'Roboto-Regular',
@@ -20,10 +10,6 @@ const typography = {
 };
 
 const fabShadow = `
-    background-color: #007bff;
-    padding-vertical: 10;
-    padding-horizontal: 20;
-    border-radius: 8px;
     ${
       isIos
         ? `
@@ -36,8 +22,17 @@ const fabShadow = `
     }
 `;
 
+const fabShadowObj = {
+  shadowColor: '#000000',
+  shadowOffset: isIos ? { width: 0, height: 2 } : undefined,
+  shadowOpacity: isIos ? 0.3 : undefined,
+  shadowRadius: isIos ? 4 : undefined,
+  elevation: isAndroid ? 5 : undefined,
+};
+
 const shadow = {
   fab: fabShadow,
+  fabObj: fabShadowObj,
 };
 
 const otherThemeProps = {
@@ -210,6 +205,5 @@ const theme = {
   dark: darkTheme,
 };
 
-export type { AppTheme, ColorPalette, Typography };
 export { lightTheme, darkTheme };
 export default theme;
