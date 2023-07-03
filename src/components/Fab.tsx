@@ -1,23 +1,24 @@
 import React from 'react';
-import { StyleProp, ViewStyle } from 'react-native';
-import { useTheme } from 'styled-components/native';
+import { Pressable, PressableProps, StyleProp, ViewStyle } from 'react-native';
 import { SvgProps } from 'react-native-svg';
 
-import { FloatingActionGroup, FloatingActionGroupProps } from './utility';
+import { Positioner, PositionerProps } from './utility';
+import { IconProps } from 'react-native-vector-icons/Icon';
 
 type Props = {
-  Icon: React.FC<SvgProps>;
+  Icon: React.FC<SvgProps | IconProps>;
   iconProps?: SvgProps;
   iconStyle?: StyleProp<ViewStyle>;
-} & FloatingActionGroupProps;
+  positioning: PositionerProps;
+} & PressableProps;
 
-const Fab = ({ Icon, iconProps, ...rest }: Props) => {
-  const theme = useTheme();
-  const shadowStyles = theme.shadow.fab;
+const Fab = ({ Icon, iconProps, positioning, ...rest }: Props) => {
   return (
-    <FloatingActionGroup style={shadowStyles} {...rest}>
-      <Icon style={shadowStyles} {...iconProps} />
-    </FloatingActionGroup>
+    <Positioner {...positioning}>
+      <Pressable {...rest}>
+        <Icon {...iconProps} />
+      </Pressable>
+    </Positioner>
   );
 };
 

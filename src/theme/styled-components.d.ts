@@ -1,7 +1,7 @@
 // create styled-components.d.ts in your project source
 // if it isn't being picked up, check tsconfig compilerOptions.types
 import {} from 'styled-components/cssprop';
-import { lightTheme } from './theme';
+import { AppTheme, lightTheme } from './theme';
 
 type ThemeType = typeof lightTheme;
 

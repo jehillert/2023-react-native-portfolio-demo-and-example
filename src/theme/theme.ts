@@ -2,8 +2,14 @@ import { DefaultTheme } from 'styled-components/native';
 import { isIos } from '../constants';
 
 type ColorPalette = typeof lightTheme.colors;
-
 type Typography = typeof typography;
+type Shadow = typeof shadow;
+
+type AppTheme = {
+  colors: ColorPalette;
+  typography: Typography;
+  shadow: Shadow;
+};
 
 const typography = {
   fontFamily: 'Roboto-Regular',
@@ -39,7 +45,7 @@ const otherThemeProps = {
   typography,
 };
 
-const lightTheme: DefaultTheme = {
+const lightTheme = {
   colors: {
     common: {
       black: '#000',
@@ -104,8 +110,8 @@ const lightTheme: DefaultTheme = {
     },
     divider: 'rgba(0, 0, 0, 0.12)',
     background: {
-      paper: '#fff',
-      default: '#fff',
+      paper: '#ffffff',
+      default: '#ffffff',
     },
     action: {
       active: 'rgba(0, 0, 0, 0.54)',
@@ -181,7 +187,6 @@ const darkTheme: DefaultTheme = {
       primary: '#fff',
       secondary: 'rgba(255, 255, 255, 0.7)',
       disabled: 'rgba(255, 255, 255, 0.5)',
-      icon: 'rgba(255, 255, 255, 0.5)',
     },
     divider: 'rgba(255, 255, 255, 0.12)',
     background: {
@@ -205,6 +210,6 @@ const theme = {
   dark: darkTheme,
 };
 
-export type { ColorPalette, Typography };
+export type { AppTheme, ColorPalette, Typography };
 export { lightTheme, darkTheme };
 export default theme;

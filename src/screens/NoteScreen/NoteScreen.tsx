@@ -141,14 +141,13 @@ const NoteScreen = () => {
                 iconMap={{ [actions.heading1]: handleHead }}
               />
             )}
-            <ColorPalette colors={shades} />
+            <ColorPalette colors={shades} row positioning={{ quadrant: 1 }} />
             {showFab && (
               <Fab
                 onPress={handleFabPress}
                 onLongPress={handleLongPress}
-                quadrant={2}
-                isRichToolbar
                 Icon={CircledDoubleArrows}
+                positioning={{ isRichToolbar: true, quadrant: 2 }}
               />
             )}
           </KeyboardAwareScrollView>

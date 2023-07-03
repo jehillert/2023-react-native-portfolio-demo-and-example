@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
 import styled from 'styled-components/native';
-import { Pressable, PressableProps } from 'react-native';
+import { StyleProp, View, ViewStyle } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useKeyboard } from '../../hooks';
 import { richToolbarHeight } from '../../constants';
@@ -9,12 +9,10 @@ type Quadrant = 1 | 2 | 3 | 4;
 
 type OffsetUnit = '%' | 'px';
 
-type FabContainerProps = {
+type FloatingContainerProps = {
   quadrant: Quadrant;
   offsetX: number;
   offsetY: number;
-  unitX: OffsetUnit;
-  unitY: OffsetUnit;
 };
 
 /**
@@ -30,17 +28,16 @@ type Props = {
   isRichToolbar?: boolean;
   offsetX?: number;
   offsetY?: number;
-} & PressableProps;
+  containerStyle?: StyleProp<ViewStyle>;
+};
 
-const FloatingActionGroup = ({
+const Positioner = ({
   children,
+  containerStyle,
   quadrant = 1,
   isRichToolbar = false,
   offsetX = 16,
   offsetY = 16,
-  unitX = 'px',
-  unitY = 'px',
-  ...rest
 }: Props) => {
   const { bottom } = useSafeAreaInsets();
   const { keyboardShown } = useKeyboard();
@@ -54,15 +51,13 @@ const FloatingActionGroup = ({
       quadrant={quadrant}
       offsetX={offsetX}
       offsetY={_offsetY}
-      unitX={unitX}
-      unitY={unitY}
-      {...rest}>
+      style={containerStyle}>
       {children}
     </FabContainer>
   );
 };
 
-const FabContainer = styled(Pressable)<FabContainerProps>`
+const FabContainer = styled(View)<FloatingContainerProps>`
   position: absolute;
   ${({ quadrant, offsetX, offsetY }) => {
     switch (quadrant) {
@@ -96,4 +91,4 @@ const FabContainer = styled(Pressable)<FabContainerProps>`
 `;
 
 export type { OffsetUnit, Props };
-export default FloatingActionGroup;
+export default Positioner;
