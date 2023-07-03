@@ -2,14 +2,15 @@ import { AnyAction } from 'redux';
 import { MMKV } from 'react-native-mmkv';
 import { ThunkAction, configureStore } from '@reduxjs/toolkit';
 import { persistStore, persistReducer, Storage } from 'redux-persist';
-import rootReducer from './root-reducer';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import Reactotron from '../../ReactotronConfig';
+import rootReducer from './root-reducer';
 
-// NOTE: can share data between your apps. https://github.com/mrousavy/react-native-mmkv#app-groups.
+// NOTE: MMKV enables data sharing between your apps. https://github.com/mrousavy/react-native-mmkv#app-groups.
 // NOTE: data can be encrypted. but remember to change answers about encryption ion ios/google play
 const storage = new MMKV();
 
-export const reduxStorage: Storage = {
+export const MMKVStorage: Storage = {
   setItem: (key, value) => {
     storage.set(key, value);
     return Promise.resolve(true);
@@ -26,7 +27,7 @@ export const reduxStorage: Storage = {
 
 const persistConfig = {
   key: 'root',
-  storage: reduxStorage,
+  storage: __DEV__ ? AsyncStorage : MMKVStorage,
   whitelist: ['notes', 'settings'],
 };
 
@@ -40,11 +41,11 @@ const store = configureStore({
   reducer: persistedReducer,
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({ serializableCheck: false }),
-  devTools: process.env.NODE_ENV !== 'production',
+  devTools: __DEV__,
   enhancers,
 });
 
-if (process.env.NODE_ENV === 'development' && (module as any).hot) {
+if (__DEV__ && (module as any).hot) {
   (module as any).hot.accept(() => {
     const newRootReducer = require('./root-reducer').default;
     store.replaceReducer(newRootReducer);

@@ -128,7 +128,7 @@ const NoteScreen = () => {
                 iconMap={{ [actions.heading1]: handleHead }}
               />
             )}
-            <ColorPalette colors={shades} row positioning={{ quadrant: 1 }} />
+            <ColorPalette colors={shades} positioning={{ quadrant: 1 }} />
             {showFab && (
               <SvgFab
                 onPress={handleFabPress}

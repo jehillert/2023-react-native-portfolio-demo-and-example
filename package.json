@@ -49,6 +49,7 @@
     "@babel/core": "^7.20.0",
     "@babel/preset-env": "^7.20.0",
     "@babel/runtime": "^7.20.0",
+    "@react-native-async-storage/async-storage": "^1.19.0",
     "@react-native-community/eslint-config": "^3.2.0",
     "@testing-library/react-native": "^12.1.2",
     "@tsconfig/react-native": "^2.0.2",

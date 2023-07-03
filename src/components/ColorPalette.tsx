@@ -1,11 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import {
-  TouchableOpacity,
-  TouchableOpacityProps,
-  View,
-  ViewStyle,
-} from 'react-native';
+import { TouchableOpacity, TouchableOpacityProps, View } from 'react-native';
 import { Positioner, PositionerProps } from './utility';
 import { Shades } from '../constants';
 
