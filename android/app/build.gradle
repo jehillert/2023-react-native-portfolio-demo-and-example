@@ -1,4 +1,12 @@
 apply plugin: "com.android.application"
+project.ext.envConfigFiles = [
+  productiondebug: ".env.production",
+  productionrelease: ".env.production",
+  developmentrelease: ".env.development",
+  developmentdebug: ".env.development",
+  stagingrelease: ".env.staging",
+  stagingdebug: ".env.staging"
+]
 apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
 apply plugin: 'com.google.gms.google-services'
 apply plugin: "com.facebook.react"
@@ -142,6 +150,7 @@ android {
     buildTypes {
         debug {
             signingConfig signingConfigs.debug
+            matchingFallbacks = ['debug', 'release']
         }
         release {
             // Caution! In production, you need to generate your own keystore file.
@@ -150,6 +159,14 @@ android {
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
+    }
+    flavorDimensions "default"
+        productFlavors {
+        production {}
+        staging {
+            // We can have build-specific configurations here. Like using applicationIdSuffix to create different package name (ex. ".staging")
+        }
+        development {}
     }
 
     // applicationVariants are e.g. debug, release
@@ -187,13 +204,5 @@ dependencies {
         implementation jscFlavor
     }
 }
-
-// project.ext.envConfigFiles = [
-//     debug: ".env.development",
-//     development: ".env",
-//     release: ".env.production",
-// ]
-
-// apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
 
 apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)
