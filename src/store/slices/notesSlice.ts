@@ -7,7 +7,7 @@ import {
 } from '@reduxjs/toolkit';
 import { uuid } from '../../utils';
 import { AppThunk } from '../store';
-import { selectUntitledNoteCount } from '../selectors';
+import { selectUntitledNoteCount } from '../selectors/notesSelectors';
 
 type Note = {
   content?: string;

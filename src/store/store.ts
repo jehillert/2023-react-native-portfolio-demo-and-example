@@ -5,30 +5,39 @@ import { persistStore, persistReducer, Storage } from 'redux-persist';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Reactotron from '../../ReactotronConfig';
 import rootReducer from './root-reducer';
+import appConfig from '../appConfig';
+
+const { STORAGE_TYPE } = appConfig;
 
 // NOTE: MMKV enables data sharing between your apps. https://github.com/mrousavy/react-native-mmkv#app-groups.
 // NOTE: data can be encrypted. but remember to change answers about encryption ion ios/google play
-const storage = new MMKV();
+let storage: Storage;
 
-export const MMKVStorage: Storage = {
-  setItem: (key, value) => {
-    storage.set(key, value);
-    return Promise.resolve(true);
-  },
-  getItem: key => {
-    const value = storage.getString(key);
-    return Promise.resolve(value);
-  },
-  removeItem: key => {
-    storage.delete(key);
-    return Promise.resolve();
-  },
-};
+if (STORAGE_TYPE === 'MMKV') {
+  const mmkv = new MMKV();
+
+  storage = {
+    setItem: (key, value) => {
+      mmkv.set(key, value);
+      return Promise.resolve(true);
+    },
+    getItem: key => {
+      const value = mmkv.getString(key);
+      return Promise.resolve(value);
+    },
+    removeItem: key => {
+      mmkv.delete(key);
+      return Promise.resolve();
+    },
+  };
+} else {
+  storage = AsyncStorage;
+}
 
 const persistConfig = {
   key: 'root',
-  storage: __DEV__ ? AsyncStorage : MMKVStorage,
-  whitelist: ['notes', 'settings'],
+  // whitelist: ['notes', 'settings'],
+  storage,
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

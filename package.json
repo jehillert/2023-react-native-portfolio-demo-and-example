@@ -3,12 +3,13 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
+    "prestart": "cp .env.development .env",
     "android": "react-native run-android",
-    "android-dev": "react-native run-android --variant=dev",
     "ios": "react-native run-ios --simulator='iPhone 14 Pro Max'",
     "start": "react-native start",
     "test": "jest",
-    "postinstall": "react-native setup-ios-permissions && pod-install"
+    "postinstall": "react-native setup-ios-permissions && pod-install",
+    "deploy-from-local": "scripts/deploy-from-local.sh"
   },
   "dependencies": {
     "@babel/plugin-transform-export-namespace-from": "^7.22.5",
@@ -22,7 +23,6 @@
     "lodash.debounce": "^4.0.8",
     "react": "18.2.0",
     "react-native": "0.71.8",
-    "react-native-code-push": "^8.0.2",
     "react-native-config": "^1.5.1",
     "react-native-draggable-flatlist": "^4.0.1",
     "react-native-drawer-layout": "^3.2.1",
