@@ -160,14 +160,6 @@ android {
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
     }
-    flavorDimensions "default"
-        productFlavors {
-        production {}
-        staging {
-            // We can have build-specific configurations here. Like using applicationIdSuffix to create different package name (ex. ".staging")
-        }
-        development {}
-    }
 
     // applicationVariants are e.g. debug, release
     applicationVariants.all { variant ->

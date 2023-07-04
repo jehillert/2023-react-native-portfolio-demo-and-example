@@ -5,8 +5,6 @@ import { Screens } from './types';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { useTheme } from 'styled-components/native';
 
-import { selectLeftDrawerOpen } from '../store/selectors';
-import { useAppDispatch, useAppSelector } from '../hooks/useRedux';
 import { IconPressable, Text } from '../components';
 import { config as linkingConfig } from '../linking';
 import { RootNavigation } from '.';
@@ -16,7 +14,9 @@ import {
   useMessagingSubscribe,
   useNotificationsPermission,
 } from '../hooks';
-import { leftDrawerOpened } from '../store/slices';
+import DrawerPressable from './DrawerPressable';
+
+type DrawerProps = { drawerId: 'left' | 'right' };
 
 const linking = {
   prefixes: ['https://hillert.dev', 'jnotes://'],
@@ -32,8 +32,6 @@ const StackNavigator = () => {
   useLinking();
   // not gonna work until you add android assetLinks.json (https://medium.com/@ertemishakk/deep-linking-with-react-native-c7fbaac25127)
   useInitialURL();
-  const dispatch = useAppDispatch();
-  const leftDrawerOpen = useAppSelector(selectLeftDrawerOpen);
 
   const theme = useTheme();
   const colors = theme?.colors;
@@ -54,12 +52,10 @@ const StackNavigator = () => {
     : DefaultTheme;
 
   const backPressable = () => <IconPressable name="chevron-left" />;
-  const menuPressable = () => {
-    const handlePressMenu = () => {
-      dispatch(leftDrawerOpened(!leftDrawerOpen));
-    };
-    return <IconPressable name="menu" onPress={handlePressMenu} />;
-  };
+
+  const directoryMenuButton = () => <DrawerPressable drawerId="left" />;
+
+  const noteScreenMenuButton = () => <DrawerPressable drawerId="right" />;
 
   return (
     <NavigationContainer
@@ -78,10 +74,16 @@ const StackNavigator = () => {
           options={{
             title: 'Notes',
             headerTitleAlign: 'center',
-            headerLeft: menuPressable,
+            headerLeft: directoryMenuButton,
           }}
         />
-        <Stack.Screen name={Screens.NOTE} component={NoteScreen} />
+        <Stack.Screen
+          name={Screens.NOTE}
+          component={NoteScreen}
+          options={{
+            headerRight: noteScreenMenuButton,
+          }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

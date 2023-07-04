@@ -16,13 +16,19 @@ import {
   RichToolbar,
 } from 'react-native-pell-rich-editor';
 
-import ColorPalette from '../../components/ColorPalette';
+import ColorPalette, {
+  ColorCallback,
+} from '../../components/palettes/ColorPalette';
 import DrawerRight from './DrawerRight';
 import { useAppDispatch, useAppSelector } from '../../hooks/useRedux';
 import { useDebounce, useKeyboard } from '../../hooks';
-import { isAndroid, shades } from '../../constants';
-import { CircledDoubleArrows } from '../../assets';
-import { SvgFab } from '../../components';
+import {
+  fontColors,
+  highlight2Colors,
+  highlightColors,
+  isAndroid,
+  shadeColors,
+} from '../../constants';
 import {
   selectActiveNoteId,
   // selectLeftDrawerOpen,
@@ -49,7 +55,7 @@ const NoteScreen = () => {
 
   const rightDrawerOpen = useAppSelector(selectRightDrawerOpen);
 
-  const showFab = !rightDrawerOpen;
+  // editorRef.current.
   // const showFab = !leftDrawerOpen && !rightDrawerOpen;
   const savedContent = activeNote?.content ?? '';
   const contentRef = useRef(savedContent);
@@ -84,15 +90,21 @@ const NoteScreen = () => {
     debouncedRequest();
   };
 
-  const handleFabPress = useCallback(() => {
-    Keyboard.dismiss();
-    dispatch(rightDrawerOpened(true));
-  }, [rightDrawerOpen]);
+  const handlePressShade: ColorCallback = ({ bg }) =>
+    editorRef.current?.setHiliteColor(bg);
 
-  // const handleLongPress = useCallback(() => {
-  //   Keyboard.dismiss();
-  //   dispatch(leftDrawerOpened(true));
-  // }, [leftDrawerOpen]);
+  const handlePressHighlight: ColorCallback = ({ bg, fg }) => {
+    fg && editorRef.current?.setForeColor(fg);
+    editorRef.current?.setHiliteColor(bg);
+  };
+
+  const handleForeColor = useCallback(() => {
+    editorRef.current?.setForeColor('blue');
+  }, []);
+
+  const handleHaliteColor = useCallback(() => {
+    editorRef.current?.setHiliteColor('red');
+  }, []);
 
   return (
     <>
@@ -100,7 +112,7 @@ const NoteScreen = () => {
         <KeyboardAwareScrollView contentContainerStyle={kbAwareSVStyles}>
           <RichEditor
             ref={editorRef}
-            initialFocus
+            // initialFocus
             useContainer={false}
             onChange={handleContentChange}
             initialContentHTML={savedContent}
@@ -109,6 +121,8 @@ const NoteScreen = () => {
             <RichToolbar
               editor={editorRef}
               actions={[
+                actions.foreColor,
+                actions.hiliteColor,
                 actions.insertImage,
                 actions.undo,
                 actions.redo,
@@ -125,17 +139,21 @@ const NoteScreen = () => {
                 actions.heading1,
               ]}
               iconMap={{ [actions.heading1]: handleHead }}
+              foreColor={handleForeColor}
+              hiliteColor={handleHaliteColor}
             />
           )}
-          <ColorPalette colors={shades} positioning={{ quadrant: 1 }} />
-          {showFab && (
-            <SvgFab
-              onPress={handleFabPress}
-              // onLongPress={handleLongPress}
-              SvgIcon={CircledDoubleArrows}
-              positioning={{ isRichToolbar: true, quadrant: 2 }}
-            />
-          )}
+          <ColorPalette
+            colors={highlight2Colors}
+            onPressColor={handlePressHighlight}
+            positioning={{ quadrant: 1 }}
+          />
+          <ColorPalette
+            colors={shadeColors}
+            onPressColor={handlePressShade}
+            positioning={{ isRichToolbar: true, quadrant: 3 }}
+            row
+          />
         </KeyboardAwareScrollView>
       </DrawerRight>
     </>
