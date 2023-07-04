@@ -18,7 +18,6 @@ import {
 
 import ColorPalette from '../../components/ColorPalette';
 import DrawerRight from './DrawerRight';
-import DrawerLeft from './DrawerLeft';
 import { useAppDispatch, useAppSelector } from '../../hooks/useRedux';
 import { useDebounce, useKeyboard } from '../../hooks';
 import { isAndroid, shades } from '../../constants';
@@ -26,13 +25,13 @@ import { CircledDoubleArrows } from '../../assets';
 import { SvgFab } from '../../components';
 import {
   selectActiveNoteId,
-  selectLeftDrawerOpen,
+  // selectLeftDrawerOpen,
   selectNoteById,
   selectRightDrawerOpen,
 } from '../../store/selectors';
 import {
   rightDrawerOpened,
-  leftDrawerOpened,
+  // leftDrawerOpened,
   updateNote,
 } from '../../store/slices';
 
@@ -47,10 +46,11 @@ const NoteScreen = () => {
 
   const activeNoteId = useAppSelector(selectActiveNoteId);
   const activeNote = useAppSelector(() => selectNoteById(activeNoteId));
-  const leftDrawerOpen = useAppSelector(selectLeftDrawerOpen);
+
   const rightDrawerOpen = useAppSelector(selectRightDrawerOpen);
 
-  const showFab = !leftDrawerOpen && !rightDrawerOpen;
+  const showFab = !rightDrawerOpen;
+  // const showFab = !leftDrawerOpen && !rightDrawerOpen;
   const savedContent = activeNote?.content ?? '';
   const contentRef = useRef(savedContent);
   const editorRef = useRef<RichEditor>(null);
@@ -89,57 +89,55 @@ const NoteScreen = () => {
     dispatch(rightDrawerOpened(true));
   }, [rightDrawerOpen]);
 
-  const handleLongPress = useCallback(() => {
-    Keyboard.dismiss();
-    dispatch(leftDrawerOpened(true));
-  }, [leftDrawerOpen]);
+  // const handleLongPress = useCallback(() => {
+  //   Keyboard.dismiss();
+  //   dispatch(leftDrawerOpened(true));
+  // }, [leftDrawerOpen]);
 
   return (
     <>
-      <DrawerLeft>
-        <DrawerRight>
-          <KeyboardAwareScrollView contentContainerStyle={kbAwareSVStyles}>
-            <RichEditor
-              ref={editorRef}
-              initialFocus
-              useContainer={false}
-              onChange={handleContentChange}
-              initialContentHTML={savedContent}
+      <DrawerRight>
+        <KeyboardAwareScrollView contentContainerStyle={kbAwareSVStyles}>
+          <RichEditor
+            ref={editorRef}
+            initialFocus
+            useContainer={false}
+            onChange={handleContentChange}
+            initialContentHTML={savedContent}
+          />
+          {!!editorRef?.current?.isKeyboardOpen && (
+            <RichToolbar
+              editor={editorRef}
+              actions={[
+                actions.insertImage,
+                actions.undo,
+                actions.redo,
+                actions.setBold,
+                actions.setItalic,
+                actions.setUnderline,
+                actions.outdent,
+                actions.indent,
+                actions.alignLeft,
+                actions.alignCenter,
+                actions.alignRight,
+                actions.blockquote,
+                actions.checkboxList,
+                actions.heading1,
+              ]}
+              iconMap={{ [actions.heading1]: handleHead }}
             />
-            {!!editorRef?.current?.isKeyboardOpen && (
-              <RichToolbar
-                editor={editorRef}
-                actions={[
-                  actions.insertImage,
-                  actions.undo,
-                  actions.redo,
-                  actions.setBold,
-                  actions.setItalic,
-                  actions.setUnderline,
-                  actions.outdent,
-                  actions.indent,
-                  actions.alignLeft,
-                  actions.alignCenter,
-                  actions.alignRight,
-                  actions.blockquote,
-                  actions.checkboxList,
-                  actions.heading1,
-                ]}
-                iconMap={{ [actions.heading1]: handleHead }}
-              />
-            )}
-            <ColorPalette colors={shades} positioning={{ quadrant: 1 }} />
-            {showFab && (
-              <SvgFab
-                onPress={handleFabPress}
-                onLongPress={handleLongPress}
-                SvgIcon={CircledDoubleArrows}
-                positioning={{ isRichToolbar: true, quadrant: 2 }}
-              />
-            )}
-          </KeyboardAwareScrollView>
-        </DrawerRight>
-      </DrawerLeft>
+          )}
+          <ColorPalette colors={shades} positioning={{ quadrant: 1 }} />
+          {showFab && (
+            <SvgFab
+              onPress={handleFabPress}
+              // onLongPress={handleLongPress}
+              SvgIcon={CircledDoubleArrows}
+              positioning={{ isRichToolbar: true, quadrant: 2 }}
+            />
+          )}
+        </KeyboardAwareScrollView>
+      </DrawerRight>
     </>
   );
 };

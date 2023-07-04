@@ -51,7 +51,7 @@ const BackButton = ({
       <Icon
         name={name}
         size={size}
-        color={color ? color : colors.text.primary}
+        color={color ? color : colors.textPrimary}
       />
     </IconPressable>
   );

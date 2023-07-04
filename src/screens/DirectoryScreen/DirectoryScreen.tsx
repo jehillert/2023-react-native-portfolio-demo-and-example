@@ -9,10 +9,11 @@ import DraggableFlatList, {
   RenderItemParams,
 } from 'react-native-draggable-flatlist';
 
-import { selectActiveNoteId, selectSortedNotes } from '../../store/selectors';
 import { useAppDispatch, useAppSelector } from '../../hooks/useRedux';
 import { Fab, Text } from '../../components';
 import { Screens } from '../../navigation';
+import DrawerLeft from '../NoteScreen/DrawerLeft';
+import { selectActiveNoteId, selectSortedNotes } from '../../store/selectors';
 import {
   Note,
   createNote,
@@ -32,7 +33,7 @@ const SwipeContainer = styled(View)`
   align-items: center;
   justify-content: flex-end;
   padding: 16px;
-  background-color: ${({ theme }) => theme.colors.error.main};
+  background-color: ${({ theme }) => theme.colors.errorMain};
 `;
 
 const TouchableRowView = styled(TouchableOpacity)`
@@ -46,6 +47,7 @@ const DirectoryScreen = () => {
   const navigation = useNavigation();
   const activeNoteId = useAppSelector(selectActiveNoteId);
   const sortedNotes = useAppSelector(selectSortedNotes);
+
   const navigateToNote = () => navigation.navigate(Screens.NOTE);
 
   const handleCreateNote = () => {
@@ -79,7 +81,7 @@ const DirectoryScreen = () => {
         <SwipeContainer>
           <Icon
             name="trash-can-outline"
-            color={colors.text.secondary}
+            color={colors.textSecondary}
             size={32}
           />
         </SwipeContainer>
@@ -112,26 +114,28 @@ const DirectoryScreen = () => {
   };
 
   return (
-    <View style={{ flex: 1 }}>
-      <DraggableFlatList
-        data={sortedNotes}
-        renderItem={renderItem}
-        keyExtractor={(item: Note) => `draggable-item-${item.id}`}
-        onDragEnd={handleDragEnd}
-        ItemSeparatorComponent={SpacerView}
-        bounces={false}
-      />
-      <Fab
-        onPress={handleCreateNote}
-        iconProps={{
-          name: 'plus-circle',
-          size: 56,
-          color: colors.primary.main,
-          style: shadow.fabObj,
-        }}
-        positioning={{ quadrant: 2 }}
-      />
-    </View>
+    <DrawerLeft>
+      <View style={{ flex: 1 }}>
+        <DraggableFlatList
+          data={sortedNotes}
+          renderItem={renderItem}
+          keyExtractor={(item: Note) => `draggable-item-${item.id}`}
+          onDragEnd={handleDragEnd}
+          ItemSeparatorComponent={SpacerView}
+          bounces={false}
+        />
+        <Fab
+          onPress={handleCreateNote}
+          iconProps={{
+            name: 'plus-circle',
+            size: 56,
+            color: colors.primaryMain,
+            style: shadow.fabObj,
+          }}
+          positioning={{ quadrant: 2 }}
+        />
+      </View>
+    </DrawerLeft>
   );
 };
 
