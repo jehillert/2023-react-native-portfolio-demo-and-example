@@ -5,9 +5,9 @@ import { Screens } from './types';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { useTheme } from 'styled-components/native';
 
-import { RootNavigation } from '.';
-import { Text } from '../components';
+import { IconPressable, Text } from '../components';
 import { config as linkingConfig } from '../linking';
+import { RootNavigation } from '.';
 import {
   useInitialURL,
   useLinking,
@@ -48,6 +48,8 @@ const StackNavigator = () => {
       }
     : DefaultTheme;
 
+  const backPressable = () => <IconPressable name="chevron-left" />;
+
   return (
     <NavigationContainer
       linking={linking}
@@ -55,13 +57,19 @@ const StackNavigator = () => {
       ref={RootNavigation.navigationRef}
       theme={navTheme}>
       <Stack.Navigator
-        screenOptions={{ headerStyle: { backgroundColor: 'tomato' } }}>
-        <Stack.Screen name={Screens.DIRECTORY} component={DirectoryScreen} />
+        screenOptions={{
+          headerStyle: { backgroundColor: 'tomato' },
+          headerLeft: backPressable,
+        }}>
         <Stack.Screen
-          name={Screens.NOTE}
-          component={NoteScreen}
-          options={({ route }) => ({ title: 'Notes' })}
+          name={Screens.DIRECTORY}
+          component={DirectoryScreen}
+          options={{
+            title: 'Notes',
+            headerTitleAlign: 'center',
+          }}
         />
+        <Stack.Screen name={Screens.NOTE} component={NoteScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

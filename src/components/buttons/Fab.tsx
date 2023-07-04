@@ -4,7 +4,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { IconProps } from 'react-native-vector-icons/Icon';
 import { SvgProps } from 'react-native-svg';
 
-import { Positioner, PositionerProps } from './utility';
+import { Positioner, PositionerProps } from '../utility';
 
 type SvgFabProps = {
   SvgIcon: React.FC<SvgProps>;

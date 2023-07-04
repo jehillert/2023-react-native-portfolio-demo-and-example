@@ -7,7 +7,7 @@ import Reactotron from '../../ReactotronConfig';
 import rootReducer from './root-reducer';
 import appConfig from '../appConfig';
 
-const { STORAGE_TYPE } = appConfig;
+const { REACTRON_ENABLED, STORAGE_TYPE } = appConfig;
 
 // NOTE: MMKV enables data sharing between your apps. https://github.com/mrousavy/react-native-mmkv#app-groups.
 // NOTE: data can be encrypted. but remember to change answers about encryption ion ios/google play
@@ -42,9 +42,10 @@ const persistConfig = {
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-let enhancers = Reactotron?.createEnhancer
-  ? [Reactotron?.createEnhancer()]
-  : [];
+let enhancers =
+  REACTRON_ENABLED && Reactotron?.createEnhancer
+    ? [Reactotron?.createEnhancer()]
+    : [];
 
 const store = configureStore({
   reducer: persistedReducer,
