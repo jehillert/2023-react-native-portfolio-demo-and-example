@@ -1,14 +1,14 @@
 // testing
 // https://coolsoftware.dev/blog/testing-react-native-webview-with-react-native-testing-library/
-import React, { useCallback, useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useLayoutEffect, useRef } from 'react';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useIsFocused } from '@react-navigation/native';
 import {
-  Keyboard,
   Text as RNText,
   ColorValue,
   StyleProp,
   ViewStyle,
+  TouchableWithoutFeedback,
 } from 'react-native';
 import {
   actions,
@@ -16,51 +16,58 @@ import {
   RichToolbar,
 } from 'react-native-pell-rich-editor';
 
-import ColorPalette, {
-  ColorCallback,
-} from '../../components/palettes/ColorPalette';
 import DrawerRight from './DrawerRight';
 import { useAppDispatch, useAppSelector } from '../../hooks/useRedux';
 import { useDebounce, useKeyboard } from '../../hooks';
-import {
-  fontColors,
-  highlight2Colors,
-  highlightColors,
-  isAndroid,
-  shadeColors,
-} from '../../constants';
+import { highlight2Colors, isAndroid, shadeColors } from '../../constants';
 import {
   selectActiveNoteId,
-  // selectLeftDrawerOpen,
   selectNoteById,
-  selectRightDrawerOpen,
+  selectThemeId,
 } from '../../store/selectors';
-import {
-  rightDrawerOpened,
-  // leftDrawerOpened,
-  updateNote,
-} from '../../store/slices';
+import { updateNote } from '../../store/slices';
+import { useTheme } from 'styled-components/native';
+import ColorPalette, {
+  ColorCallback,
+} from '../../components/palettes/ColorPalette';
 
 const handleHead = ({ tintColor }: { tintColor: ColorValue }) => (
   <RNText style={{ color: tintColor }}>H1</RNText>
 );
 
 const NoteScreen = () => {
+  const { colors } = useTheme();
   const dispatch = useAppDispatch();
   const isFocused = useIsFocused();
-  const keyboardHeight = useKeyboard().keyboardHeight;
-
+  const { keyboardHeight, keyboardShown } = useKeyboard();
   const activeNoteId = useAppSelector(selectActiveNoteId);
   const activeNote = useAppSelector(() => selectNoteById(activeNoteId));
+  const themeId = useAppSelector(selectThemeId);
+  //-webkit-touch-callout: none;
+  /*
+document.body.style.webkitTapHighlightColor = 'rgba(0, 0, 0, 0)';
+document.body.style.webkitLineClamp = 'none';
+document.body.style.userSelect = 'none';
 
-  const rightDrawerOpen = useAppSelector(selectRightDrawerOpen);
-
-  // editorRef.current.
-  // const showFab = !leftDrawerOpen && !rightDrawerOpen;
+editor?.commandDOM(
+  `$('body').style.webkitTapHighlightColor='rgba(0, 0, 0, 0)'`,
+);
+editor?.commandDOM(`$('body').style.webkitLineClamp='none'`);
+editor?.commandDOM(`$('body').style.userSelect='none'`);
+*/
+  // editor?.commandDOM(`$('body').style.webkitTouchCallout='none'`);
   const savedContent = activeNote?.content ?? '';
   const contentRef = useRef(savedContent);
   const editorRef = useRef<RichEditor>(null);
+  const editor = editorRef.current;
   let content = contentRef?.current;
+
+  const contentStyle = {
+    backgroundColor: colors.backgroundPaper,
+    color: colors.textPrimary,
+    caretColor: colors.textPrimary,
+    placeholderColor: colors.textSecondary,
+  };
 
   const kbAwareSVStyles: StyleProp<ViewStyle> = {
     position: 'absolute',
@@ -74,13 +81,17 @@ const NoteScreen = () => {
     console.log(savedContent);
   }, [savedContent]);
 
+  // useLayoutEffect(() => {
+  //   editor?.dismissKeyboard();
+  // }, [keyboardShown]);
+
   const debouncedRequest = useDebounce(() =>
     dispatch(updateNote({ id: activeNoteId, content: content })),
   );
 
   useEffect(() => {
     if (editorRef?.current) {
-      isFocused && editorRef.current.focusContentEditor;
+      isFocused && editor?.focusContentEditor;
       !isFocused && editorRef?.current?.blurContentEditor;
     }
   }, [isFocused]);
@@ -90,21 +101,17 @@ const NoteScreen = () => {
     debouncedRequest();
   };
 
-  const handlePressShade: ColorCallback = ({ bg }) =>
-    editorRef.current?.setHiliteColor(bg);
-
-  const handlePressHighlight: ColorCallback = ({ bg, fg }) => {
-    fg && editorRef.current?.setForeColor(fg);
-    editorRef.current?.setHiliteColor(bg);
+  const handlePressShade: ColorCallback = ({ bg }) => {
+    editor?.setHiliteColor(bg);
+    if (themeId === 'dark') {
+      editor?.setForeColor(colors.commonBlack);
+    }
   };
 
-  const handleForeColor = useCallback(() => {
-    editorRef.current?.setForeColor('blue');
-  }, []);
-
-  const handleHaliteColor = useCallback(() => {
-    editorRef.current?.setHiliteColor('red');
-  }, []);
+  const handlePressHighlight: ColorCallback = ({ bg, fg }) => {
+    fg && editor?.setForeColor(fg);
+    editor?.setHiliteColor(bg);
+  };
 
   return (
     <>
@@ -112,17 +119,16 @@ const NoteScreen = () => {
         <KeyboardAwareScrollView contentContainerStyle={kbAwareSVStyles}>
           <RichEditor
             ref={editorRef}
-            // initialFocus
             useContainer={false}
             onChange={handleContentChange}
             initialContentHTML={savedContent}
+            editorStyle={contentStyle}
+            disabled
           />
           {!!editorRef?.current?.isKeyboardOpen && (
             <RichToolbar
               editor={editorRef}
               actions={[
-                actions.foreColor,
-                actions.hiliteColor,
                 actions.insertImage,
                 actions.undo,
                 actions.redo,
@@ -139,8 +145,6 @@ const NoteScreen = () => {
                 actions.heading1,
               ]}
               iconMap={{ [actions.heading1]: handleHead }}
-              foreColor={handleForeColor}
-              hiliteColor={handleHaliteColor}
             />
           )}
           <ColorPalette

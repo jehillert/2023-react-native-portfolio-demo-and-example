@@ -49,9 +49,11 @@ const ColorPalette = ({
         fg={_fg}
         onPress={handlePress}
         {...rest}>
-        <ColorText fg={_fg} style={textStyle}>
-          {txt}
-        </ColorText>
+        {isText && (
+          <ColorText fg={_fg} style={textStyle}>
+            {txt}
+          </ColorText>
+        )}
       </ColorElement>
     );
   });
@@ -73,14 +75,16 @@ const ColorElement = styled(TouchableOpacity)<{
   width: ${({ size }) => `${size}px`};
   border-radius: ${({ size }) => `${size}px`};
   background-color: ${({ bg }) => bg};
+  align-items: center;
+  justify-content: center;
 `;
 
 const PaletteView = styled(View)<{ row: boolean }>`
   flex-flow: ${({ row }) => (row ? `row` : `column`)} nowrap;
 `;
 
-const ColorText = styled(Text.Body1)<{ fg: string }>`
-  color: ${({ fg }) => fg};
+const ColorText = styled(Text.AvatarInitials)<{ fg?: string }>`
+  color: ${({ fg, theme }) => fg ?? theme.colors.textPrimary};
 `;
 
 export type { ColorCallback, Props as ColorPaletteProps };
