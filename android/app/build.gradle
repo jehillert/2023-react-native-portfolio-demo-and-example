@@ -113,7 +113,7 @@ android {
         applicationId "com.jnotes"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 31
+        versionCode 35
         versionName "1.4.0"
         resValue "string", "build_config_package", "com.jnotes"
     }
