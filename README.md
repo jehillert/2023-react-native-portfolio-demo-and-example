@@ -18,22 +18,41 @@
 - TODO: developoment, testing, production environments
 
 # Codebase Reminders
+
 ## [REACT-NATIVE-VECTOR-ICONS](https://github.com/oblador/react-native-vector-icons#upgrading)
 > Upgrading this package often requires the font files linked to your projects to be updated as well. If the automatic linking works for you, running this again should update the fonts. Otherwise you need to follow the steps outlined in the installation section.
+
 ## [JEST MOCKS](https://jestjs.io/docs/manual-mocks)
+
 ### Mocking Node Modules
 - Mocks of node modules should be placed in the __mocks__ directory adjacent to node_modules
 - Automatically mocked. There's no need to explicitly call jest.mock('module_name')
   - FOR THIS TO WORK, THE EXACT NAME OF THE DEPENDENCY IN NODE_MODULES HAS TO BE USED.
   - For nested dependencies, recreate the folder structure leading to the module.
   - Otherwise, the mock needs to be referenced in `setupFiles[]` or `setupFilesAfterEnv[]` in `jest.config.js`.
+
 ### Mocking Built-in Node Modules
 - explicitly call (e.g. `jest.mock('path')`, `jest.mock('fs')`) is required, because build-in modules are not mocked by default.
+
 ###  Manual Mocks
 - Manual mocks are defined by writing a module in a __mocks__/ subdirectory immediately adjacent to the module
 
-### Activating Reactotron
+# § Setting Up
+Untracked files to add locally:
+
+## Add appcenter-config.json file
 ```shell
+# Create appcenter-config.json at `android/app/src/main/assets/appcenter-config.json`
+{
+  "app_secret": "ANDROID_APPCENTER_APP_SECRET"
+}
+
+
+```
+
+## Enabling Reactotron
+```shell
+  # 0 - set REACTOTRON_ENABLED in src/AppConfig to true
   # 1 - Open Reactotron
   # 2 - start metro server (if not already)
   # 3 - run android or ios device

@@ -3,6 +3,7 @@ __notes__/
 
 # sensitive
 google-services.json
+appcenter-config.json
 .bitrise.secrets.yml
 .credentials/
 .env
