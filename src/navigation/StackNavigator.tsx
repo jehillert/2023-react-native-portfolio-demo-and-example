@@ -1,20 +1,20 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { DirectoryScreen, NoteScreen } from '../screens';
-import { Screens } from './types';
+import { ScreensEnum } from './types';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { useTheme } from 'styled-components/native';
 
 import { IconPressable, Text } from '../components';
 import { config as linkingConfig } from '../linking';
-import { RootNavigation } from '.';
+import DrawerPressable from './DrawerPressable';
+import navigationRef from './root-navigation';
 import {
   useInitialURL,
   useLinking,
   useMessagingSubscribe,
   useNotificationsPermission,
 } from '../hooks';
-import DrawerPressable from './DrawerPressable';
 
 type DrawerProps = { drawerId: 'left' | 'right' };
 
@@ -61,7 +61,7 @@ const StackNavigator = () => {
     <NavigationContainer
       linking={linking}
       fallback={<Text.H6>Loading...</Text.H6>}
-      ref={RootNavigation.navigationRef}
+      ref={navigationRef}
       theme={navTheme}>
       <Stack.Navigator
         screenOptions={{
@@ -69,7 +69,7 @@ const StackNavigator = () => {
           headerLeft: backPressable,
         }}>
         <Stack.Screen
-          name={Screens.DIRECTORY}
+          name={ScreensEnum.DIRECTORY}
           component={DirectoryScreen}
           options={{
             title: 'Notes',
@@ -78,7 +78,7 @@ const StackNavigator = () => {
           }}
         />
         <Stack.Screen
-          name={Screens.NOTE}
+          name={ScreensEnum.NOTE}
           component={NoteScreen}
           options={{
             headerRight: noteScreenMenuButton,

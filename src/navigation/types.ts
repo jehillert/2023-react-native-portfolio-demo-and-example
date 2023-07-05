@@ -1,6 +1,6 @@
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 
-enum Screens {
+enum ScreensEnum {
   DIRECTORY = 'Directory',
   NOTE = 'Note',
 }
@@ -8,16 +8,16 @@ enum Screens {
 type CommonNavParams = { id?: string } | undefined;
 
 type StackParamList = {
-  [Screens.DIRECTORY]: CommonNavParams;
-  [Screens.NOTE]: CommonNavParams;
+  [ScreensEnum.DIRECTORY]: CommonNavParams;
+  [ScreensEnum.NOTE]: CommonNavParams;
 };
 
 type DirectoryScreenProps = NativeStackScreenProps<
   StackParamList,
-  Screens.DIRECTORY
+  ScreensEnum.DIRECTORY
 >;
 
-type NoteScreenProps = NativeStackScreenProps<StackParamList, Screens.NOTE>;
+type NoteScreenProps = NativeStackScreenProps<StackParamList, ScreensEnum.NOTE>;
 
 declare global {
   namespace ReactNavigation {
@@ -27,4 +27,4 @@ declare global {
 
 export type { StackParamList, DirectoryScreenProps, NoteScreenProps };
 
-export { Screens };
+export { ScreensEnum };

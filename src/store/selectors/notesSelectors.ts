@@ -1,6 +1,6 @@
 import { createSelector } from '@reduxjs/toolkit';
-import { Note, notesAdapter } from '../slices';
 import { RootState, store } from '../store';
+import { Note, notesAdapter } from '../slices';
 
 const notesSelectors = notesAdapter.getSelectors<RootState>(
   state => state.notes,

@@ -1,12 +1,12 @@
 import { createNavigationContainerRef } from '@react-navigation/native';
-import { Screens } from './types';
+import { ScreensEnum } from './types';
 
 const navigationRef = createNavigationContainerRef();
 
-export function navigate(name: Screens, params: any) {
+export function navigate(name: ScreensEnum, params: any) {
   if (navigationRef.isReady()) {
     navigationRef.navigate(name, params);
   }
 }
 
-export { navigationRef };
+export default navigationRef;

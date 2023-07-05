@@ -11,7 +11,7 @@ import DraggableFlatList, {
 
 import { useAppDispatch, useAppSelector } from '../../hooks/useRedux';
 import { Fab, Text } from '../../components';
-import { Screens } from '../../navigation';
+import { ScreensEnum } from '../../navigation';
 import DrawerLeft from '../NoteScreen/DrawerLeft';
 import { selectActiveNoteId, selectSortedNotes } from '../../store/selectors';
 import {
@@ -48,7 +48,7 @@ const DirectoryScreen = () => {
   const activeNoteId = useAppSelector(selectActiveNoteId);
   const sortedNotes = useAppSelector(selectSortedNotes);
 
-  const navigateToNote = () => navigation.navigate(Screens.NOTE);
+  const navigateToNote = () => navigation.navigate(ScreensEnum.NOTE);
 
   const handleCreateNote = () => {
     dispatch(createNote());
