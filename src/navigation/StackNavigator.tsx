@@ -74,7 +74,8 @@ const StackNavigator = () => {
           options={{
             title: 'Notes',
             headerTitleAlign: 'center',
-            headerLeft: directoryMenuButton,
+            headerRight: directoryMenuButton,
+            headerLeft: undefined,
           }}
         />
         <Stack.Screen

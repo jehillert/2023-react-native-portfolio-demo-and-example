@@ -21,9 +21,7 @@ const useNotificationsPermission = () => {
     isAndroid &&
       PermissionsAndroid.request(
         PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS,
-      ).then(result => {
-        console.log(result);
-      });
+      );
   }, []);
 };
 

@@ -14,7 +14,6 @@ LogBox.ignoreAllLogs();
 
 let App = () => {
   const themeVariant = useColorScheme() ?? 'light';
-  console.log(themeVariant);
   const isDarkMode = themeVariant === 'dark';
   const thm = theme[themeVariant];
   const backgroundStyle = {

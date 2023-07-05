@@ -4,9 +4,8 @@ import { Alert } from 'react-native';
 
 const useMessagingSubscribe = () => {
   useEffect(() => {
-    messaging()
-      .getToken()
-      .then(fcmToken => console.log(fcmToken));
+    messaging().getToken();
+    // .then(fcmToken => console.log(fcmToken));
 
     const subscribe = messaging().setBackgroundMessageHandler(
       async remoteMessage => {

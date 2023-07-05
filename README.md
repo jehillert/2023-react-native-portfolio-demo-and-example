@@ -31,3 +31,53 @@
 - explicitly call (e.g. `jest.mock('path')`, `jest.mock('fs')`) is required, because build-in modules are not mocked by default.
 ###  Manual Mocks
 - Manual mocks are defined by writing a module in a __mocks__/ subdirectory immediately adjacent to the module
+
+### Activating Reactotron
+```shell
+  # 1 - Open Reactotron
+  # 2 - start metro server (if not already)
+  # 3 - run android or ios device
+  # 4 - run the following ADB command:
+  adb reverse tcp:9090 tcp:9090
+  # 5 - Force close and repoen the app.
+```
+
+# § Bitrise
+```shell
+jnotes
+cd android && ./gradlew bundleRelease && cd ..
+```
+
+# § CodePush
+
+```shell
+# IOS - Release an update using the "release-react" command:
+appcenter codepush release-react -a jehillert/jnoter -d Staging
+
+```
+```shell
+# ANDROID - Release an update using the "release-react" command:
+appcenter codepush release-react -a jehillert/jnotes -d Staging
+```
+```shell
+# Set the app to deploy
+appcenter apps set-current jehillert/__app-name__
+```
+
+```shell
+# View CodePush Deployment Keys
+appcenter codepush deployment list --app -k
+```
+
+## iOS Code Signing Key Generation
+```shell
+# generate private RSA key and write it to private.pem file
+cd path/to/save/location
+openssl genrsa -out private.pem
+```
+
+```shell
+# export public key from private.pem into public.pem
+cd path/to/save/location
+openssl rsa -pubout -in private.pem -out public.pem
+```
