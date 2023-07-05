@@ -1,6 +1,7 @@
 import 'react-native-gesture-handler';
 
 import React from 'react';
+import codePush from 'react-native-code-push';
 import { ThemeProvider } from 'styled-components/native';
 import { LogBox, StatusBar, useColorScheme } from 'react-native';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
@@ -11,7 +12,7 @@ import AppWrapper from './AppWrapper';
 
 LogBox.ignoreAllLogs();
 
-const App = () => {
+let App = () => {
   const themeVariant = useColorScheme() ?? 'light';
   console.log(themeVariant);
   const isDarkMode = themeVariant === 'dark';
@@ -32,5 +33,7 @@ const App = () => {
     </ThemeProvider>
   );
 };
+
+App = codePush(App);
 
 export default App;

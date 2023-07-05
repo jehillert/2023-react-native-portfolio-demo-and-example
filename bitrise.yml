@@ -3,6 +3,37 @@ format_version: '11'
 default_step_lib_source: https://github.com/bitrise-io/bitrise-steplib.git
 project_type: react-native
 workflows:
+  Cleanup:
+    description: |
+      Remove secret from appcenter-config-temp.json.
+    steps:
+      - script@1:
+          inputs:
+            - content: |-
+                #!/bin/bash
+
+                # Setup
+                set -e
+                set -o pipefail
+                set -x
+
+                # Define the file path
+                file="android/app/src/main/assets/appcenter-config.json"
+
+                # Create a temporary file
+                temp_file="appcenter-config-temp.json"
+
+                # Copy original line 1 to temp file
+                head -n 1 "$file" > "$temp_file"
+
+                # Write new line 2 to temp file
+                echo '  "app_secret": "ANDROID_APPCENTER_APP_SECRET"' >> "$temp_file"
+
+                # Skip lines 1-2 and append rest of original file
+                tail -n +3 "$file" >> "$temp_file"
+
+                # Replace the original file with the temporary file
+                mv "$temp_file" "$file"
   Setup:
     description: |
       Get current build number from gradle file.
@@ -51,6 +82,11 @@ workflows:
                 PROJECT=./ios/jnotes.xcodeproj/project.pbxproj
                 sed -i '' -e 's/CURRENT_PROJECT_VERSION \= [^\;]*\;/CURRENT_PROJECT_VERSION = '$LATEST_BUILD';/' $PROJECT
                 build_number=`sed -n '/CURRENT_PROJECT_VERSION/{s/CURRENT_PROJECT_VERSION = //;s/;//;s/^[[:space:]]*//;p;q;}' $PROJECT`
+      - change-value@2:
+          inputs:
+            - old_value: ANDROID_APPCENTER_APP_SECRET
+            - new_value: '$ANDROID_APPCENTER_APP_SECRET'
+            - file: '$APPCENTER_CONFIG_JSON_PATH'
       - file-downloader@1:
           inputs:
             - destination: android/app/google-services.json
@@ -128,13 +164,13 @@ workflows:
             - password: '$APPLE_ID_PASSWORD'
             - app_password: '$APP_SPECIFIC_PASSWORD'
             - itunescon_user: '$APPLE_ID_EMAIL'
-  Release:
+  StagingRelease:
     before_run: []
     after_run:
       - Setup
-      - BuildJSBundle
-      - BuildAndDeployAndroid
-      - BuildAndDeployIOS
+      - BundleJs
+      - ReleaseAndroid
+      - ReleaseIOS
     envs:
       - BITRISE_DISTRIBUTION_METHOD: app-store
 meta:
@@ -151,6 +187,10 @@ app:
     - VARIANT: release
     - WORKDIR: '.'
     - ANDROID_PACKAGE_NAME: com.jnotes
+    - APPCENTER_CONFIG_JSON_PATH: '$WORKDIR/android/app/src/main/assets'
 trigger_map:
   - push_branch: main
     workflow: Release
+  - pull_request_source_branch: '*'
+    workflow: Release
+    pull_request_target_branch: release

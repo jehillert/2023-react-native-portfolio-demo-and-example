@@ -1,3 +1,15 @@
 <resources>
-    <string name="app_name">jnotes</string>
+  <string name="app_name">jnotes</string>
+  <string name="appCenterCrashes_whenToSendCrashes" moduleConfig="true" translatable="false">DO_NOT_ASK_JAVASCRIPT</string>
+  <string name="appCenterAnalytics_whenToEnableAnalytics" moduleConfig="true" translatable="false">ALWAYS_SEND</string>
+  <string moduleConfig="true" name="CodePushDeploymentKey">"@string/ANDROID_CODEPUSH_DEPLOYMENT_KEY"</string>
+  <string name="CodePushPublicKey">-----BEGIN PUBLIC KEY-----
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAxOIK5VXKxT4nBNeLQscl
+jzoykQEt7mYtmaTQf3stKzCnLggamnNiQ3cD8tlWB/FJguRslzTssMdgQa1UG9UU
+MHfEMl5HuWBjRtJ0fR8iT8Zk0aHcmV9xlHT1l89w2KfewoyRx94S4nFjeqEkKpP3
+ZCMU72iCceUfNmGFAujZ39S5/49yY4IiAafKWq7T+NqJICQcLKv7rW48oRztI4xl
+u/2Vk4fql7IsbdFDXKCNVJqg+asvfjvc01QbNeiGNk+Jzk5b817GK63w+Q5a7XV6
+X+HJeuyn5MNtTDT4uhkNEiEPBvoR3n8oeYS29rvoD5RLcUpXxEL7JtiNF/egMXWb
+JwIDAQAB
+-----END PUBLIC KEY-----</string>
 </resources>

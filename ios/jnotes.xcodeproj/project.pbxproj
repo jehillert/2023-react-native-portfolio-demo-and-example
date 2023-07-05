@@ -20,6 +20,7 @@
 		9523EDF72A50514500E8C89E /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9523EDF42A50514500E8C89E /* MaterialCommunityIcons.ttf */; };
 		9523EDF82A50514500E8C89E /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9523EDF42A50514500E8C89E /* MaterialCommunityIcons.ttf */; };
 		952462AE2A3823C4005D308E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 952462AD2A3823C4005D308E /* GoogleService-Info.plist */; };
+		95A84EAD2A55712100614B6E /* AppCenter-Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 95A84EAC2A55712100614B6E /* AppCenter-Config.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +55,7 @@
 		952462AD2A3823C4005D308E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		959691542A3D473400898CFE /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		95A0ECC02A2DFC2E0039982D /* jnotes.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = jnotes.entitlements; path = jnotes/jnotes.entitlements; sourceTree = "<group>"; };
+		95A84EAC2A55712100614B6E /* AppCenter-Config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "AppCenter-Config.plist"; path = "jnotes/AppCenter-Config.plist"; sourceTree = "<group>"; };
 		B2252E611DE65B19EF9FD2BE /* Pods_jnotes_jnotesTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_jnotes_jnotesTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -98,6 +100,7 @@
 		13B07FAE1A68108700A75B9A /* jnotes */ = {
 			isa = PBXGroup;
 			children = (
+				95A84EAC2A55712100614B6E /* AppCenter-Config.plist */,
 				95A0ECC02A2DFC2E0039982D /* jnotes.entitlements */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.mm */,
@@ -285,6 +288,7 @@
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				9523EDF52A50514500E8C89E /* MaterialIcons.ttf in Resources */,
+				95A84EAD2A55712100614B6E /* AppCenter-Config.plist in Resources */,
 				952462AE2A3823C4005D308E /* GoogleService-Info.plist in Resources */,
 				9523EDF72A50514500E8C89E /* MaterialCommunityIcons.ttf in Resources */,
 				9012E9AD226344F09CDCB495 /* Roboto-Regular.ttf in Resources */,
