@@ -32,13 +32,13 @@ workflows:
                 # Create a temporary file
                 temp_file=".bitrise.secrets_temp.yml"
 
-                # Read the first line from the original file and write it to the temporary file
+                # Copy original line 1 to temp file
                 head -n 1 "$file" > "$temp_file"
 
-                # Write the new line to the temporary file
+                # Write new line 2 to temp file
                 echo "  - LATEST_BUILD: $INCREMENTED_BUILD_NUMBER" >> "$temp_file"
 
-                # Skip the first two lines and append the remaining lines from the original file to the temporary file
+                # Skip lines 1-2 and append rest of original file
                 tail -n +3 "$file" >> "$temp_file"
 
                 # Replace the original file with the temporary file
@@ -57,8 +57,9 @@ workflows:
             - source: '$BITRISEIO_GOOGLE_SERVICES_JSON_URL'
       - activate-ssh-key@4: {}
       - git-clone@8: {}
-  BuildJSBundle:
-    description: 'Tests, builds and deploys the app using *Deploy to Google Play and
+  BundleJs:
+    description:
+      'Tests, builds and deploys the app using *Deploy to Google Play and
       Apple App stores.
 
       '
@@ -72,9 +73,9 @@ workflows:
             - command: test
             - verbose_log: 'yes'
             - workdir: '$WORKDIR'
-  BuildAndDeployAndroid:
-    description: 'Tests, builds and deploys the app using *Deploy to Google Play and
-      Apple App stores.
+  ReleaseAndroid:
+    description:
+      'Tests, builds and deploys the app using *Deploy to Google Play.
 
       '
     steps:
@@ -98,9 +99,9 @@ workflows:
             - package_name: '$ANDROID_PACKAGE_NAME'
             - track: internal
             - service_account_json_key_path: '$SERVICE_ACCOUNT_JSON_KEY_PATH'
-  BuildAndDeployIOS:
-    description: 'Tests, builds and deploys the app using *Deploy to Google Play and
-      Apple App stores.
+  ReleaseIOS:
+    description:
+      'Tests, builds and deploys the app using *Deploy to Apple App Store.
 
       '
     steps:

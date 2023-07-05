@@ -1,5 +1,6 @@
 # miscellaneous
 __notes__/
+
 # sensitive
 google-services.json
 .bitrise.secrets.yml
