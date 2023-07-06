@@ -3,8 +3,7 @@ import React from 'react';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import styled, { useTheme } from 'styled-components/native';
-import { TouchableOpacity, View } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { Button, TouchableOpacity, View } from 'react-native';
 import DraggableFlatList, {
   RenderItemParams,
 } from 'react-native-draggable-flatlist';
@@ -22,6 +21,7 @@ import {
   setActiveNoteId,
   setIds,
 } from '../../store/slices';
+import { Sentry } from '../../integrations';
 
 type Props = {} & DirectoryScreenProps;
 

@@ -7,10 +7,13 @@ import { LogBox, StatusBar, useColorScheme } from 'react-native';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 
 import { StackNavigator } from './navigation';
+import { initSentry } from './integrations';
 import { theme } from './theme';
 import AppWrapper from './AppWrapper';
 
 LogBox.ignoreAllLogs();
+
+initSentry();
 
 let App = () => {
   const themeVariant = useColorScheme() ?? 'light';
