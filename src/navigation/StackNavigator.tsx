@@ -1,7 +1,7 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { DirectoryScreen, NoteScreen } from '../screens';
-import { ScreensEnum } from './types';
+import { RootStackParamList, ScreensEnum } from './types';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { useTheme } from 'styled-components/native';
 
@@ -16,14 +16,12 @@ import {
   useNotificationsPermission,
 } from '../hooks';
 
-type DrawerProps = { drawerId: 'left' | 'right' };
-
 const linking = {
   prefixes: ['https://hillert.dev', 'jnotes://'],
   config: linkingConfig,
 };
 
-const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const StackNavigator = () => {
   useNotificationsPermission();

@@ -33,6 +33,20 @@
 	</array>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<key>CodePushDeploymentKey</key>
+	<string>$(CODEPUSH_DEPLOYMENT_KEY)</string>
+	<key>CodePushPublicKey</key>
+	<string>-----BEGIN PUBLIC KEY-----
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAxOIK5VXKxT4nBNeLQscl
+jzoykQEt7mYtmaTQf3stKzCnLggamnNiQ3cD8tlWB/FJguRslzTssMdgQa1UG9UU
+MHfEMl5HuWBjRtJ0fR8iT8Zk0aHcmV9xlHT1l89w2KfewoyRx94S4nFjeqEkKpP3
+ZCMU72iCceUfNmGFAujZ39S5/49yY4IiAafKWq7T+NqJICQcLKv7rW48oRztI4xl
+u/2Vk4fql7IsbdFDXKCNVJqg+asvfjvc01QbNeiGNk+Jzk5b817GK63w+Q5a7XV6
+X+HJeuyn5MNtTDT4uhkNEiEPBvoR3n8oeYS29rvoD5RLcUpXxEL7JtiNF/egMXWb
+JwIDAQAB
+-----END PUBLIC KEY-----</string>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -46,8 +60,19 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSExtensionActivationRule</key>
+	<dict>
+		<key>NSExtensionActivationSupportsText</key>
+		<true/>
+	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Roboto-Regular.ttf</string>
+		<string>MaterialCommunityIcons.ttf</string>
+		<string>MaterialIcons.ttf</string>
+	</array>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>
@@ -67,30 +92,5 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-	<key>UIAppFonts</key>
-	<array>
-		<string>Roboto-Regular.ttf</string>
-		<string>MaterialCommunityIcons.ttf</string>
-		<string>MaterialIcons.ttf</string>
-	</array>
-	<key>ITSAppUsesNonExemptEncryption</key>
-	<false/>
-	<key>NSExtensionActivationRule</key>
-	<dict>
-		<key>NSExtensionActivationSupportsText</key>
-		<true/>
-	</dict>
-	<key>CodePushDeploymentKey</key>
-	<string>$(CODEPUSH_DEPLOYMENT_KEY)</string>
-	<key>CodePushPublicKey</key>
-	<string>-----BEGIN PUBLIC KEY-----
-MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAxOIK5VXKxT4nBNeLQscl
-jzoykQEt7mYtmaTQf3stKzCnLggamnNiQ3cD8tlWB/FJguRslzTssMdgQa1UG9UU
-MHfEMl5HuWBjRtJ0fR8iT8Zk0aHcmV9xlHT1l89w2KfewoyRx94S4nFjeqEkKpP3
-ZCMU72iCceUfNmGFAujZ39S5/49yY4IiAafKWq7T+NqJICQcLKv7rW48oRztI4xl
-u/2Vk4fql7IsbdFDXKCNVJqg+asvfjvc01QbNeiGNk+Jzk5b817GK63w+Q5a7XV6
-X+HJeuyn5MNtTDT4uhkNEiEPBvoR3n8oeYS29rvoD5RLcUpXxEL7JtiNF/egMXWb
-JwIDAQAB
------END PUBLIC KEY-----</string>
 </dict>
 </plist>

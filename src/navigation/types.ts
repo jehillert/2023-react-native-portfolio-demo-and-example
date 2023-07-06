@@ -3,28 +3,43 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 enum ScreensEnum {
   DIRECTORY = 'Directory',
   NOTE = 'Note',
+  MARKUP = 'Markup',
 }
 
 type CommonNavParams = { id?: string } | undefined;
 
-type StackParamList = {
+type RootStackParamList = {
   [ScreensEnum.DIRECTORY]: CommonNavParams;
   [ScreensEnum.NOTE]: CommonNavParams;
+  [ScreensEnum.MARKUP]: CommonNavParams;
 };
 
 type DirectoryScreenProps = NativeStackScreenProps<
-  StackParamList,
+  RootStackParamList,
   ScreensEnum.DIRECTORY
 >;
 
-type NoteScreenProps = NativeStackScreenProps<StackParamList, ScreensEnum.NOTE>;
+type NoteScreenProps = NativeStackScreenProps<
+  RootStackParamList,
+  ScreensEnum.NOTE
+>;
+
+type MarkupScreenProps = NativeStackScreenProps<
+  RootStackParamList,
+  ScreensEnum.NOTE
+>;
 
 declare global {
   namespace ReactNavigation {
-    interface RootParamList extends StackParamList {}
+    interface RootParamList extends RootStackParamList {}
   }
 }
 
-export type { StackParamList, DirectoryScreenProps, NoteScreenProps };
+export type {
+  MarkupScreenProps,
+  RootStackParamList,
+  DirectoryScreenProps,
+  NoteScreenProps,
+};
 
 export { ScreensEnum };

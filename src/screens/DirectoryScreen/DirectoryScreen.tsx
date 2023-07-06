@@ -9,11 +9,11 @@ import DraggableFlatList, {
   RenderItemParams,
 } from 'react-native-draggable-flatlist';
 
-import { useAppDispatch, useAppSelector } from '../../hooks/useRedux';
-import { Fab, Text } from '../../components';
-import { ScreensEnum } from '../../navigation';
-import DrawerLeft from '../NoteScreen/DrawerLeft';
 import { selectActiveNoteId, selectSortedNotes } from '../../store/selectors';
+import { useAppDispatch, useAppSelector } from '../../hooks/useRedux';
+import { DirectoryScreenProps, ScreensEnum } from '../../navigation';
+import DrawerLeft from '../NoteScreen/DrawerLeft';
+import { Fab, Text } from '../../components';
 import {
   Note,
   createNote,
@@ -22,6 +22,8 @@ import {
   setActiveNoteId,
   setIds,
 } from '../../store/slices';
+
+type Props = {} & DirectoryScreenProps;
 
 const SpacerView = styled(View)`
   margin-top: 3px;
@@ -41,10 +43,9 @@ const TouchableRowView = styled(TouchableOpacity)`
   background-color: ${({ theme }) => theme.colors.grey['700']};
 `;
 
-const DirectoryScreen = () => {
+const DirectoryScreen = ({ navigation }: Props) => {
   const { colors, shadow } = useTheme();
   const dispatch = useAppDispatch();
-  const navigation = useNavigation();
   const activeNoteId = useAppSelector(selectActiveNoteId);
   const sortedNotes = useAppSelector(selectSortedNotes);
 

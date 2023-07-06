@@ -3,13 +3,7 @@
 import React, { useCallback, useEffect, useLayoutEffect, useRef } from 'react';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useIsFocused } from '@react-navigation/native';
-import {
-  Text as RNText,
-  ColorValue,
-  StyleProp,
-  ViewStyle,
-  TouchableWithoutFeedback,
-} from 'react-native';
+import { Text as RNText, ColorValue, StyleProp, ViewStyle } from 'react-native';
 import {
   actions,
   RichEditor,
@@ -30,12 +24,15 @@ import { useTheme } from 'styled-components/native';
 import ColorPalette, {
   ColorCallback,
 } from '../../components/palettes/ColorPalette';
+import { NoteScreenProps } from '../../navigation';
+
+type Props = {} & NoteScreenProps;
 
 const handleHead = ({ tintColor }: { tintColor: ColorValue }) => (
   <RNText style={{ color: tintColor }}>H1</RNText>
 );
 
-const NoteScreen = () => {
+const NoteScreen = (props: Props) => {
   const { colors } = useTheme();
   const dispatch = useAppDispatch();
   const isFocused = useIsFocused();
