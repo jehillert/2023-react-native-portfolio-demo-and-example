@@ -5,6 +5,9 @@ import { useAppDispatch, useAppSelector } from '../../hooks/useRedux';
 import { selectThemeId } from '../../store/selectors';
 import { ThemeSelection, setThemeId } from '../../store/slices';
 import RadioPanel from '../RadioPanel';
+import { Provider } from 'react-redux';
+import { store } from '../../store/store';
+import { toTitleCase } from '../../utils';
 
 type Props = {};
 
@@ -19,21 +22,25 @@ const ThemeSettingContainer = styled(View)`
 const AppSettingsDrawerContent = ({}: Props) => {
   const dispatch = useAppDispatch();
   const themeId = useAppSelector(selectThemeId);
+  const themeIdTxt = toTitleCase(themeId);
+
   const handleSelect = (themeId: ThemeSelection) => {
-    dispatch(setThemeId(themeId));
+    dispatch(setThemeId((themeId as string).toLowerCase() as ThemeSelection));
   };
 
   return (
-    <DrawerView>
-      <ThemeSettingContainer>
-        <RadioPanel
-          title={'Appearance'}
-          labels={['System', 'Light', 'Dark']}
-          setSelectedValue={handleSelect}
-          selectedValue={themeId}
-        />
-      </ThemeSettingContainer>
-    </DrawerView>
+    <Provider store={store}>
+      <DrawerView>
+        <ThemeSettingContainer>
+          <RadioPanel
+            title={'Appearance'}
+            labels={['System', 'Light', 'Dark']}
+            setSelectedValue={handleSelect}
+            selectedValue={themeIdTxt}
+          />
+        </ThemeSettingContainer>
+      </DrawerView>
+    </Provider>
   );
 };
 

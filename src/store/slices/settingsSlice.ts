@@ -34,8 +34,9 @@ const settingsSlice = createSlice({
   name: 'settings',
   initialState,
   reducers: {
-    setThemeId(state, { payload: theme }: PayloadAction<ThemeSelection>) {
-      state.themeId = theme;
+    setThemeId(state, { payload: themeId }: PayloadAction<ThemeSelection>) {
+      console.log(themeId);
+      state.themeId = themeId;
     },
     setToolbarActions(
       state,
