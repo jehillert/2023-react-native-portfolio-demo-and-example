@@ -88,6 +88,7 @@ const StackNavigator = () => {
             headerTitleAlign: 'center',
             headerRight: settingsDrawerButton,
             headerLeft: undefined,
+            animation: 'slide_from_right',
           }}
         />
         <Stack.Screen
@@ -97,6 +98,7 @@ const StackNavigator = () => {
             title: 'Notes',
             headerTitleAlign: 'center',
             headerRight: markupScreenDrawerButtons,
+            animation: 'slide_from_right',
           }}
         />
       </Stack.Navigator>

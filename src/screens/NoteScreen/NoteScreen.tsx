@@ -78,10 +78,6 @@ editor?.commandDOM(`$('body').style.userSelect='none'`);
     console.log(savedContent);
   }, [savedContent]);
 
-  // useLayoutEffect(() => {
-  //   editor?.dismissKeyboard();
-  // }, [keyboardShown]);
-
   const debouncedRequest = useDebounce(() =>
     dispatch(updateNote({ id: activeNoteId, content: content })),
   );
