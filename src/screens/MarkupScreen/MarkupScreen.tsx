@@ -1,57 +1,64 @@
-import React, { Component } from 'react';
+import React, { useRef, useState } from 'react';
 import { styled } from 'styled-components';
-import { useTheme } from 'styled-components/native';
-import { Button, Linking, Text, View } from 'react-native';
-import { useIsFocused, useNavigation } from '@react-navigation/native';
+import { Text, View } from 'react-native';
 import WebView from 'react-native-webview';
 
 import { MarkupScreenProps } from '../../navigation';
-import { useAppDispatch } from '../../hooks/useRedux';
 
 type Props = {} & MarkupScreenProps;
 
+type MenuSelectionCallback =
+  | ((event: {
+      nativeEvent: {
+        label: string;
+        key: string;
+        selectedText: string;
+      };
+    }) => void)
+  | undefined;
+
 const MarkupScreenContainer = styled(View)<{}>`
   background-color: tan;
+  flex: 1;
 `;
 
 const MarkupScreen = ({}: Props) => {
-  const theme = useTheme();
-  const isFocused = useIsFocused();
-  const dispatch = useAppDispatch();
-  const navigation = useNavigation();
-  const [selectionInfo, setSelectionInfo] = React.useState(null);
-  const webviewRef = React.useRef();
+  const [selectionInfo, setSelectionInfo] = useState<Record<string, string>>();
+  const webviewRef = useRef<WebView>(null);
+  const webview = webviewRef.current;
+
+  const handleCustomMenuSelection: MenuSelectionCallback = ({
+    nativeEvent,
+  }) => {
+    const { label, key, selectedText } = nativeEvent;
+    setSelectionInfo(nativeEvent);
+    // clearing the selection by sending a message. This would need a script on the source page to listen to the message.
+    webview?.postMessage(JSON.stringify({ what: 'clearSelection' }));
+  };
+
   return (
-    <MarkupScreenContainer>
-      <View>
-        <View style={{ height: 120 }}>
-          <WebView
-            ref={webviewRef}
-            source={{ html: HTML }}
-            automaticallyAdjustContentInsets={false}
-            menuItems={[
-              { label: 'Highlight', key: 'highlight' },
-              { label: 'Strikethrough', key: 'strikethrough' },
-            ]}
-            onCustomMenuSelection={webViewEvent => {
-              const { label, key, selectedText } = webViewEvent.nativeEvent;
-              setSelectionInfo(webViewEvent.nativeEvent);
-              // clearing the selection by sending a message. This would need a script on the source page to listen to the message.
-              webviewRef.current?.postMessage(
-                JSON.stringify({ what: 'clearSelection' }),
-              );
-            }}
-          />
-        </View>
-        {selectionInfo && (
-          <Text>
-            onCustomMenuSelection called: {'\n'}- label: {selectionInfo?.label}
-            {'\n'}- key: {selectionInfo?.key}
-            {'\n'}- selectedText: {selectionInfo?.selectedText}
-          </Text>
-        )}
-      </View>
-    </MarkupScreenContainer>
+    <>
+      <MarkupScreenContainer>
+        <WebView
+          ref={webviewRef}
+          source={{ html: HTML }}
+          automaticallyAdjustContentInsets={false}
+          menuItems={[]}
+          // menuItems={[
+          //   { label: 'Highlight', key: 'highlight' },
+          //   { label: 'Strikethrough', key: 'strikethrough' },
+          // ]}
+          onCustomMenuSelection={handleCustomMenuSelection}
+        />
+      </MarkupScreenContainer>
+      {selectionInfo && (
+        <Text>
+          onCustomMenuSelection called: {'\n'}- label: {selectionInfo?.label}
+          {'\n'}- key: {selectionInfo?.key}
+          {'\n'}- selectedText: {selectionInfo?.selectedText}
+        </Text>
+      )}
+    </>
   );
 };
 
@@ -69,7 +76,8 @@ const HTML = `
         margin: 0;
         padding: 0;
         font: 62.5% arial, sans-serif;
-        background: #ccc;
+        background: green;
+        height: 1000px;
       }
     </style>
     <script>

@@ -4,7 +4,7 @@ import { styled } from 'styled-components/native';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { RootStackParamList, ScreensEnum } from './types';
-import { DirectoryScreen, NoteScreen } from '../screens';
+import { DirectoryScreen, MarkupScreen, NoteScreen } from '../screens';
 import { useTheme } from 'styled-components/native';
 
 import navigationRef from './root-navigation';
@@ -94,6 +94,16 @@ const StackNavigator = () => {
         <Stack.Screen
           name={ScreensEnum.NOTE}
           component={NoteScreen}
+          options={{
+            title: 'Notes',
+            headerTitleAlign: 'center',
+            headerRight: markupScreenDrawerButtons,
+            animation: 'slide_from_right',
+          }}
+        />
+        <Stack.Screen
+          name={ScreensEnum.MARKUP}
+          component={MarkupScreen}
           options={{
             title: 'Notes',
             headerTitleAlign: 'center',

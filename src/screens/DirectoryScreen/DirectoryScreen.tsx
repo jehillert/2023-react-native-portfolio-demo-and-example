@@ -60,6 +60,8 @@ const DirectoryScreen = ({ navigation }: Props) => {
     navigateToNote();
   };
 
+  const handleOpenWebview = () => navigation.navigate(ScreensEnum.MARKUP);
+
   const handleDragEnd = ({ data }: { data: Note[] }) => {
     notesAdapter.sortComparer = false;
     const newIds = setIds(data.map(item => item.id));
@@ -134,6 +136,7 @@ const DirectoryScreen = ({ navigation }: Props) => {
         />
         <Fab
           onPress={handleCreateNote}
+          onLongPress={handleOpenWebview}
           iconProps={{
             name: 'plus-circle',
             size: 56,

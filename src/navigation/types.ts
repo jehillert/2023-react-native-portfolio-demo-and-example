@@ -26,7 +26,7 @@ type NoteScreenProps = NativeStackScreenProps<
 
 type MarkupScreenProps = NativeStackScreenProps<
   RootStackParamList,
-  ScreensEnum.NOTE
+  ScreensEnum.MARKUP
 >;
 
 declare global {
