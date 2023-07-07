@@ -16,11 +16,6 @@ let AppCore = () => {
   const themeId = useAppSelector(selectThemeId);
   const appThemeId = themeId === 'system' ? systemThemeId : themeId;
   const barStyle = appThemeId === 'dark' ? Colors.darker : Colors.lighter;
-  console.log(appThemeId);
-  console.log(
-    '▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬',
-  );
-  const activeTheme = theme[appThemeId];
 
   return (
     <ThemeProvider theme={theme[appThemeId]}>

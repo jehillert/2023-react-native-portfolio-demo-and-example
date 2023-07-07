@@ -35,8 +35,11 @@ const AppSettingsDrawerContent = ({}: Props) => {
           <RadioPanel
             title={'Appearance'}
             labels={['System', 'Light', 'Dark']}
+            labelPosition="left"
+            styleCheckbox={{ marginRight: 0 }}
             setSelectedValue={handleSelect}
             selectedValue={themeIdTxt}
+            variant="check"
           />
         </ThemeSettingContainer>
       </DrawerView>
