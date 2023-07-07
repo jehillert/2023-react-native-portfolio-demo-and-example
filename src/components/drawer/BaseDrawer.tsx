@@ -1,5 +1,5 @@
 import React, { ReactNode, useEffect } from 'react';
-import styled from 'styled-components/native';
+import styled, { useTheme } from 'styled-components/native';
 import { Text } from 'react-native';
 import { DrawerProps } from 'react-native-drawer-layout/lib/typescript/src/types';
 import { Drawer as _Drawer } from 'react-native-drawer-layout';
@@ -15,8 +15,9 @@ type Props = {
 } & Partial<DrawerProps>;
 
 const Drawer = styled(_Drawer)`
-  z-index: 100000000;
+  z-index: 10;
   elevation: 10;
+  flex: 1;
 `;
 
 const DummyDrawerContent = () => <Text>Drawer content</Text>;
@@ -30,12 +31,14 @@ const BaseDrawer = ({
 }: Props) => {
   const dispatch = useAppDispatch();
   const open = useAppSelector(state => selectDrawerStateById(state, drawerId));
+  const { colors } = useTheme();
   const handleOpen = () => dispatch(setDrawer({ drawerId, newState: true }));
   const handleClose = () => dispatch(setDrawer({ drawerId, newState: false }));
 
   return (
     <Drawer
       {...rest}
+      drawerStyle={{ backgroundColor: colors.backgroundPaper }}
       drawerType="front"
       onClose={handleClose}
       onOpen={handleOpen}

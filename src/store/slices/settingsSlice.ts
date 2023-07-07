@@ -26,7 +26,7 @@ interface ISettings {
 }
 
 const initialState: ISettings = {
-  themeId: 'light',
+  themeId: 'system',
   toolbarActions: defaultToolbarActions,
 };
 
@@ -34,10 +34,10 @@ const settingsSlice = createSlice({
   name: 'settings',
   initialState,
   reducers: {
-    themeIdSet(state, { payload: theme }: PayloadAction<ThemeSelection>) {
+    setThemeId(state, { payload: theme }: PayloadAction<ThemeSelection>) {
       state.themeId = theme;
     },
-    toolbarActionsSet(
+    setToolbarActions(
       state,
       { payload: toolbarActions }: PayloadAction<ToolbarAction[]>,
     ) {
@@ -46,5 +46,6 @@ const settingsSlice = createSlice({
   },
 });
 
-export const { themeIdSet, toolbarActionsSet } = settingsSlice.actions;
+export type { ThemeSelection };
+export const { setThemeId, setToolbarActions } = settingsSlice.actions;
 export default settingsSlice.reducer;

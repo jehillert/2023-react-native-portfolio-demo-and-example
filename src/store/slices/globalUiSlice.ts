@@ -33,21 +33,23 @@ const globalUiSlice = createSlice({
       { payload }: PayloadAction<{ drawerId: DrawerId; newState: boolean }>,
     ) {
       const { drawerId, newState } = payload;
-      state.drawerState[drawerId] = newState;
+      console.log(drawerId, newState);
+      for (const id in state.drawerState) {
+        const isOpen = state.drawerState[id as DrawerId];
+        if (id !== drawerId && isOpen) {
+          state.drawerState[id as DrawerId] = false;
+        } else {
+          state.drawerState[drawerId] = newState;
+        }
+      }
     },
     setInitialUrl(state, { payload }: PayloadAction<string | null>) {
       state.initialUrl = payload;
     },
-    leftDrawerOpened(state, { payload }: PayloadAction<boolean>) {
-      state.leftDrawerOpen = payload;
-    },
-    rightDrawerOpened(state, { payload }: PayloadAction<boolean>) {
-      state.rightDrawerOpen = payload;
-    },
   },
 });
 
-export const { leftDrawerOpened, rightDrawerOpened, setDrawer, setInitialUrl } =
+export const { setDrawer, setInitialUrl } =
   globalUiSlice.actions;
 
 export { DrawerId };

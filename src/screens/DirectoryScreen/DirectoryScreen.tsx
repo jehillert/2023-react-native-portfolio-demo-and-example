@@ -11,7 +11,12 @@ import DraggableFlatList, {
 import { selectActiveNoteId, selectSortedNotes } from '../../store/selectors';
 import { useAppDispatch, useAppSelector } from '../../hooks/useRedux';
 import { DirectoryScreenProps, ScreensEnum } from '../../navigation';
-import { BaseDrawer, Fab, Text } from '../../components';
+import {
+  AppSettingsDrawerContent,
+  BaseDrawer,
+  Fab,
+  Text,
+} from '../../components';
 import {
   DrawerId,
   Note,
@@ -114,7 +119,10 @@ const DirectoryScreen = ({ navigation }: Props) => {
   };
 
   return (
-    <BaseDrawer drawerId={DrawerId.APP_SETTINGS} drawerPosition="left">
+    <BaseDrawer
+      drawerId={DrawerId.APP_SETTINGS}
+      drawerPosition="left"
+      renderDrawerContent={() => <AppSettingsDrawerContent />}>
       <View style={{ flex: 1 }}>
         <DraggableFlatList
           data={sortedNotes}
