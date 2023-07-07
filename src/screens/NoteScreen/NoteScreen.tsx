@@ -1,6 +1,6 @@
 // testing
 // https://coolsoftware.dev/blog/testing-react-native-webview-with-react-native-testing-library/
-import React, { useCallback, useEffect, useLayoutEffect, useRef } from 'react';
+import React, { useEffect, useLayoutEffect, useRef } from 'react';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useIsFocused } from '@react-navigation/native';
 import { Text as RNText, ColorValue, StyleProp, ViewStyle } from 'react-native';
@@ -10,7 +10,6 @@ import {
   RichToolbar,
 } from 'react-native-pell-rich-editor';
 
-import DrawerRight from './DrawerRight';
 import { useAppDispatch, useAppSelector } from '../../hooks/useRedux';
 import { useDebounce, useKeyboard } from '../../hooks';
 import { highlight2Colors, isAndroid, shadeColors } from '../../constants';
@@ -19,12 +18,13 @@ import {
   selectNoteById,
   selectThemeId,
 } from '../../store/selectors';
-import { updateNote } from '../../store/slices';
+import { DrawerId, updateNote } from '../../store/slices';
 import { useTheme } from 'styled-components/native';
 import ColorPalette, {
   ColorCallback,
 } from '../../components/palettes/ColorPalette';
 import { NoteScreenProps } from '../../navigation';
+import { BaseDrawer } from '../../components';
 
 type Props = {} & NoteScreenProps;
 
@@ -112,51 +112,53 @@ editor?.commandDOM(`$('body').style.userSelect='none'`);
 
   return (
     <>
-      <DrawerRight>
-        <KeyboardAwareScrollView contentContainerStyle={kbAwareSVStyles}>
-          <RichEditor
-            ref={editorRef}
-            useContainer={false}
-            onChange={handleContentChange}
-            initialContentHTML={savedContent}
-            editorStyle={contentStyle}
-            disabled
-          />
-          {!!editorRef?.current?.isKeyboardOpen && (
-            <RichToolbar
-              editor={editorRef}
-              actions={[
-                actions.insertImage,
-                actions.undo,
-                actions.redo,
-                actions.setBold,
-                actions.setItalic,
-                actions.setUnderline,
-                actions.outdent,
-                actions.indent,
-                actions.alignLeft,
-                actions.alignCenter,
-                actions.alignRight,
-                actions.blockquote,
-                actions.checkboxList,
-                actions.heading1,
-              ]}
-              iconMap={{ [actions.heading1]: handleHead }}
+      <BaseDrawer drawerId={DrawerId.MARKUP_TOOLS} drawerPosition="left">
+        <BaseDrawer drawerId={DrawerId.DOCUMENT_MAP} drawerPosition="right">
+          <KeyboardAwareScrollView contentContainerStyle={kbAwareSVStyles}>
+            <RichEditor
+              ref={editorRef}
+              useContainer={false}
+              onChange={handleContentChange}
+              initialContentHTML={savedContent}
+              editorStyle={contentStyle}
+              disabled
             />
-          )}
-          <ColorPalette
-            colors={highlight2Colors}
-            onPressColor={handlePressHighlight}
-            positioning={{ quadrant: 1 }}
-          />
-          <ColorPalette
-            colors={shadeColors}
-            onPressColor={handlePressShade}
-            positioning={{ isRichToolbar: true, quadrant: 3 }}
-            row
-          />
-        </KeyboardAwareScrollView>
-      </DrawerRight>
+            {!!editorRef?.current?.isKeyboardOpen && (
+              <RichToolbar
+                editor={editorRef}
+                actions={[
+                  actions.insertImage,
+                  actions.undo,
+                  actions.redo,
+                  actions.setBold,
+                  actions.setItalic,
+                  actions.setUnderline,
+                  actions.outdent,
+                  actions.indent,
+                  actions.alignLeft,
+                  actions.alignCenter,
+                  actions.alignRight,
+                  actions.blockquote,
+                  actions.checkboxList,
+                  actions.heading1,
+                ]}
+                iconMap={{ [actions.heading1]: handleHead }}
+              />
+            )}
+            <ColorPalette
+              colors={highlight2Colors}
+              onPressColor={handlePressHighlight}
+              positioning={{ quadrant: 1 }}
+            />
+            <ColorPalette
+              colors={shadeColors}
+              onPressColor={handlePressShade}
+              positioning={{ isRichToolbar: true, quadrant: 3 }}
+              row
+            />
+          </KeyboardAwareScrollView>
+        </BaseDrawer>
+      </BaseDrawer>
     </>
   );
 };

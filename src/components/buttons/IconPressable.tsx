@@ -43,11 +43,7 @@ const BackButton = ({
   };
 
   return (
-    <IconPressable
-      {...props}
-      style={style}
-      onPress={handleBackPress}
-      hitSlop={30}>
+    <IconPressable {...props} style={style} onPress={handleBackPress}>
       <Icon
         name={name}
         size={size}

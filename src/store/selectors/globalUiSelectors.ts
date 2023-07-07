@@ -1,11 +1,16 @@
+import { createSelector } from '@reduxjs/toolkit';
 import { RootState } from '../store';
+import { DrawerId } from '../slices';
 
 const selectInitialUrl = (state: RootState) => state.globalUi.initialUrl;
 
-const selectLeftDrawerOpen = (state: RootState) =>
-  state.globalUi.leftDrawerOpen;
+const selectDrawerState = (state: RootState) => state.globalUi.drawerState;
 
-const selectRightDrawerOpen = (state: RootState) =>
-  state.globalUi.rightDrawerOpen;
+const selectDrawer = (state: RootState, drawerId: DrawerId) => drawerId;
 
-export { selectInitialUrl, selectLeftDrawerOpen, selectRightDrawerOpen };
+const selectDrawerStateById = createSelector(
+  [selectDrawerState, selectDrawer],
+  (drawerState, drawerId) => drawerState[drawerId] ?? false,
+);
+
+export { selectInitialUrl, selectDrawerState, selectDrawerStateById };

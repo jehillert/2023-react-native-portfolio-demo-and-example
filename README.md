@@ -44,7 +44,7 @@ Untracked files to add locally:
 ```shell
 # Create appcenter-config.json at `android/app/src/main/assets/appcenter-config.json`
 {
-  "app_secret": "ANDROID_APPCENTER_APP_SECRET"
+  "app_secret": "APPCENTER_APP_SECRET_ANDROID"
 }
 
 

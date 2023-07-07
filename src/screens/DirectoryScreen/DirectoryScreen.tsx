@@ -3,7 +3,7 @@ import React from 'react';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import styled, { useTheme } from 'styled-components/native';
-import { Button, TouchableOpacity, View } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 import DraggableFlatList, {
   RenderItemParams,
 } from 'react-native-draggable-flatlist';
@@ -11,9 +11,9 @@ import DraggableFlatList, {
 import { selectActiveNoteId, selectSortedNotes } from '../../store/selectors';
 import { useAppDispatch, useAppSelector } from '../../hooks/useRedux';
 import { DirectoryScreenProps, ScreensEnum } from '../../navigation';
-import DrawerLeft from '../NoteScreen/DrawerLeft';
-import { Fab, Text } from '../../components';
+import { BaseDrawer, Fab, Text } from '../../components';
 import {
+  DrawerId,
   Note,
   createNote,
   notesAdapter,
@@ -21,7 +21,6 @@ import {
   setActiveNoteId,
   setIds,
 } from '../../store/slices';
-import { Sentry } from '../../integrations';
 
 type Props = {} & DirectoryScreenProps;
 
@@ -115,7 +114,7 @@ const DirectoryScreen = ({ navigation }: Props) => {
   };
 
   return (
-    <DrawerLeft>
+    <BaseDrawer drawerId={DrawerId.APP_SETTINGS} drawerPosition="left">
       <View style={{ flex: 1 }}>
         <DraggableFlatList
           data={sortedNotes}
@@ -136,7 +135,7 @@ const DirectoryScreen = ({ navigation }: Props) => {
           positioning={{ quadrant: 2 }}
         />
       </View>
-    </DrawerLeft>
+    </BaseDrawer>
   );
 };
 

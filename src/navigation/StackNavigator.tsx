@@ -1,14 +1,17 @@
 import React from 'react';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { DirectoryScreen, NoteScreen } from '../screens';
-import { RootStackParamList, ScreensEnum } from './types';
+import { View } from 'react-native';
+import { styled } from 'styled-components/native';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { RootStackParamList, ScreensEnum } from './types';
+import { DirectoryScreen, NoteScreen } from '../screens';
 import { useTheme } from 'styled-components/native';
 
+import navigationRef from './root-navigation';
+import DrawerToggle from '../components/drawer/DrawerToggle';
+import { DrawerId } from '../store/slices';
 import { IconPressable, Text } from '../components';
 import { config as linkingConfig } from '../linking';
-import DrawerPressable from './DrawerPressable';
-import navigationRef from './root-navigation';
 import {
   useInitialURL,
   useLinking,
@@ -21,6 +24,12 @@ const linking = {
   config: linkingConfig,
 };
 
+const DrawerButtonGroupContainer = styled(View)`
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: 12px;
+`;
+
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const StackNavigator = () => {
@@ -30,10 +39,8 @@ const StackNavigator = () => {
   useLinking();
   // not gonna work until you add android assetLinks.json (https://medium.com/@ertemishakk/deep-linking-with-react-native-c7fbaac25127)
   useInitialURL();
-
   const theme = useTheme();
   const colors = theme?.colors;
-
   const navTheme = colors
     ? {
         ...DefaultTheme,
@@ -49,11 +56,18 @@ const StackNavigator = () => {
       }
     : DefaultTheme;
 
-  const backPressable = () => <IconPressable name="chevron-left" />;
+  const backButton = () => <IconPressable name="chevron-left" />;
 
-  const directoryMenuButton = () => <DrawerPressable drawerId="left" />;
+  const settingsDrawerButton = () => (
+    <DrawerToggle drawerId={DrawerId.APP_SETTINGS} name="dock-right" />
+  );
 
-  const noteScreenMenuButton = () => <DrawerPressable drawerId="right" />;
+  const markupScreenDrawerButtons = () => (
+    <DrawerButtonGroupContainer>
+      <DrawerToggle drawerId={DrawerId.MARKUP_TOOLS} name="dock-left" />
+      <DrawerToggle drawerId={DrawerId.DOCUMENT_MAP} name="dock-right" />
+    </DrawerButtonGroupContainer>
+  );
 
   return (
     <NavigationContainer
@@ -64,7 +78,7 @@ const StackNavigator = () => {
       <Stack.Navigator
         screenOptions={{
           headerStyle: { backgroundColor: 'tomato' },
-          headerLeft: backPressable,
+          headerLeft: backButton,
         }}>
         <Stack.Screen
           name={ScreensEnum.DIRECTORY}
@@ -72,7 +86,7 @@ const StackNavigator = () => {
           options={{
             title: 'Notes',
             headerTitleAlign: 'center',
-            headerRight: directoryMenuButton,
+            headerRight: settingsDrawerButton,
             headerLeft: undefined,
           }}
         />
@@ -80,7 +94,9 @@ const StackNavigator = () => {
           name={ScreensEnum.NOTE}
           component={NoteScreen}
           options={{
-            headerRight: noteScreenMenuButton,
+            title: 'Notes',
+            headerTitleAlign: 'center',
+            headerRight: markupScreenDrawerButtons,
           }}
         />
       </Stack.Navigator>

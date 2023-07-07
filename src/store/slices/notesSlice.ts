@@ -19,7 +19,8 @@ type Note = {
 };
 
 export const notesAdapter = createEntityAdapter<Note>({
-  sortComparer: (a, b) => a.title.localeCompare(b.title),
+  sortComparer: ({ title: aTitle = '' }: Note, { title: bTitle = '' }: Note) =>
+    aTitle.localeCompare(bTitle),
 });
 
 const notesSlice = createSlice({

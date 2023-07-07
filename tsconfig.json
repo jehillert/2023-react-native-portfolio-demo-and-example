@@ -1,3 +1,6 @@
 {
+  "compilerOptions": {
+    "noErrorTruncation": true
+  },
   "extends": "@tsconfig/react-native/tsconfig.json"
 }

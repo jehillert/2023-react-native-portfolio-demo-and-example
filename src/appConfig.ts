@@ -1,13 +1,25 @@
 import Config from 'react-native-config';
 
-type AppConfig = Record<string, string | boolean | undefined>;
+type Environment = 'development' | 'production' | 'staging';
 
-const STORAGE_TYPE: 'AsyncStorage' | 'MMKV' = 'AsyncStorage';
-const REACTOTRON_ENABLED = true;
+type AppConfig = {
+  APP_BUILD: string | undefined;
+  APP_VERSION: string | undefined;
+  CODEPUSH_ENABLED: boolean;
+  ENVIRONMENT: Environment | undefined;
+  REACTOTRON_ENABLED: boolean;
+  SENTRY_ENABLED: boolean;
+  STORAGE_TYPE: 'AsyncStorage' | 'MMKV';
+};
 
 const appConfig: AppConfig = {
-  STORAGE_TYPE,
-  REACTOTRON_ENABLED: REACTOTRON_ENABLED && __DEV__,
+  APP_BUILD: Config.APP_BUILD,
+  APP_VERSION: Config.APP_VERSION,
+  CODEPUSH_ENABLED: Config.CODEPUSH_ENABLED === 'true',
+  ENVIRONMENT: Config.ENVIRONMENT as Environment,
+  REACTOTRON_ENABLED: Config.REACTOTRON_ENABLED === 'true' && __DEV__,
+  STORAGE_TYPE: __DEV__ ? 'AsyncStorage' : 'MMKV',
+  SENTRY_ENABLED: Config.SENTRY_ENABLED === 'TRUE',
 };
 
 export default appConfig;

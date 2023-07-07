@@ -2,7 +2,7 @@
   <string name="app_name">jnotes</string>
   <string name="appCenterCrashes_whenToSendCrashes" moduleConfig="true" translatable="false">DO_NOT_ASK_JAVASCRIPT</string>
   <string name="appCenterAnalytics_whenToEnableAnalytics" moduleConfig="true" translatable="false">ALWAYS_SEND</string>
-  <string moduleConfig="true" name="CodePushDeploymentKey">@string/ANDROID_CODEPUSH_DEPLOYMENT_KEY</string>
+  <string moduleConfig="true" name="CodePushDeploymentKey">@string/CODEPUSH_DEPLOYMENT_KEY_ANDROID</string>
   <string name="CodePushPublicKey">-----BEGIN PUBLIC KEY-----
 MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAxOIK5VXKxT4nBNeLQscl
 jzoykQEt7mYtmaTQf3stKzCnLggamnNiQ3cD8tlWB/FJguRslzTssMdgQa1UG9UU

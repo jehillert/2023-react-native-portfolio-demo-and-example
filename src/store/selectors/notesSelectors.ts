@@ -1,6 +1,6 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { RootState, store } from '../store';
-import { Note, notesAdapter } from '../slices';
+import { Note, notesAdapter } from '../slices/notesSlice';
 
 const notesSelectors = notesAdapter.getSelectors<RootState>(
   state => state.notes,
@@ -32,9 +32,11 @@ const selectSortedNotes = createSelector(
 
 export {
   selectActiveNoteId,
+  selectEntities,
   selectNoteById,
   selectNoteIds,
   selectNotes,
   selectSortedNotes,
+  selectTotal,
   selectUntitledNoteCount,
 };

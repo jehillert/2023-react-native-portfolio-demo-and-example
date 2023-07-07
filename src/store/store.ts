@@ -1,4 +1,7 @@
-import { AnyAction } from 'redux';
+// NOTE - MMKV Store Shareable b/n Apps: https://github.com/mrousavy/react-native-mmkv#app-groups.
+// NOTE - MMKV Encryptable: But remember to change answers about encryption ion ios/google play
+// NOTE - Customizing Sentry Enhancer: docs.sentry.io/platforms/javascript/guides/react/configuration/integrations/redux/
+import { AnyAction, StoreEnhancer } from 'redux';
 import { MMKV } from 'react-native-mmkv';
 import { ThunkAction, configureStore } from '@reduxjs/toolkit';
 import { persistStore, persistReducer, Storage } from 'redux-persist';
@@ -6,11 +9,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Reactotron from '../../ReactotronConfig';
 import rootReducer from './root-reducer';
 import appConfig from '../appConfig';
+import { Sentry } from '../integrations';
 
-const { REACTRON_ENABLED, STORAGE_TYPE } = appConfig;
+const { REACTOTRON_ENABLED, STORAGE_TYPE } = appConfig;
 
-// NOTE: MMKV enables data sharing between your apps. https://github.com/mrousavy/react-native-mmkv#app-groups.
-// NOTE: data can be encrypted. but remember to change answers about encryption ion ios/google play
 let storage: Storage;
 
 if (STORAGE_TYPE === 'MMKV') {
@@ -34,6 +36,18 @@ if (STORAGE_TYPE === 'MMKV') {
   storage = AsyncStorage;
 }
 
+const getEnhancers = () => {
+  let enhancers: StoreEnhancer[] = [];
+
+  enhancers.push(Sentry.createReduxEnhancer());
+
+  REACTOTRON_ENABLED &&
+    Reactotron?.createEnhancer &&
+    enhancers.push(Reactotron?.createEnhancer());
+
+  return enhancers;
+};
+
 const persistConfig = {
   key: 'root',
   // whitelist: ['notes', 'settings'],
@@ -42,17 +56,12 @@ const persistConfig = {
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-let enhancers =
-  REACTRON_ENABLED && Reactotron?.createEnhancer
-    ? [Reactotron?.createEnhancer()]
-    : [];
-
 const store = configureStore({
   reducer: persistedReducer,
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({ serializableCheck: false }),
   devTools: __DEV__,
-  enhancers,
+  enhancers: getEnhancers(),
 });
 
 if (__DEV__ && (module as any).hot) {
