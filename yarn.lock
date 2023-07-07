@@ -2267,6 +2267,11 @@
   resolved "https://registry.yarnpkg.com/@types/json-schema/-/json-schema-7.0.12.tgz#d70faba7039d5fca54c83c7dbab41051d2b6f6cb"
   integrity sha512-Hr5Jfhc9eYOQNPYO5WLDq/n4jqijdHNlDXjuAQkkt+mWdQR+XJToOHrsD4cPaMXpn6KO7y2+wM8AZEs8VpBLVA==
 
+"@types/latinize@^0.2.15":
+  version "0.2.15"
+  resolved "https://registry.yarnpkg.com/@types/latinize/-/latinize-0.2.15.tgz#a1718e53c5d6a37a554cbe4209e4ab15adc975f9"
+  integrity sha512-II5/n9Ug5kEn20y7P93M3nsbCEaldEMt/QbAh72zKEiV0jTOCsRwEeIC+4yrqTy5vPMc6evhtE6NOCtNnSAm6w==
+
 "@types/lodash.debounce@^4.0.7":
   version "4.0.7"
   resolved "https://registry.yarnpkg.com/@types/lodash.debounce/-/lodash.debounce-4.0.7.tgz#0285879defb7cdb156ae633cecd62d5680eded9f"
@@ -5920,6 +5925,11 @@ kleur@^3.0.3:
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/kleur/-/kleur-3.0.3.tgz#a79c9ecc86ee1ce3fa6206d1216c501f147fc07e"
   integrity sha512-eTIzlVOSUR+JxdDFepEYcBMtZ9Qqdef+rnzWdRZuMbOywu5tO2w2N7rqjoANZ5k9vywhL6Br1VRjUIgTQx4E8w==
+
+latinize@^0.5.0:
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/latinize/-/latinize-0.5.0.tgz#b81cc6faf3b4e6373b771c50c1a6d96df653f392"
+  integrity sha512-SHzxgdcFP/64lUEfX3183QALY2KdSQxad3gmhCc/b03QN1mbx0AnJWvsQjqoJLbucY9pJuK+NMbnasUIocDmnQ==
 
 leven@^3.1.0:
   version "3.1.0"

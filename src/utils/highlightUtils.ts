@@ -173,7 +173,7 @@ function escapeRegExpFn(string: string): string {
   return string.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&');
 }
 
-export type { Chunk };
+export type { Chunk, FindAllArgs, FindChunksArgs };
 
 export {
   combineChunks,
