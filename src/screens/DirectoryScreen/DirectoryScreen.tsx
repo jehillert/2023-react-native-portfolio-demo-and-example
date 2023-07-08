@@ -76,12 +76,7 @@ const DirectoryScreen = ({ navigation }: Props) => {
     dispatch(setIds(data.map(item => item.id)));
   };
 
-  const renderItem = ({
-    item,
-    getIndex,
-    drag,
-    isActive,
-  }: RenderItemParams<Note>) => {
+  const renderItem = ({ item, getIndex, isActive }: RenderItemParams<Note>) => {
     const handleNotePress = () => {
       dispatch(setActiveNoteId(item.id));
       navigateToNote();

@@ -116,7 +116,7 @@ editor?.commandDOM(`$('body').style.userSelect='none'`);
               onChange={handleContentChange}
               initialContentHTML={savedContent}
               editorStyle={contentStyle}
-              // disabled
+              initialFocus
             />
             {!!editorRef?.current?.isKeyboardOpen && (
               <RichToolbar
@@ -140,17 +140,6 @@ editor?.commandDOM(`$('body').style.userSelect='none'`);
                 iconMap={{ [actions.heading1]: handleHead }}
               />
             )}
-            <ColorPalette
-              colors={highlight2Colors}
-              onPressColor={handlePressHighlight}
-              positioning={{ quadrant: 1 }}
-            />
-            <ColorPalette
-              colors={shadeColors}
-              onPressColor={handlePressShade}
-              positioning={{ isRichToolbar: true, quadrant: 3 }}
-              row
-            />
           </KeyboardAwareScrollView>
         </BaseDrawer>
       </BaseDrawer>

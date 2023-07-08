@@ -1,19 +1,20 @@
-const globalHighlight = `globalHighlight (bg, fg = undefined) => {
+const globalHighlight = `const globalHighlight = (bg, fg = undefined) => {
   let count = 0;
   let TEXT;
   let dv;
 
   TEXT =
-    '' +
-    (window.getSelection
-      ? window.getSelection()
-      : document.getSelection
-      ? document.getSelection()
-      : document.selection.createRange().text);
+  '' +
+  (window.getSelection
+    ? window.getSelection()
+    : document.getSelection
+    ? document.getSelection()
+    : document.selection.createRange().text);
 
-  if (!TEXT) TEXT = prompt('Enter search phrase:', '');
+    if (!TEXT) return;
 
-  dv = document.defaultView;
+    dv = document.defaultView;
+    window.ReactNativeWebView.postMessage('INSIDE HIGHLIGHT FCN');
 
   function searchWithinNode(node, te, len) {
     var pos, skip, spannode, middlebit, endbit, middleclone;
@@ -58,28 +59,16 @@ const globalHighlight = `globalHighlight (bg, fg = undefined) => {
     "'.";
 }`;
 
-// const postedMessage = JSON.stringify({
-//   actionType: 'hightlight',
-//   actionArgs: {
-//     color: 'blue',
-//   },
-// });
-
-// const data = JSON.parse(postedMessage);
-
-// console.log(data.actionType);
-// console.log(data.actionArgs);
-
 const listener = `
-  ${globalHighlight}
-
-  const messageEventListenerFn = (e) => {
+const messageEventListenerFn = (e) => {
+    ${globalHighlight}
     try {
       if (e.origin === '' && typeof window.ReactNativeWebView === 'object') {
         const { target, action, args} = JSON.parse(e.data);
         switch (action) {
           case 'globalHighlight':
-            const { bg, fg = undefined } = args;
+            const { colors: { bg, fg = undefined }} = args;
+            // window.ReactNativeWebView.postMessage(JSON.stringify(fg));
             globalHighlight(bg, fg)
             break;
           case 'clearSelection':

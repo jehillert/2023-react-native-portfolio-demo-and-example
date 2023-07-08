@@ -1,16 +1,17 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { styled } from 'styled-components';
-import { View } from 'react-native';
+import { Alert, View } from 'react-native';
 import WebView, { WebViewMessageEvent } from 'react-native-webview';
 
 import { selectActiveNoteId, selectNoteById } from '../../store/selectors';
 import { ColorCallback } from '../../components/palettes/ColorPalette';
 import { highlight2Colors, shadeColors } from '../../constants';
-import { highlightGlobally, initInject } from './webviewUtils';
+import { listener, initInject } from './webviewUtils';
 import { useAppSelector } from '../../hooks/useRedux';
 import { MarkupScreenProps } from '../../navigation';
 import { useTheme } from 'styled-components/native';
 import { ColorPalette } from '../../components';
+import { hScale } from '../../theme/themeUtils';
 
 type Props = {} & MarkupScreenProps;
 
@@ -25,8 +26,12 @@ type MenuSelectionCallback =
   | undefined;
 
 const MarkupScreenContainer = styled(View)<{}>`
-  background-color: tan;
   flex: 1;
+`;
+
+const WebviewContainer = styled(View)<{}>`
+  flex: 1;
+  margin-right: ${hScale(32)}px;
 `;
 
 const MarkupScreen = ({}: Props) => {
@@ -74,14 +79,14 @@ const MarkupScreen = ({}: Props) => {
     const message = JSON.stringify({
       // target: 'webview',
       action: 'globalHighlight',
-      args: { color: { bg, fg } },
+      args: { colors: { bg, fg } },
     });
     webview?.postMessage(message);
   };
 
   const handleMessage = ({ nativeEvent: { data } }: WebViewMessageEvent) => {
-    // Alert.alert('Message received from JS: ', data);
-    console.log(data);
+    Alert.alert('Message received from JS: ', data);
+    // console.log(data);
     // const { content } = JSON.parse(data);
     // console.log(content);
   };
@@ -89,19 +94,25 @@ const MarkupScreen = ({}: Props) => {
   return (
     <>
       <MarkupScreenContainer>
-        <WebView
-          ref={webviewRef}
-          source={{ html: initInject(content, bodyStyle) }}
-          automaticallyAdjustContentInsets={false}
-          menuItems={[]}
-          injectedJavaScript={injected}
-          onCustomMenuSelection={handleCustomMenuSelection}
-          onMessage={handleMessage}
-        />
+        <WebviewContainer>
+          <WebView
+            ref={webviewRef}
+            source={{ html: initInject(content, bodyStyle) }}
+            automaticallyAdjustContentInsets={false}
+            menuItems={[]}
+            injectedJavaScript={injected}
+            injectedJavaScriptBeforeContentLoaded={listener}
+            onCustomMenuSelection={handleCustomMenuSelection}
+            onMessage={handleMessage}
+          />
+        </WebviewContainer>
         <ColorPalette
           colors={highlight2Colors}
           onPressColor={handlePressHighlight}
-          positioning={{ quadrant: 1 }}
+          positioning={{
+            quadrant: 1,
+            offsetX: 8,
+          }}
         />
         <ColorPalette
           colors={shadeColors}
