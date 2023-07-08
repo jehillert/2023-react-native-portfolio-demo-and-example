@@ -108,7 +108,7 @@ const RadioPanel = ({
   controllerProps,
   ...radioButtonProps
 }: Props) => {
-  const theme = useTheme();
+  const { colors } = useTheme();
   const checkmarkSize = 16;
   const isControlled = asForm && !!controllerProps;
 
@@ -136,8 +136,8 @@ const RadioPanel = ({
               {label}
               <RadioButton.Android
                 {...radioButtonProps}
-                color={theme.colors.primaryMain}
-                uncheckedColor={theme.colors.actionDisabled}
+                color={colors.primaryMain}
+                uncheckedColor={colors.actionDisabled}
                 value={labelValue}
                 status={status}
                 onPress={handlePress(labelValue)}
@@ -154,7 +154,13 @@ const RadioPanel = ({
               style={styleRow}>
               {label}
               <Checkbox style={styleCheckbox} checkmarkSize={checkmarkSize}>
-                {checked && <Icon name="check-bold" size={checkmarkSize} />}
+                {checked && (
+                  <Icon
+                    name="check-bold"
+                    size={checkmarkSize}
+                    color={colors.textPrimary}
+                  />
+                )}
               </Checkbox>
             </CheckmarkPressable>
           );

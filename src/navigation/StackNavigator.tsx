@@ -79,6 +79,7 @@ const StackNavigator = () => {
         screenOptions={{
           headerStyle: { backgroundColor: 'tomato' },
           headerLeft: backButton,
+          presentation: 'card',
         }}>
         <Stack.Screen
           name={ScreensEnum.DIRECTORY}

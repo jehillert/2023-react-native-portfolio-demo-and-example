@@ -1,5 +1,5 @@
 export * from './stringUtils';
-export * from './highlightUtils';
+export * from './rnHighlightUtils';
 
 import uuidDefaultExport from 'react-native-uuid';
 

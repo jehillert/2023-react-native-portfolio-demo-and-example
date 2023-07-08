@@ -1,9 +1,8 @@
 import React from 'react';
-import { Pressable, PressableProps, StyleProp, ViewStyle } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { Pressable, PressableProps, StyleProp, ViewStyle } from 'react-native';
 import { IconProps } from 'react-native-vector-icons/Icon';
 import { SvgProps } from 'react-native-svg';
-
 import { Positioner, PositionerProps } from '../utility';
 
 type SvgFabProps = {

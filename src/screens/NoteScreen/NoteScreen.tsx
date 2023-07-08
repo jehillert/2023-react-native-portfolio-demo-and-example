@@ -34,13 +34,12 @@ const handleHead = ({ tintColor }: { tintColor: ColorValue }) => (
 
 const NoteScreen = (props: Props) => {
   const { colors } = useTheme();
+  const { keyboardHeight } = useKeyboard();
   const dispatch = useAppDispatch();
   const isFocused = useIsFocused();
-  const { keyboardHeight, keyboardShown } = useKeyboard();
   const activeNoteId = useAppSelector(selectActiveNoteId);
   const activeNote = useAppSelector(() => selectNoteById(activeNoteId));
   const themeId = useAppSelector(selectThemeId);
-  //-webkit-touch-callout: none;
   /*
 document.body.style.webkitTapHighlightColor = 'rgba(0, 0, 0, 0)';
 document.body.style.webkitLineClamp = 'none';
@@ -74,13 +73,13 @@ editor?.commandDOM(`$('body').style.userSelect='none'`);
     bottom: keyboardHeight,
   };
 
-  useEffect(() => {
-    console.log(savedContent);
-  }, [savedContent]);
-
   const debouncedRequest = useDebounce(() =>
     dispatch(updateNote({ id: activeNoteId, content: content })),
   );
+
+  useEffect(() => {
+    console.log(savedContent);
+  }, [savedContent]);
 
   useEffect(() => {
     if (editorRef?.current) {
@@ -117,7 +116,7 @@ editor?.commandDOM(`$('body').style.userSelect='none'`);
               onChange={handleContentChange}
               initialContentHTML={savedContent}
               editorStyle={contentStyle}
-              disabled
+              // disabled
             />
             {!!editorRef?.current?.isKeyboardOpen && (
               <RichToolbar

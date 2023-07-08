@@ -3,7 +3,7 @@ import React from 'react';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import styled, { useTheme } from 'styled-components/native';
-import { TouchableOpacity, View } from 'react-native';
+import { View } from 'react-native';
 import DraggableFlatList, {
   RenderItemParams,
 } from 'react-native-draggable-flatlist';
@@ -26,6 +26,7 @@ import {
   setActiveNoteId,
   setIds,
 } from '../../store/slices';
+import { IconButton, TouchableRipple } from 'react-native-paper';
 
 type Props = {} & DirectoryScreenProps;
 
@@ -42,9 +43,18 @@ const SwipeContainer = styled(View)`
   background-color: ${({ theme }) => theme.colors.errorMain};
 `;
 
-const TouchableRowView = styled(TouchableOpacity)`
-  padding: 16px;
+const RowView = styled(View)`
   background-color: ${({ theme }) => theme.colors.grey['700']};
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+  padding-horizontal: 3%;
+  padding-vertical: 3%;
+`;
+
+const ActionGroupView = styled(View)`
+  flex-direction: row;
+  align-items: center;
 `;
 
 const DirectoryScreen = ({ navigation }: Props) => {
@@ -60,8 +70,6 @@ const DirectoryScreen = ({ navigation }: Props) => {
     navigateToNote();
   };
 
-  const handleOpenWebview = () => navigation.navigate(ScreensEnum.MARKUP);
-
   const handleDragEnd = ({ data }: { data: Note[] }) => {
     notesAdapter.sortComparer = false;
     const newIds = setIds(data.map(item => item.id));
@@ -74,6 +82,16 @@ const DirectoryScreen = ({ navigation }: Props) => {
     drag,
     isActive,
   }: RenderItemParams<Note>) => {
+    const handleNotePress = () => {
+      dispatch(setActiveNoteId(item.id));
+      navigateToNote();
+    };
+
+    const handleMarkerPress = () => {
+      dispatch(setActiveNoteId(item.id));
+      navigation.navigate(ScreensEnum.MARKUP);
+    };
+
     const handlePress = () => {
       dispatch(setActiveNoteId(item.id));
       navigateToNote();
@@ -106,16 +124,27 @@ const DirectoryScreen = ({ navigation }: Props) => {
         onFailed={() => console.log('onFailed')}
         onSwipeableClose={() => console.log('onSwipeableClose')}
         onSwipeableOpen={handleSwipeOpened}
-        // onSwipeableOpen={() => console.log('onSwipeableOpen')}
         onSwipeableWillClose={() => console.log('onSwipeableWillClose')}
         onSwipeableWillOpen={() => console.log('onSwipeableWillOpen')}>
-        <TouchableRowView
-          onPress={handlePress}
-          disabled={!activeNoteId}
-          onLongPress={drag}
-          delayLongPress={250}>
+        <RowView>
           <Text.H6>{item.title}</Text.H6>
-        </TouchableRowView>
+          <ActionGroupView>
+            <IconButton
+              icon="text-box"
+              iconColor={colors.textSecondary}
+              onPress={handleNotePress}
+              mode="contained-tonal"
+              size={32}
+            />
+            <IconButton
+              icon="marker"
+              iconColor={colors.textSecondary}
+              onPress={handleMarkerPress}
+              mode="contained-tonal"
+              size={28}
+            />
+          </ActionGroupView>
+        </RowView>
       </Swipeable>
     );
   };
@@ -136,7 +165,6 @@ const DirectoryScreen = ({ navigation }: Props) => {
         />
         <Fab
           onPress={handleCreateNote}
-          onLongPress={handleOpenWebview}
           iconProps={{
             name: 'plus-circle',
             size: 56,

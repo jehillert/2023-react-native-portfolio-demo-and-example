@@ -1,7 +1,7 @@
 // utility fns source: https://github.com/bvaughn/highlight-words-core
-import * as Chunks from './highlightUtils';
+import * as Chunks from './rnHighlightUtils';
 import latinize from 'latinize';
-import { Chunk } from './highlightUtils';
+import { Chunk } from './rnHighlightUtils';
 
 describe('utils', () => {
   const TEXT = 'This is a string with words to search.';

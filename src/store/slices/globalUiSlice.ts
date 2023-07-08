@@ -33,7 +33,6 @@ const globalUiSlice = createSlice({
       { payload }: PayloadAction<{ drawerId: DrawerId; newState: boolean }>,
     ) {
       const { drawerId, newState } = payload;
-      console.log(drawerId, newState);
       for (const id in state.drawerState) {
         const isOpen = state.drawerState[id as DrawerId];
         if (id !== drawerId && isOpen) {
@@ -49,8 +48,7 @@ const globalUiSlice = createSlice({
   },
 });
 
-export const { setDrawer, setInitialUrl } =
-  globalUiSlice.actions;
+export const { setDrawer, setInitialUrl } = globalUiSlice.actions;
 
 export { DrawerId };
 
