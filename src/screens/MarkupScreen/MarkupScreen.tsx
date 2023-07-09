@@ -58,10 +58,20 @@ const MarkupScreen = ({}: Props) => {
   };
 
   const handlePressHighlight: ColorCallback = ({ backgroundColor, color }) => {
+    const globalHighlightArgs = {
+      styles: {
+        backgroundColor,
+        color,
+      },
+      searchConfig: {
+        wholeWordOnly: false,
+        caseSensitive: false,
+      },
+    };
+
     const message = JSON.stringify({
-      // target: 'webview',
       action: 'globalHighlight',
-      args: { colors: { backgroundColor, color } },
+      args: globalHighlightArgs,
     });
     webview?.postMessage(message);
   };
