@@ -60,9 +60,9 @@ const messageEventListenerFn = (e) => {
         const { target, action, args} = JSON.parse(e.data);
         switch (action) {
           case 'globalHighlight':
-            const { colors: { bg, fg = undefined }} = args;
-            // window.ReactNativeWebView.postMessage(JSON.stringify(fg));
-            globalHighlight(bg, fg)
+            const { colors: { backgroundColor, color = undefined }} = args;
+            // window.ReactNativeWebView.postMessage(JSON.stringify(color));
+            globalHighlight(backgroundColor, color)
             break;
           case 'clearSelection':
             window.getSelection()?.removeAllRanges()

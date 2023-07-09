@@ -15,16 +15,6 @@ import { hScale } from '../../theme/themeUtils';
 
 type Props = {} & MarkupScreenProps;
 
-type MenuSelectionCallback =
-  | ((event: {
-      nativeEvent: {
-        label: string;
-        key: string;
-        selectedText: string;
-      };
-    }) => void)
-  | undefined;
-
 const MarkupScreenContainer = styled(View)<{}>`
   flex: 1;
 `;
@@ -63,15 +53,15 @@ const MarkupScreen = ({}: Props) => {
   const clearSelection = () =>
     webviewRef.current?.postMessage(JSON.stringify({ what: 'clearSelection' }));
 
-  const handlePressShade: ColorCallback = ({ bg }) => {
+  const handlePressShade: ColorCallback = ({ backgroundColor }) => {
     webview?.injectJavaScript(getWebViewContent);
   };
 
-  const handlePressHighlight: ColorCallback = ({ bg, fg }) => {
+  const handlePressHighlight: ColorCallback = ({ backgroundColor, color }) => {
     const message = JSON.stringify({
       // target: 'webview',
       action: 'globalHighlight',
-      args: { colors: { bg, fg } },
+      args: { colors: { backgroundColor, color } },
     });
     webview?.postMessage(message);
   };

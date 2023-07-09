@@ -1,42 +1,46 @@
 const black = '#000000';
 const white = '#ffffff';
 
-type PaletteColorProp = { bg: string; fg?: string; txt?: string };
+type PaletteColorProp = {
+  backgroundColor: string;
+  color?: string;
+  txt?: string;
+};
 
 const shadeColors: PaletteColorProp[] = [
-  { bg: '#B499D3' },
-  { bg: '#9AB9EE' },
-  { bg: '#DFF399' },
-  { bg: '#FEF799' },
-  { bg: '#FCD599' },
-  { bg: '#F399D2' },
+  { backgroundColor: '#B499D3' },
+  { backgroundColor: '#9AB9EE' },
+  { backgroundColor: '#DFF399' },
+  { backgroundColor: '#FEF799' },
+  { backgroundColor: '#FCD599' },
+  { backgroundColor: '#F399D2' },
 ];
 
 const highlightColors: PaletteColorProp[] = [
-  { bg: '#470091' },
-  { bg: '#0050D4' },
-  { bg: '#04CC1E' },
-  { bg: '#FCEC00' },
-  { bg: '#F79701' },
-  { bg: '#ED1B23' },
+  { backgroundColor: '#470091' },
+  { backgroundColor: '#0050D4' },
+  { backgroundColor: '#04CC1E' },
+  { backgroundColor: '#FCEC00' },
+  { backgroundColor: '#F79701' },
+  { backgroundColor: '#ED1B23' },
 ];
 
 const highlight2Colors: PaletteColorProp[] = [
-  { bg: '#470091', fg: white, txt: 'a' },
-  { bg: '#0050D4', fg: white, txt: 'a' },
-  { bg: '#04CC1E', fg: black, txt: 'a' },
-  { bg: '#FCEC00', fg: black, txt: 'a' },
-  { bg: '#F79701', fg: black, txt: 'a' },
-  { bg: '#ED1B23', fg: white, txt: 'a' },
+  { backgroundColor: '#470091', color: white, txt: 'a' },
+  { backgroundColor: '#0050D4', color: white, txt: 'a' },
+  { backgroundColor: '#04CC1E', color: black, txt: 'a' },
+  { backgroundColor: '#FCEC00', color: black, txt: 'a' },
+  { backgroundColor: '#F79701', color: black, txt: 'a' },
+  { backgroundColor: '#ED1B23', color: white, txt: 'a' },
 ];
 
 const fontColors: PaletteColorProp[] = [
-  { bg: white, fg: '#470091', txt: 'a' },
-  { bg: white, fg: '#0050D4', txt: 'a' },
-  { bg: white, fg: '#04CC1E', txt: 'a' },
-  { bg: white, fg: '#FCEC00', txt: 'a' },
-  { bg: white, fg: '#F79701', txt: 'a' },
-  { bg: white, fg: '#ED1B23', txt: 'a' },
+  { backgroundColor: white, color: '#470091', txt: 'a' },
+  { backgroundColor: white, color: '#0050D4', txt: 'a' },
+  { backgroundColor: white, color: '#04CC1E', txt: 'a' },
+  { backgroundColor: white, color: '#FCEC00', txt: 'a' },
+  { backgroundColor: white, color: '#F79701', txt: 'a' },
+  { backgroundColor: white, color: '#ED1B23', txt: 'a' },
 ];
 
 export type { PaletteColorProp };

@@ -13,7 +13,10 @@ import { PaletteColorProp } from '../../constants';
 import Text from '../Text';
 import { Surface as BaseSurface } from 'react-native-paper';
 
-type ColorCallback = (props: { bg: string; fg?: string }) => void;
+type ColorCallback = (props: {
+  backgroundColor: string;
+  color?: string;
+}) => void;
 
 type Props = {
   colors: PaletteColorProp[];
@@ -26,14 +29,14 @@ type Props = {
 } & TouchableOpacityProps;
 
 const ColorElement = styled(TouchableOpacity)<{
-  bg: string;
-  fg?: string;
+  backgroundColor: string;
+  color?: string;
   size: number;
 }>`
   height: ${({ size }) => `${size}px`};
   width: ${({ size }) => `${size}px`};
   border-radius: ${({ size }) => `${size}px`};
-  background-color: ${({ bg }) => bg};
+  background-color: ${({ backgroundColor }) => backgroundColor};
   align-items: center;
   justify-content: center;
 `;
@@ -42,8 +45,8 @@ const PaletteView = styled(View)<{ row: boolean }>`
   flex-flow: ${({ row }) => (row ? `row` : `column`)} nowrap;
 `;
 
-const ColorText = styled(Text.AvatarInitials)<{ fg?: string }>`
-  color: ${({ fg, theme }) => fg ?? theme.colors.textPrimary};
+const ColorText = styled(Text.AvatarInitials)<{ color?: string }>`
+  color: ${({ color, theme }) => color ?? theme.colors.textPrimary};
 `;
 
 const Surface = styled(BaseSurface)<{ size: number }>`
@@ -61,26 +64,30 @@ const ColorPalette = ({
   textStyle,
   ...rest
 }: Props) => {
-  const ColorElements = colors.map(color => {
-    const { bg, fg, txt } = color;
+  const ColorElements = colors.map(paletteColor => {
+    const { backgroundColor, color, txt } = paletteColor;
     const isText = !!txt;
-    const _fg = isText && !fg ? 'transparent' : fg ? fg : undefined;
-    const id = isText ? `${bg}-${fg}-${txt}` : `${bg}-${fg}`;
+    const _color = isText && !color ? 'transparent' : color ? color : undefined;
+    const id = isText
+      ? `${backgroundColor}-${color}-${txt}`
+      : `${backgroundColor}-${color}`;
 
     const handlePress = () =>
-      isText ? onPressColor({ bg, fg }) : onPressColor({ bg });
+      isText
+        ? onPressColor({ backgroundColor, color })
+        : onPressColor({ backgroundColor });
 
     return (
       <Surface key={id} style={style} size={size} mode="elevated" elevation={3}>
         <ColorElement
           id={id}
           size={size}
-          bg={bg}
-          fg={_fg}
+          backgroundColor={backgroundColor}
+          color={_color}
           onPress={handlePress}
           {...rest}>
           {isText && (
-            <ColorText fg={_fg} style={textStyle}>
+            <ColorText color={_color} style={textStyle}>
               {txt}
             </ColorText>
           )}
