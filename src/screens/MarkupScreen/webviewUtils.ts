@@ -1,66 +1,61 @@
-const globalHighlight = `const globalHighlight = (bg, fg = undefined) => {
+const globalHighlight = `
+const globalHighlight = (bg, fg = undefined) => {
   let count = 0;
-  let TEXT;
-  let dv;
+  let selectedText;
 
-  TEXT =
-  '' +
-  (window.getSelection
-    ? window.getSelection()
-    : document.getSelection
-    ? document.getSelection()
-    : document.selection.createRange().text);
+  selectedText = document.getSelection().toString();
 
-    if (!TEXT) return;
+  if (!selectedText) return;
 
-    dv = document.defaultView;
-    window.ReactNativeWebView.postMessage('INSIDE HIGHLIGHT FCN');
+  const searchWithinNode = (node, searchText) => {
+    let pos;
+    let skip;
+    let spanNode;
+    let middlebit;
+    let middleclone;
 
-  function searchWithinNode(node, te, len) {
-    var pos, skip, spannode, middlebit, endbit, middleclone;
     skip = 0;
-    if (node.nodeType == 3) {
-      pos = node.data.toUpperCase().indexOf(te);
+
+    const { childNodes, nodeType, tagName } = node;
+
+    if (nodeType == Node.TEXT_NODE) {
+      pos = node.data.toUpperCase().indexOf(searchText);
       if (pos >= 0) {
-        spannode = document.createElement('SPAN');
-        spannode.style.backgroundColor = bg;
+        spanNode = document.createElement('SPAN');
+        spanNode.style.backgroundColor = bg;
         if (fg) {
-          spannode.style.color = fg;
+          spanNode.style.color = fg;
         }
         middlebit = node.splitText(pos);
-        endbit = middlebit.splitText(len);
+        endbit = middlebit.splitText(searchText.length);
         middleclone = middlebit.cloneNode(true);
-        spannode.appendChild(middleclone);
-        middlebit.parentNode.replaceChild(spannode, middlebit);
+        spanNode.appendChild(middleclone);
+        middlebit.parentNode.replaceChild(spanNode, middlebit);
         ++count;
         skip = 1;
       }
     } else if (
-      node.nodeType == 1 &&
-      node.childNodes &&
-      node.tagName.toUpperCase() != 'SCRIPT' &&
-      node.tagName.toUpperCase != 'STYLE'
+      nodeType === Node.ELEMENT_NODE &&
+      childNodes &&
+      tagName.toUpperCase() !== 'SCRIPT' &&
+      tagName.toUpperCase() !== 'STYLE'
     ) {
-      for (var child = 0; child < node.childNodes.length; ++child) {
-        child = child + searchWithinNode(node.childNodes[child], te, len);
+      for (let child = 0; child < node.childNodes.length; ++child) {
+        child = child + searchWithinNode(node.childNodes[child], searchText);
       }
     }
     return skip;
-  }
-  window.status = "Searching for '" + TEXT + "'...";
-  searchWithinNode(document.body, TEXT.toUpperCase(), TEXT.length);
-  window.status =
-    'Found ' +
-    count +
-    ' occurrence' +
-    (count == 1 ? '' : 's') +
-    " of '" +
-    TEXT +
-    "'.";
-}`;
+  };
+  searchWithinNode(document.body, selectedText.toUpperCase());
+
+  return count;
+};
+`;
 
 const listener = `
 const messageEventListenerFn = (e) => {
+  // window.ReactNativeWebView.postMessage('hi!');
+
     ${globalHighlight}
     try {
       if (e.origin === '' && typeof window.ReactNativeWebView === 'object') {
@@ -89,10 +84,10 @@ const messageEventListenerFn = (e) => {
   document.addEventListener('message', (e) => messageEventListenerFn(e));
 `;
 
-const initInject = (document: string, bodyStyle: string) => `
-  <!DOCTYPE html>
+const initInject = (document: string, bodyStyle: string) => `<!DOCTYPE html>\n
   <html>
     <head>
+      <meta name="viewport" content="width=device-width, initial-scale=1">
       <script>
         ${listener}
       </script>
@@ -105,66 +100,3 @@ const initInject = (document: string, bodyStyle: string) => `
 `;
 
 export { initInject, listener };
-
-/*
-
-const highlightGlobally = (bg: string, fg?: string) => `
-javascript: (function() {
-  let count = 0;
-  let TEXT;
-  let dv;
-
-  TEXT =
-    '' +
-    (window.getSelection
-      ? window.getSelection()
-      : document.getSelection
-      ? document.getSelection()
-      : document.selection.createRange().text);
-
-  if (!TEXT) TEXT = prompt('Enter search phrase:', '');
-
-  dv = document.defaultView;
-
-  function searchWithinNode(node, te, len) {
-    var pos, skip, spannode, middlebit, endbit, middleclone;
-    skip = 0;
-    if (node.nodeType == 3) {
-      pos = node.data.toUpperCase().indexOf(te);
-      if (pos >= 0) {
-        spannode = document.createElement('SPAN');
-        spannode.style.backgroundColor = '${bg}';
-        ${fg ? `spannode.style.color = '${fg}';` : ''}
-        middlebit = node.splitText(pos);
-        endbit = middlebit.splitText(len);
-        middleclone = middlebit.cloneNode(true);
-        spannode.appendChild(middleclone);
-        middlebit.parentNode.replaceChild(spannode, middlebit);
-        ++count;
-        skip = 1;
-      }
-    } else if (
-      node.nodeType == 1 &&
-      node.childNodes &&
-      node.tagName.toUpperCase() != 'SCRIPT' &&
-      node.tagName.toUpperCase != 'STYLE'
-    ) {
-      for (var child = 0; child < node.childNodes.length; ++child) {
-        child = child + searchWithinNode(node.childNodes[child], te, len);
-      }
-    }
-    return skip;
-  }
-  window.status = "Searching for '" + TEXT + "'...";
-  searchWithinNode(document.body, TEXT.toUpperCase(), TEXT.length);
-  window.status =
-    'Found ' +
-    count +
-    ' occurrence' +
-    (count == 1 ? '' : 's') +
-    " of '" +
-    TEXT +
-    "'.";
-})();
-`;
-*/
