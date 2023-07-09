@@ -30,17 +30,9 @@ import { IconButton, TouchableRipple } from 'react-native-paper';
 
 type Props = {} & DirectoryScreenProps;
 
-const SpacerView = styled(View)`
-  margin-top: 3px;
-`;
-
-const SwipeContainer = styled(View)`
-  width: 100%;
+const ActionGroupView = styled(View)`
   flex-direction: row;
   align-items: center;
-  justify-content: flex-end;
-  padding: 16px;
-  background-color: ${({ theme }) => theme.colors.errorMain};
 `;
 
 const RowView = styled(View)`
@@ -52,9 +44,21 @@ const RowView = styled(View)`
   padding-vertical: 3%;
 `;
 
-const ActionGroupView = styled(View)`
+const SwipeContainer = styled(View)`
+  width: 100%;
   flex-direction: row;
   align-items: center;
+  justify-content: flex-end;
+  padding: 16px;
+  background-color: ${({ theme }) => theme.colors.errorMain};
+`;
+
+const SpacerView = styled(View)`
+  margin-top: 3px;
+`;
+
+const TitleText = styled(Text.H6)`
+  color: ${({ theme }) => theme.colors.textPrimary};
 `;
 
 const DirectoryScreen = ({ navigation }: Props) => {
@@ -122,7 +126,7 @@ const DirectoryScreen = ({ navigation }: Props) => {
         onSwipeableWillClose={() => console.log('onSwipeableWillClose')}
         onSwipeableWillOpen={() => console.log('onSwipeableWillOpen')}>
         <RowView>
-          <Text.H6>{item.title}</Text.H6>
+          <TitleText>{item.title}</TitleText>
           <ActionGroupView>
             <IconButton
               icon="text-box"

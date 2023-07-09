@@ -15,48 +15,6 @@ type FloatingContainerProps = {
   offsetY: number;
 };
 
-/**
- * children
- * @prop quadrant - the corner to position the fab
- * @prop offsetX - the horizontal offset from the nearest side (left/right)
- * @prop offsetY - the vertical offset from the nearest side (top/bottom)
- * @prop isRichToolbar - is element meant to rest above a richToolbar at bottom of screen
- */
-type Props = {
-  children?: ReactNode;
-  quadrant?: Quadrant;
-  isRichToolbar?: boolean;
-  offsetX?: number;
-  offsetY?: number;
-  containerStyle?: StyleProp<ViewStyle>;
-};
-
-const Positioner = ({
-  children,
-  containerStyle,
-  quadrant = 1,
-  isRichToolbar = false,
-  offsetX = 16,
-  offsetY = 16,
-}: Props) => {
-  const { bottom } = useSafeAreaInsets();
-  const { keyboardShown } = useKeyboard();
-  const toolbarOffset = isRichToolbar ? richToolbarHeight : 0;
-  const isBottom = quadrant === 2 || quadrant === 3;
-  const bottomOffset = keyboardShown ? toolbarOffset : bottom;
-  const _offsetY = isBottom ? offsetY + bottomOffset : offsetY;
-
-  return (
-    <FabContainer
-      quadrant={quadrant}
-      offsetX={offsetX}
-      offsetY={_offsetY}
-      style={containerStyle}>
-      {children}
-    </FabContainer>
-  );
-};
-
 const FabContainer = styled(View)<FloatingContainerProps>`
   position: absolute;
   ${({ quadrant, offsetX, offsetY }) => {
@@ -89,6 +47,49 @@ const FabContainer = styled(View)<FloatingContainerProps>`
   align-items: flex-end;
   z-index: 1000;
 `;
+
+/**
+ * children
+ * @prop quadrant - the corner to position the fab
+ * @prop offsetX - the horizontal offset from the nearest side (left/right)
+ * @prop offsetY - the vertical offset from the nearest side (top/bottom)
+ * @prop isRichToolbar - is element meant to rest above a richToolbar at bottom of screen
+ */
+type Props = {
+  children?: ReactNode;
+  quadrant?: Quadrant;
+  isRichToolbar?: boolean;
+  offsetX?: number;
+  offsetY?: number;
+  containerStyle?: StyleProp<ViewStyle>;
+  style?: StyleProp<ViewStyle>;
+};
+
+const Positioner = ({
+  children,
+  quadrant = 1,
+  isRichToolbar = false,
+  offsetX = 16,
+  offsetY = 16,
+  style,
+}: Props) => {
+  const { bottom } = useSafeAreaInsets();
+  const { keyboardShown } = useKeyboard();
+  const toolbarOffset = isRichToolbar ? richToolbarHeight : 0;
+  const isBottom = quadrant === 2 || quadrant === 3;
+  const bottomOffset = keyboardShown ? toolbarOffset : bottom;
+  const _offsetY = isBottom ? offsetY + bottomOffset : offsetY;
+
+  return (
+    <FabContainer
+      quadrant={quadrant}
+      offsetX={offsetX}
+      offsetY={_offsetY}
+      style={style}>
+      {children}
+    </FabContainer>
+  );
+};
 
 export type { OffsetUnit, Props };
 export default Positioner;

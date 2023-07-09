@@ -1,7 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { styled } from 'styled-components';
 import { Alert, View } from 'react-native';
-import WebView, { WebViewMessageEvent } from 'react-native-webview';
+import BaseWebView, { WebViewMessageEvent } from 'react-native-webview';
 
 import { selectActiveNoteId, selectNoteById } from '../../store/selectors';
 import { ColorCallback } from '../../components/palettes/ColorPalette';
@@ -29,9 +29,9 @@ const MarkupScreenContainer = styled(View)<{}>`
   flex: 1;
 `;
 
-const WebviewContainer = styled(View)<{}>`
+const WebView = styled(BaseWebView)`
   flex: 1;
-  margin-right: ${hScale(32)}px;
+  padding-right: ${hScale(32)}px;
 `;
 
 const MarkupScreen = ({}: Props) => {
@@ -39,8 +39,7 @@ const MarkupScreen = ({}: Props) => {
   const activeNoteId = useAppSelector(selectActiveNoteId);
   const activeNote = useAppSelector(() => selectNoteById(activeNoteId));
   const content = activeNote?.content ?? '';
-  const [textSelection, setTextSelection] = useState<string>();
-  const webviewRef = useRef<WebView>(null);
+  const webviewRef = useRef<BaseWebView>(null);
   const webview = webviewRef.current;
 
   const getWebViewContent = `
@@ -58,21 +57,14 @@ const MarkupScreen = ({}: Props) => {
   const injected = `document.body.style = ${bodyStyle}`;
 
   useEffect(() => {
-    console.log(`textSelection: ${textSelection}`);
-  }, [textSelection]);
+    webview?.injectJavaScript(listener);
+  }, []);
 
   const clearSelection = () =>
     webviewRef.current?.postMessage(JSON.stringify({ what: 'clearSelection' }));
 
-  const handleCustomMenuSelection: MenuSelectionCallback = ({
-    nativeEvent,
-  }) => {
-    setTextSelection(nativeEvent?.selectedText);
-  };
-
   const handlePressShade: ColorCallback = ({ bg }) => {
     webview?.injectJavaScript(getWebViewContent);
-    // webview?.injectJavaScript(highlightGlobally(bg));
   };
 
   const handlePressHighlight: ColorCallback = ({ bg, fg }) => {
@@ -94,18 +86,15 @@ const MarkupScreen = ({}: Props) => {
   return (
     <>
       <MarkupScreenContainer>
-        <WebviewContainer>
-          <WebView
-            ref={webviewRef}
-            source={{ html: initInject(content, bodyStyle) }}
-            automaticallyAdjustContentInsets={false}
-            menuItems={[]}
-            injectedJavaScript={injected}
-            injectedJavaScriptBeforeContentLoaded={listener}
-            onCustomMenuSelection={handleCustomMenuSelection}
-            onMessage={handleMessage}
-          />
-        </WebviewContainer>
+        <WebView
+          ref={webviewRef}
+          source={{ html: initInject(content, bodyStyle) }}
+          automaticallyAdjustContentInsets={false}
+          menuItems={[]}
+          injectedJavaScript={injected}
+          // injectedJavaScriptBeforeContentLoaded={listener}
+          onMessage={handleMessage}
+        />
         <ColorPalette
           colors={highlight2Colors}
           onPressColor={handlePressHighlight}
