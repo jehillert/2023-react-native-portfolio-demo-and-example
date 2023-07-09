@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
-    "noErrorTruncation": true
+    "noErrorTruncation": true,
+    "allowJs": true
   },
   "extends": "@tsconfig/react-native/tsconfig.json"
 }

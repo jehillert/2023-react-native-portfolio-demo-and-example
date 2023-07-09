@@ -1,5 +1,18 @@
 const globalHighlight = `
-const globalHighlight = (backgroundColor, color = undefined) => {
+const searchConfig = {
+  wholeWordOnly: false,
+  caseSensitive: false,
+};
+
+const getMarkupNode = (styles) => {
+  spanNode = document.createElement('SPAN');
+  for (property in styles) {
+    spanNode.style[property] = styles[property];
+  }
+  return spanNode;
+};
+
+const globalHighlight = (styles, searchConfig) => {
   let count = 0;
   let selectedText;
 
@@ -16,19 +29,16 @@ const globalHighlight = (backgroundColor, color = undefined) => {
 
     const { childNodes, nodeType, tagName } = node;
     const isTextNode = nodeType === Node.TEXT_NODE;
-    const hasSearchableChildren = nodeType === Node.ELEMENT_NODE &&
+    const hasSearchableChildren =
+      nodeType === Node.ELEMENT_NODE &&
       childNodes &&
       tagName.toUpperCase() !== 'SCRIPT' &&
-      tagName.toUpperCase() !== 'STYLE'
+      tagName.toUpperCase() !== 'STYLE';
 
     if (isTextNode) {
       pos = node.data.toUpperCase().indexOf(searchText);
       if (pos >= 0) {
-        spanNode = document.createElement('SPAN');
-        spanNode.style.backgroundColor = backgroundColor;
-        if (color) {
-          spanNode.style.color = color;
-        }
+        const spanNode = getMarkupNode(styles);
         middlebit = node.splitText(pos);
         endbit = middlebit.splitText(searchText.length);
         middleclone = middlebit.cloneNode(true);
@@ -60,9 +70,12 @@ const messageEventListenerFn = (e) => {
         const { target, action, args} = JSON.parse(e.data);
         switch (action) {
           case 'globalHighlight':
-            const { colors: { backgroundColor, color = undefined }} = args;
-            // window.ReactNativeWebView.postMessage(JSON.stringify(color));
-            globalHighlight(backgroundColor, color)
+            const searchConfig = {
+              wholeWordOnly: false,
+              caseSensitive: false,
+            };
+            const { colors } = args;
+            globalHighlight(colors, searchConfig)
             break;
           case 'clearSelection':
             window.getSelection()?.removeAllRanges()
