@@ -1,5 +1,5 @@
 const globalHighlight = `
-const globalHighlight = (bg, fg = undefined) => {
+const globalHighlight = (backgroundColor, color = undefined) => {
   let count = 0;
   let selectedText;
 
@@ -9,22 +9,25 @@ const globalHighlight = (bg, fg = undefined) => {
 
   const searchWithinNode = (node, searchText) => {
     let pos;
-    let skip;
     let spanNode;
     let middlebit;
     let middleclone;
-
-    skip = 0;
+    let skip = 0;
 
     const { childNodes, nodeType, tagName } = node;
+    const isTextNode = nodeType === Node.TEXT_NODE;
+    const hasSearchableChildren = nodeType === Node.ELEMENT_NODE &&
+      childNodes &&
+      tagName.toUpperCase() !== 'SCRIPT' &&
+      tagName.toUpperCase() !== 'STYLE'
 
-    if (nodeType == Node.TEXT_NODE) {
+    if (isTextNode) {
       pos = node.data.toUpperCase().indexOf(searchText);
       if (pos >= 0) {
         spanNode = document.createElement('SPAN');
-        spanNode.style.backgroundColor = bg;
-        if (fg) {
-          spanNode.style.color = fg;
+        spanNode.style.backgroundColor = backgroundColor;
+        if (color) {
+          spanNode.style.color = color;
         }
         middlebit = node.splitText(pos);
         endbit = middlebit.splitText(searchText.length);
@@ -34,12 +37,7 @@ const globalHighlight = (bg, fg = undefined) => {
         ++count;
         skip = 1;
       }
-    } else if (
-      nodeType === Node.ELEMENT_NODE &&
-      childNodes &&
-      tagName.toUpperCase() !== 'SCRIPT' &&
-      tagName.toUpperCase() !== 'STYLE'
-    ) {
+    } else if (hasSearchableChildren) {
       for (let child = 0; child < node.childNodes.length; ++child) {
         child = child + searchWithinNode(node.childNodes[child], searchText);
       }
