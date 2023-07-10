@@ -47,7 +47,7 @@ const StackNavigator = () => {
   const backButton = () => <IconPressable name="chevron-left" />;
 
   const settingsDrawerButton = () => (
-    <DrawerToggle drawerId={DrawerId.APP_SETTINGS} name="dock-right" />
+    <DrawerToggle drawerId={DrawerId.APP_SETTINGS} name="menu" />
   );
 
   const markupScreenDrawerButtons = () => (
