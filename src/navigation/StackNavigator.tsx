@@ -11,18 +11,8 @@ import navigationRef from './root-navigation';
 import DrawerToggle from '../components/drawer/DrawerToggle';
 import { DrawerId } from '../store/slices';
 import { IconPressable, Text } from '../components';
-import { config as linkingConfig } from '../linking';
-import {
-  useInitialURL,
-  useLinking,
-  useMessagingSubscribe,
-  useNotificationsPermission,
-} from '../hooks';
-
-const linking = {
-  prefixes: ['https://hillert.dev', 'jnotes://'],
-  config: linkingConfig,
-};
+import { useMessagingSubscribe, useNotificationsPermission } from '../hooks';
+import { useLinking, useInitialURL } from '../linking';
 
 const DrawerButtonGroupContainer = styled(View)`
   flex-direction: row;
@@ -35,8 +25,8 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 const StackNavigator = () => {
   useNotificationsPermission();
   useMessagingSubscribe();
-  // useLinking();
-  // useInitialURL();
+  useLinking();
+  useInitialURL();
   const theme = useTheme();
   const colors = theme?.colors;
   const navTheme = colors

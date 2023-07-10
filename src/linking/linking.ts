@@ -1,4 +1,5 @@
 const linking = {
+  // prefixes: ['https://hillert.dev', 'jnotes://'],
   prefixes: ['https://*', 'http://*'],
   config: {
     screens: {
