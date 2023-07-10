@@ -21,6 +21,9 @@
 		9523EDF82A50514500E8C89E /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9523EDF42A50514500E8C89E /* MaterialCommunityIcons.ttf */; };
 		952462AE2A3823C4005D308E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 952462AD2A3823C4005D308E /* GoogleService-Info.plist */; };
 		95A84EAD2A55712100614B6E /* AppCenter-Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 95A84EAC2A55712100614B6E /* AppCenter-Config.plist */; };
+		95C080B22A5C1D1000E41773 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95C080B12A5C1D1000E41773 /* ShareViewController.swift */; };
+		95C080B52A5C1D1000E41773 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 95C080B32A5C1D1000E41773 /* MainInterface.storyboard */; };
+		95C080B92A5C1D1000E41773 /* jnotes share.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 95C080AF2A5C1D1000E41773 /* jnotes share.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -31,7 +34,28 @@
 			remoteGlobalIDString = 13B07F861A680F5B00A75B9A;
 			remoteInfo = jnotes;
 		};
+		95C080B72A5C1D1000E41773 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 95C080AE2A5C1D1000E41773;
+			remoteInfo = "jnotes share";
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		95C080BA2A5C1D1000E41773 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				95C080B92A5C1D1000E41773 /* jnotes share.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		00E356EE1AD99517003FC87E /* jnotesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = jnotesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -56,6 +80,11 @@
 		959691542A3D473400898CFE /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		95A0ECC02A2DFC2E0039982D /* jnotes.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = jnotes.entitlements; path = jnotes/jnotes.entitlements; sourceTree = "<group>"; };
 		95A84EAC2A55712100614B6E /* AppCenter-Config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "AppCenter-Config.plist"; path = "jnotes/AppCenter-Config.plist"; sourceTree = "<group>"; };
+		95C080AF2A5C1D1000E41773 /* jnotes share.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "jnotes share.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		95C080B12A5C1D1000E41773 /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
+		95C080B42A5C1D1000E41773 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
+		95C080B62A5C1D1000E41773 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		95C080BE2A5C206500E41773 /* jnotes share.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "jnotes share.entitlements"; sourceTree = "<group>"; };
 		B2252E611DE65B19EF9FD2BE /* Pods_jnotes_jnotesTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_jnotes_jnotesTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -74,6 +103,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				30896E7DA73AAB2D27F47922 /* Pods_jnotes.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		95C080AC2A5C1D1000E41773 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -138,6 +174,7 @@
 				13B07FAE1A68108700A75B9A /* jnotes */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* jnotesTests */,
+				95C080B02A5C1D1000E41773 /* jnotes share */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				BBD78D7AC51CEA395F1C20DB /* Pods */,
@@ -153,6 +190,7 @@
 			children = (
 				13B07F961A680F5B00A75B9A /* jnotes.app */,
 				00E356EE1AD99517003FC87E /* jnotesTests.xctest */,
+				95C080AF2A5C1D1000E41773 /* jnotes share.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -164,6 +202,17 @@
 				9523EDF32A50514500E8C89E /* MaterialIcons.ttf */,
 			);
 			path = Fonts;
+			sourceTree = "<group>";
+		};
+		95C080B02A5C1D1000E41773 /* jnotes share */ = {
+			isa = PBXGroup;
+			children = (
+				95C080BE2A5C206500E41773 /* jnotes share.entitlements */,
+				95C080B12A5C1D1000E41773 /* ShareViewController.swift */,
+				95C080B32A5C1D1000E41773 /* MainInterface.storyboard */,
+				95C080B62A5C1D1000E41773 /* Info.plist */,
+			);
+			path = "jnotes share";
 			sourceTree = "<group>";
 		};
 		9982135496634758AA748DCC /* Resources */ = {
@@ -223,15 +272,34 @@
 				E235C05ADACE081382539298 /* [CP] Copy Pods Resources */,
 				C798A3302C61736A7BD75579 /* [CP-User] [RNFB] Core Configuration */,
 				025DD2B28D4A4C1A9E770B96 /* Upload Debug Symbols to Sentry */,
+				95C080BA2A5C1D1000E41773 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				95C080B82A5C1D1000E41773 /* PBXTargetDependency */,
 			);
 			name = jnotes;
 			productName = jnotes;
 			productReference = 13B07F961A680F5B00A75B9A /* jnotes.app */;
 			productType = "com.apple.product-type.application";
+		};
+		95C080AE2A5C1D1000E41773 /* jnotes share */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 95C080BD2A5C1D1000E41773 /* Build configuration list for PBXNativeTarget "jnotes share" */;
+			buildPhases = (
+				95C080AB2A5C1D1000E41773 /* Sources */,
+				95C080AC2A5C1D1000E41773 /* Frameworks */,
+				95C080AD2A5C1D1000E41773 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "jnotes share";
+			productName = "jnotes share";
+			productReference = 95C080AF2A5C1D1000E41773 /* jnotes share.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -239,6 +307,7 @@
 		83CBB9F71A601CBA00E9B192 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 1430;
 				LastUpgradeCheck = 1210;
 				TargetAttributes = {
 					00E356ED1AD99517003FC87E = {
@@ -250,6 +319,9 @@
 						DevelopmentTeamName = "";
 						LastSwiftMigration = 1120;
 						ProvisioningStyle = Manual;
+					};
+					95C080AE2A5C1D1000E41773 = {
+						CreatedOnToolsVersion = 14.3.1;
 					};
 				};
 			};
@@ -268,6 +340,7 @@
 			targets = (
 				13B07F861A680F5B00A75B9A /* jnotes */,
 				00E356ED1AD99517003FC87E /* jnotesTests */,
+				95C080AE2A5C1D1000E41773 /* jnotes share */,
 			);
 		};
 /* End PBXProject section */
@@ -293,6 +366,14 @@
 				952462AE2A3823C4005D308E /* GoogleService-Info.plist in Resources */,
 				9523EDF72A50514500E8C89E /* MaterialCommunityIcons.ttf in Resources */,
 				9012E9AD226344F09CDCB495 /* Roboto-Regular.ttf in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		95C080AD2A5C1D1000E41773 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				95C080B52A5C1D1000E41773 /* MainInterface.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -493,6 +574,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		95C080AB2A5C1D1000E41773 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				95C080B22A5C1D1000E41773 /* ShareViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -501,7 +590,23 @@
 			target = 13B07F861A680F5B00A75B9A /* jnotes */;
 			targetProxy = 00E356F41AD99517003FC87E /* PBXContainerItemProxy */;
 		};
+		95C080B82A5C1D1000E41773 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 95C080AE2A5C1D1000E41773 /* jnotes share */;
+			targetProxy = 95C080B72A5C1D1000E41773 /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		95C080B32A5C1D1000E41773 /* MainInterface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				95C080B42A5C1D1000E41773 /* Base */,
+			);
+			name = MainInterface.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
@@ -561,6 +666,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 3B4392A12AC88292D35C810B /* Pods-jnotes.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = jnotes/jnotes.entitlements;
@@ -590,6 +696,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5709B34CF0A7D63546082F79 /* Pods-jnotes.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = jnotes/jnotes.entitlements;
@@ -756,6 +863,85 @@
 			};
 			name = Release;
 		};
+		95C080BB2A5C1D1000E41773 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = "jnotes share/jnotes share.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 882D56FC2G;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "jnotes share/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "jnotes share";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.jnotes.jnotes-share";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		95C080BC2A5C1D1000E41773 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = "jnotes share/jnotes share.entitlements";
+				CODE_SIGN_IDENTITY = 32804af5c19d9c98b9724c3e0a9cf82f3f0d3390;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 882D56FC2G;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "jnotes share/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "jnotes share";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.jnotes.jnotes-share";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -782,6 +968,15 @@
 			buildConfigurations = (
 				83CBBA201A601CBA00E9B192 /* Debug */,
 				83CBBA211A601CBA00E9B192 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		95C080BD2A5C1D1000E41773 /* Build configuration list for PBXNativeTarget "jnotes share" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				95C080BB2A5C1D1000E41773 /* Debug */,
+				95C080BC2A5C1D1000E41773 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
