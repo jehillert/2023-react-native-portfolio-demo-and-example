@@ -11,7 +11,7 @@ export type ShareFile = {
   extension?: string;
 };
 
-export const useGetShare = () => {
+const useShare = () => {
   const [share, setShare] = useState<ShareFile[] | undefined>(undefined);
 
   useEffect(() => {
@@ -32,3 +32,5 @@ export const useGetShare = () => {
 
   return share;
 };
+
+export { useShare };

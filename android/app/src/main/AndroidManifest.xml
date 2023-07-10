@@ -12,23 +12,35 @@
         <action android:name="android.intent.action.MAIN" />
         <category android:name="android.intent.category.LAUNCHER" />
       </intent-filter>
-      <intent-filter android:autoVerify="true">
+      <intent-filter>
+        <!-- support opening urls into your app -->
         <action android:name="android.intent.action.VIEW" />
         <category android:name="android.intent.category.DEFAULT" />
         <category android:name="android.intent.category.BROWSABLE" />
-        <data android:scheme="http" />
-        <data android:scheme="https" />
+        <data android:scheme="https" android:host="example.com" android:pathPrefix="/invite" />
       </intent-filter>
+      <!-- to support sharing text into your app -->
       <intent-filter>
         <action android:name="android.intent.action.SEND" />
         <category android:name="android.intent.category.DEFAULT" />
-        <data android:mimeType="text/plain" />
+        <data android:mimeType="text/*" />
+      </intent-filter>
+      <!-- to support sharing videos into your app -->
+      <intent-filter>
+        <action android:name="android.intent.action.SEND" />
+        <category android:name="android.intent.category.DEFAULT" />
+        <data android:mimeType="video/*" />
+      </intent-filter>
+      <!-- to support sharing any type of files -->
+      <intent-filter>
+        <action android:name="android.intent.action.SEND" />
+        <category android:name="android.intent.category.DEFAULT" />
+        <data android:mimeType="*/*" />
       </intent-filter>
       <intent-filter>
-        <action android:name="android.intent.action.VIEW" />
+        <action android:name="android.intent.action.SEND_MULTIPLE" />
         <category android:name="android.intent.category.DEFAULT" />
-        <category android:name="android.intent.category.BROWSABLE" />
-        <data android:scheme="https" android:host="google.com" />
+        <data android:mimeType="*/*" />
       </intent-filter>
     </activity>
   </application>

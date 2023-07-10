@@ -10,7 +10,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { store, persistor } from './store/store';
-import { useGetShare } from './hooks';
+import { useShare } from './hooks';
 
 LogBox.ignoreAllLogs();
 
@@ -18,7 +18,7 @@ initSentry();
 
 let App = () => {
   useCodePush();
-  useGetShare();
+  useShare();
 
   return (
     <Sentry.TouchEventBoundary>
