@@ -52,7 +52,7 @@ const globalHighlight = /*javascript*/ `
           // const spanNode = getMarkupNode(markupId, styles);
           const spanNode = markupNode.cloneNode(true);
           const middlebit = node.splitText(pos);
-          endbit = middlebit.splitText(searchText.length);
+          const endbit = middlebit.splitText(searchText.length);
           const middleclone = middlebit.cloneNode(true);
           spanNode.appendChild(middleclone);
           middlebit.parentNode.replaceChild(spanNode, middlebit);

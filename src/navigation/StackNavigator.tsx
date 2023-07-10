@@ -35,10 +35,8 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 const StackNavigator = () => {
   useNotificationsPermission();
   useMessagingSubscribe();
-  // not gonna work until you add android assetLinks.json (https://medium.com/@ertemishakk/deep-linking-with-react-native-c7fbaac25127)
-  useLinking();
-  // not gonna work until you add android assetLinks.json (https://medium.com/@ertemishakk/deep-linking-with-react-native-c7fbaac25127)
-  useInitialURL();
+  // useLinking();
+  // useInitialURL();
   const theme = useTheme();
   const colors = theme?.colors;
   const navTheme = colors
@@ -71,7 +69,7 @@ const StackNavigator = () => {
 
   return (
     <NavigationContainer
-      linking={linking}
+      // linking={linking}
       fallback={<Text.H6>Loading...</Text.H6>}
       ref={navigationRef}
       theme={navTheme}>

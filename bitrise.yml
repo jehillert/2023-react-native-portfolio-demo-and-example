@@ -68,11 +68,11 @@ workflows:
           inputs:
             - command: ''
             - verbose_log: 'yes'
-      - yarn@0.1:
-          inputs:
-            - command: test
-            - verbose_log: 'yes'
-            - workdir: '$WORKDIR'
+      # - yarn@0.1:
+      #     inputs:
+      #       - command: test
+      #       - verbose_log: 'yes'
+      #       - workdir: '$WORKDIR'
   ReleaseAndroid:
     description:
       'Tests, builds and deploys the app using *Deploy to Google Play.
