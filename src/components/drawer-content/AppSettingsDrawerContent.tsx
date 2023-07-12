@@ -13,6 +13,7 @@ type Props = {};
 
 const DrawerView = styled(View)`
   flex: 1;
+  padding: 8px;
 `;
 
 const ThemeSettingContainer = styled(View)`
