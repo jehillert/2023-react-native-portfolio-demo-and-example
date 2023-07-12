@@ -22,11 +22,10 @@ const useShare = () => {
         console.log('Received Files', files);
         setShare(files);
       },
-      // @ts-ignore
-      error => {
+      (error: Error) => {
         console.log(error);
       },
-      'org.reactjs.native.example.jnotes', // share url protocol (must be unique to your app, suggest using your apple bundle id)
+      'org.reactjs.native.example.jnotes',
     );
   }, []);
 
