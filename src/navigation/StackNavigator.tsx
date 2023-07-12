@@ -11,8 +11,12 @@ import navigationRef from './root-navigation';
 import DrawerToggle from '../components/drawer/DrawerToggle';
 import { DrawerId } from '../store/slices';
 import { IconPressable, Text } from '../components';
-import { useMessagingSubscribe, useNotificationsPermission } from '../hooks';
 import { useLinking, useInitialURL } from '../linking';
+import {
+  useCustomNavTheme,
+  useMessagingSubscribe,
+  useNotificationsPermission,
+} from '../hooks';
 
 const DrawerButtonGroupContainer = styled(View)`
   flex-direction: row;
@@ -29,20 +33,7 @@ const StackNavigator = () => {
   useInitialURL();
   const theme = useTheme();
   const colors = theme?.colors;
-  const navTheme = colors
-    ? {
-        ...DefaultTheme,
-        colors: {
-          ...DefaultTheme.colors,
-          primary: colors.primaryMain,
-          background: colors.backgroundDefault,
-          card: colors.backgroundPaper,
-          text: colors.textPrimary,
-          border: colors.textPrimary,
-          notification: colors.errorMain,
-        },
-      }
-    : DefaultTheme;
+  const navTheme = useCustomNavTheme();
 
   const backButton = () => <IconPressable name="chevron-left" />;
 
