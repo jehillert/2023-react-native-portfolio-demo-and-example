@@ -1,11 +1,10 @@
 import React from 'react';
 import { View } from 'react-native';
 import { styled } from 'styled-components/native';
-import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
+import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { RootStackParamList, ScreensEnum } from './types';
 import { DirectoryScreen, MarkupScreen, NoteScreen } from '../screens';
-import { useTheme } from 'styled-components/native';
 
 import navigationRef from './root-navigation';
 import DrawerToggle from '../components/drawer/DrawerToggle';
@@ -31,8 +30,6 @@ const StackNavigator = () => {
   useMessagingSubscribe();
   useLinking();
   useInitialURL();
-  const theme = useTheme();
-  const colors = theme?.colors;
   const navTheme = useCustomNavTheme();
 
   const backButton = () => <IconPressable name="chevron-left" />;

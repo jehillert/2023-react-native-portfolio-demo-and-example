@@ -1,34 +1,14 @@
-import { CSSProperties } from 'react';
+const getMarkupId = /*javascript*/ `
+  const getMarkupId = (styles, searchText) =>
+    Object.keys(styles)
+      .sort()
+      .reduce((accum, keyName) => {
+        return accum + '-' + keyName;
+      }, \`[\${searchText}]\`);
+`;
 
-type SearchConfig = {
-  wholeWordOnly: boolean;
-  caseSensitive: boolean;
-};
-
-type MarkupGloballyProps = {
-  styles: CSSProperties;
-  searchConfig?: SearchConfig;
-};
-
-const defaultSearchConfig: SearchConfig = {
-  wholeWordOnly: false,
-  caseSensitive: false,
-};
-
-const markupGlobally = (
-  styles: CSSProperties,
-  searchConfig = defaultSearchConfig,
-) => /*javascript*/ `
-  ((styles = ${JSON.stringify(styles)}) => {
-
-    const getMarkupId = (searchText) =>
-      Object.keys(styles)
-        .sort()
-        .reduce((accum, keyName) => {
-          return accum + '-' + keyName;
-        }, [searchText]);
-
-  const getMarkupNode = (markupId) => {
+const getMarkupNode = /*javascript*/ `
+  const getMarkupNode = (markupId, styles) => {
     spanNode = document.createElement('SPAN');
     spanNode.setAttribute('class', markupId);
     for (property in styles) {
@@ -36,10 +16,16 @@ const markupGlobally = (
     }
     return spanNode;
   };
+`;
 
+const globalHighlight = /*javascript*/ `
+  ${getMarkupNode}
+  ${getMarkupId}
+
+  (const globalHighlight) = ({ styles, searchConfig }) => {
     let count = 0;
     let selectedText = document.getSelection().toString();
-window.ReactNativeWebView.postMessage(JSON.stringify(selectedText));
+
     if (!selectedText) return;
 
     const markupId = getMarkupId(styles, selectedText);
@@ -58,6 +44,7 @@ window.ReactNativeWebView.postMessage(JSON.stringify(selectedText));
       if (isTextNode) {
         const pos = node.data.toUpperCase().indexOf(searchText);
         if (pos >= 0) {
+          // const spanNode = getMarkupNode(markupId, styles);
           const spanNode = markupNode.cloneNode(true);
           const middlebit = node.splitText(pos);
           const endbit = middlebit.splitText(searchText.length);
@@ -77,20 +64,18 @@ window.ReactNativeWebView.postMessage(JSON.stringify(selectedText));
 
     searchWithinNode(document.body, selectedText.toUpperCase());
 
-    const markupResult = {
-       count,
-       markupId
-     };
-
-    window.ReactNativeWebView.postMessage(JSON.stringify(markupResult));
-  })();
+    return {
+      count,
+      markupId
+    };
+  };
 `;
 
 const listener = /*javascript*/ `
   const messageEventListenerFn = (e) => {
     window.ReactNativeWebView.postMessage("I worked the first time");
 
-    ${markupGlobally}
+    ${globalHighlight}
 
     let result = { isError: false };
 
@@ -99,8 +84,8 @@ const listener = /*javascript*/ `
         const { target, action, args} = JSON.parse(e.data);
 
         switch (action) {
-          case 'markupGlobally':
-            result.operation = markupGlobally(args);
+          case 'globalHighlight':
+            result.operation = globalHighlight(args);
             break;
           case 'clearSelection':
             // window.getSelection()?.removeAllRanges()
@@ -139,4 +124,4 @@ const initInject = (
   </html>
 `;
 
-export { initInject, listener, markupGlobally };
+export { initInject, listener };
