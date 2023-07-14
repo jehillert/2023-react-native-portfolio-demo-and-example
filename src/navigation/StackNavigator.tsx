@@ -47,7 +47,6 @@ const StackNavigator = () => {
 
   return (
     <NavigationContainer
-      // linking={linking}
       fallback={<Text.H6>Loading...</Text.H6>}
       ref={navigationRef}
       theme={navTheme}>

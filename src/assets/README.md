@@ -1,0 +1,1 @@
+[react-native-svg documentation](https://github.com/software-mansion/react-native-svg/blob/main/USAGE.md)

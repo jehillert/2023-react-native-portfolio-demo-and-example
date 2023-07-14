@@ -1,12 +1,9 @@
 import { DefaultTheme } from 'styled-components/native';
 import { isAndroid, isIos } from '../constants';
 
-const typography = {
-  fontFamily: 'Roboto-Regular',
-  fontWeightLight: 300,
-  fontWeightRegular: 400,
-  fontWeightMedium: 500,
-  fontWeightBold: 700,
+const dimensions = {
+  iconMedium: 32,
+  iconSmall: 16,
 };
 
 const fabShadow = `
@@ -38,7 +35,17 @@ const shadow = {
   fabObj: fabShadowObj,
 };
 
+const typography = {
+  fontFamily: 'sans-serif',
+  // fontFamily: 'Roboto- Regular',
+  fontWeightLight: 300,
+  fontWeightRegular: 400,
+  fontWeightMedium: 500,
+  fontWeightBold: 700,
+};
+
 const otherThemeProps = {
+  dimensions,
   shadow,
   typography,
 };

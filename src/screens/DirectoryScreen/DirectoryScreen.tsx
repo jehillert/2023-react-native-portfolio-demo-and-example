@@ -8,8 +8,8 @@ import DraggableFlatList, {
 
 import NoteRow from './NoteRow';
 import { Note, createNote, notesAdapter, setIds } from '../../store/slices';
-import { useAppDispatch, useAppSelector } from '../../hooks/useRedux';
 import { DirectoryScreenProps, ScreensEnum } from '../../navigation';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { selectSortedNotes } from '../../store/selectors';
 import { Fab } from '../../components';
 

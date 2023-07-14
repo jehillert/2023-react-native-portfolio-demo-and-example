@@ -22,15 +22,16 @@ const IconPressable = styled(Pressable)`
   margin-left: -8px;
 `;
 
-const BackButton = ({
-  name = 'help-rhombus-outline',
-  color,
-  size = 32,
-  onPress,
-  style,
-  ...props
-}: Props) => {
-  const { colors } = useTheme();
+const BackButton = (props: Props) => {
+  const { colors, dimensions } = useTheme();
+  const {
+    name = 'help-rhombus-outline',
+    color,
+    size = dimensions.iconMedium,
+    onPress,
+    style,
+    ...rest
+  } = props;
   const navigation = useNavigation();
 
   const handleBackPress = () => {
@@ -43,7 +44,7 @@ const BackButton = ({
   };
 
   return (
-    <IconPressable style={style} onPress={handleBackPress} {...props}>
+    <IconPressable style={style} onPress={handleBackPress} {...rest}>
       <Icon
         name={name}
         size={size}

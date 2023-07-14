@@ -11,13 +11,17 @@ import {
 } from 'react-native-pell-rich-editor';
 
 import { selectActiveNoteId, selectNoteById } from '../../store/selectors';
-import { useAppDispatch, useAppSelector } from '../../hooks/useRedux';
-import { useDebounce, useKeyboard } from '../../hooks';
 import { useTheme } from 'styled-components/native';
 import { NoteScreenProps } from '../../navigation';
 import { updateNote } from '../../store/slices';
 import { isAndroid } from '../../constants';
 import { getTime } from 'date-fns';
+import {
+  useAppDispatch,
+  useAppSelector,
+  useDebounce,
+  useKeyboard,
+} from '../../hooks';
 
 type Props = {} & NoteScreenProps;
 

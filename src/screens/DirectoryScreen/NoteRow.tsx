@@ -1,16 +1,16 @@
 import React from 'react';
+import styled, { useTheme } from 'styled-components/native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import { RenderItemParams } from 'react-native-draggable-flatlist';
-import styled, { useTheme } from 'styled-components/native';
 import { useNavigation } from '@react-navigation/native';
 import { IconButton } from 'react-native-paper';
 import { View } from 'react-native';
 
-import { useAppDispatch } from '../../hooks/useRedux';
-import { ScreensEnum } from '../../navigation';
-import { Text } from '../../components';
 import { Note, removeNote, setActiveNoteId } from '../../store/slices';
+import { ScreensEnum } from '../../navigation';
+import { useAppDispatch } from '../../hooks';
+import { Text } from '../../components';
 
 type Props = RenderItemParams<Note>;
 
@@ -42,7 +42,7 @@ const TitleText = styled(Text.H6)`
 `;
 
 const NoteRow = ({ item, getIndex, isActive }: Props) => {
-  const { colors } = useTheme();
+  const { colors, dimensions } = useTheme();
   const dispatch = useAppDispatch();
   const navigation = useNavigation();
 
@@ -83,7 +83,7 @@ const NoteRow = ({ item, getIndex, isActive }: Props) => {
             iconColor={colors.textSecondary}
             onPress={handleNotePress}
             mode="contained-tonal"
-            size={32}
+            size={dimensions.iconMedium}
           />
           <IconButton
             icon="marker"

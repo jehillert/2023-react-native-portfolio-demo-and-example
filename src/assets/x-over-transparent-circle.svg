@@ -1,0 +1,21 @@
+<svg
+  width="38"
+  height="38"
+  viewBox="0 0 38 38"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg">
+  <line
+    x1="30.0971"
+    y1="30.6577"
+    x2="7.46966"
+    y2="8.03032"
+    stroke="#111"
+    stroke-width="1.5" />
+  <line
+    x1="7.46967"
+    y1="30.5971"
+    x2="30.0971"
+    y2="7.96966"
+    stroke="#111"
+    stroke-width="1.5" />
+</svg>

@@ -1,18 +1,18 @@
 import React, { useRef } from 'react';
-import { styled } from 'styled-components';
-import { Alert, View } from 'react-native';
 import BaseWebView, { WebViewMessageEvent } from 'react-native-webview';
+import { WebViewErrorEvent } from 'react-native-webview/lib/WebViewTypes';
+import { Alert, View } from 'react-native';
+import { styled } from 'styled-components';
 
 import { selectActiveNoteId, selectNoteById } from '../../store/selectors';
 import { ColorCallback } from '../../components/palettes/ColorPalette';
 import { highlight2Colors, shadeColors } from '../../constants';
 import { initInject, markupGlobally } from './markupUtils';
-import { useAppSelector } from '../../hooks/useRedux';
 import { MarkupScreenProps } from '../../navigation';
 import { useTheme } from 'styled-components/native';
 import { ColorPalette } from '../../components';
 import { hScale } from '../../theme/themeUtils';
-import { WebViewErrorEvent } from 'react-native-webview/lib/WebViewTypes';
+import { useAppSelector } from '../../hooks';
 
 type Props = {} & MarkupScreenProps;
 

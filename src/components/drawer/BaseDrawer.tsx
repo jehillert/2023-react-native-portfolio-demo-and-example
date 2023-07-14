@@ -5,7 +5,7 @@ import { DrawerProps } from 'react-native-drawer-layout/lib/typescript/src/types
 import { Drawer as _Drawer } from 'react-native-drawer-layout';
 import { selectDrawerStateById } from '../../store/selectors';
 import { DrawerId, setDrawer } from '../../store/slices';
-import { useAppDispatch, useAppSelector } from '../../hooks/useRedux';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 
 type Props = {
   children: ReactNode;
@@ -34,7 +34,6 @@ const BaseDrawer = ({
   const open = useAppSelector(state => selectDrawerStateById(state, drawerId));
   const drawerStyle: StyleProp<ViewStyle> = {
     backgroundColor: colors.backgroundPaper,
-    padding: 16,
   };
 
   const handleOpen = () => dispatch(setDrawer({ drawerId, newState: true }));

@@ -1,26 +1,28 @@
 import React from 'react';
 import { View } from 'react-native';
 import { styled } from 'styled-components';
-import { useAppDispatch, useAppSelector } from '../../hooks/useRedux';
+
+import { DrawerId, ThemeSelection, setThemeId } from '../../store/slices';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { selectThemeId } from '../../store/selectors';
-import { ThemeSelection, setThemeId } from '../../store/slices';
-import RadioPanel from '../RadioPanel';
-import { Provider } from 'react-redux';
-import { store } from '../../store/store';
 import { toTitleCase } from '../../utils';
+import _BaseDrawerContent from './BaseDrawerContent';
+import RadioPanel from '../RadioPanel';
 
-type Props = {};
+type Props = {
+  drawerId: DrawerId;
+};
 
-const DrawerView = styled(View)`
-  flex: 1;
+const BaseDrawerContent = styled(_BaseDrawerContent)`
   padding: 8px;
 `;
 
 const ThemeSettingContainer = styled(View)`
   flex: 1;
+  padding: 8px;
 `;
 
-const AppSettingsDrawerContent = ({}: Props) => {
+const AppSettingsDrawerContent = ({ drawerId }: Props) => {
   const dispatch = useAppDispatch();
   const themeId = useAppSelector(selectThemeId);
   const themeIdTxt = toTitleCase(themeId);
@@ -30,21 +32,19 @@ const AppSettingsDrawerContent = ({}: Props) => {
   };
 
   return (
-    <Provider store={store}>
-      <DrawerView>
-        <ThemeSettingContainer>
-          <RadioPanel
-            title={'Appearance'}
-            labels={['System', 'Light', 'Dark']}
-            labelPosition="left"
-            styleCheckbox={{ marginRight: 0 }}
-            setSelectedValue={handleSelect}
-            selectedValue={themeIdTxt}
-            variant="check"
-          />
-        </ThemeSettingContainer>
-      </DrawerView>
-    </Provider>
+    <BaseDrawerContent drawerId={drawerId}>
+      <ThemeSettingContainer>
+        <RadioPanel
+          title={'Appearance'}
+          labels={['System', 'Light', 'Dark']}
+          labelPosition="left"
+          styleCheckbox={{ marginRight: 0 }}
+          setSelectedValue={handleSelect}
+          selectedValue={themeIdTxt}
+          variant="check"
+        />
+      </ThemeSettingContainer>
+    </BaseDrawerContent>
   );
 };
 

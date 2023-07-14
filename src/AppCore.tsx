@@ -6,12 +6,17 @@ import { ThemeProvider } from 'styled-components/native';
 import { StatusBar, useColorScheme } from 'react-native';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 
-import { useAppSelector } from './hooks/useRedux';
-import { StackNavigator } from './navigation';
+import {
+  AppSettingsDrawerContent,
+  BaseDrawer,
+  DocumentMapDrawerContent,
+  MarkupDrawerContent,
+} from './components';
 import { selectThemeId } from './store/selectors';
-import { theme } from './theme';
-import { AppSettingsDrawerContent, BaseDrawer } from './components';
+import { StackNavigator } from './navigation';
 import { DrawerId } from './store/slices';
+import { useAppSelector } from './hooks';
+import { theme } from './theme';
 
 let AppCore = () => {
   const systemThemeId = useColorScheme() ?? 'light';
@@ -25,12 +30,24 @@ let AppCore = () => {
     <ThemeProvider theme={theme[appThemeId]}>
       <PaperProvider theme={isDark ? MD3DarkTheme : MD3LightTheme}>
         <StatusBar barStyle={barStyle} backgroundColor={backgroundColor} />
-        <BaseDrawer drawerId={DrawerId.MARKUP_TOOLS} drawerPosition="left">
-          <BaseDrawer drawerId={DrawerId.DOCUMENT_MAP} drawerPosition="right">
+        <BaseDrawer
+          drawerId={DrawerId.MARKUP_TOOLS}
+          drawerPosition="left"
+          renderDrawerContent={() => (
+            <MarkupDrawerContent drawerId={DrawerId.APP_SETTINGS} />
+          )}>
+          <BaseDrawer
+            drawerId={DrawerId.DOCUMENT_MAP}
+            drawerPosition="right"
+            renderDrawerContent={() => (
+              <DocumentMapDrawerContent drawerId={DrawerId.APP_SETTINGS} />
+            )}>
             <BaseDrawer
               drawerId={DrawerId.APP_SETTINGS}
               drawerPosition="left"
-              renderDrawerContent={() => <AppSettingsDrawerContent />}>
+              renderDrawerContent={() => (
+                <AppSettingsDrawerContent drawerId={DrawerId.APP_SETTINGS} />
+              )}>
               <StackNavigator />
             </BaseDrawer>
           </BaseDrawer>

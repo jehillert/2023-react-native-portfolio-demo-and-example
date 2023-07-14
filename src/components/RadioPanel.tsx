@@ -108,8 +108,8 @@ const RadioPanel = ({
   controllerProps,
   ...radioButtonProps
 }: Props) => {
-  const { colors } = useTheme();
-  const checkmarkSize = 16;
+  const { colors, dimensions } = useTheme();
+  const checkmarkSize = dimensions.iconSmall;
   const isControlled = asForm && !!controllerProps;
 
   const renderPanel = ({ value, onChange }: RenderRadioButtons) => {

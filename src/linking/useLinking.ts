@@ -1,8 +1,5 @@
 import { useEffect, useState } from 'react';
 import { Linking } from 'react-native';
-import { useAppSelector } from '../hooks/useRedux';
-import { selectInitialUrl } from '../store/selectors';
-import { setInitialUrl } from '../store/slices';
 
 // not gonna work until you add android assetLinks.json (https://medium.com/@ertemishakk/deep-linking-with-react-native-c7fbaac25127)
 const useLinking = () => {

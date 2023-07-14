@@ -8,9 +8,16 @@ const selectDrawerState = (state: RootState) => state.globalUi.drawerState;
 
 const selectDrawer = (state: RootState, drawerId: DrawerId) => drawerId;
 
+const selectHeaderHeight = (state: RootState) => state.globalUi.headerHeight;
+
 const selectDrawerStateById = createSelector(
   [selectDrawerState, selectDrawer],
   (drawerState, drawerId) => drawerState[drawerId] ?? false,
 );
 
-export { selectInitialUrl, selectDrawerState, selectDrawerStateById };
+export {
+  selectHeaderHeight,
+  selectInitialUrl,
+  selectDrawerState,
+  selectDrawerStateById,
+};
