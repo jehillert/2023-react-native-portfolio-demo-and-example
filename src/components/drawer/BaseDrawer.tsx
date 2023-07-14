@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect } from 'react';
+import React, { ReactNode } from 'react';
 import styled, { useTheme } from 'styled-components/native';
 import { StyleProp, Text, ViewStyle } from 'react-native';
 import { DrawerProps } from 'react-native-drawer-layout/lib/typescript/src/types';
@@ -42,13 +42,14 @@ const BaseDrawer = ({
 
   return (
     <Drawer
-      {...rest}
       drawerStyle={drawerStyle}
       drawerType="front"
       onClose={handleClose}
       onOpen={handleOpen}
       open={open}
-      renderDrawerContent={renderDrawerContent}>
+      renderDrawerContent={renderDrawerContent}
+      useLegacyImplementation={false}
+      {...rest}>
       {children}
     </Drawer>
   );
