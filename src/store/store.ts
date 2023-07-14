@@ -1,6 +1,5 @@
 // NOTE - MMKV Store Shareable b/n Apps: https://github.com/mrousavy/react-native-mmkv#app-groups.
 // NOTE - MMKV Encryptable: But remember to change answers about encryption ion ios/google play
-// NOTE - Customizing Sentry Enhancer: docs.sentry.io/platforms/javascript/guides/react/configuration/integrations/redux/
 import { AnyAction, StoreEnhancer } from 'redux';
 import { MMKV } from 'react-native-mmkv';
 import { ThunkAction, configureStore } from '@reduxjs/toolkit';
@@ -9,9 +8,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Reactotron from '../../ReactotronConfig';
 import rootReducer from './root-reducer';
 import appConfig from '../appConfig';
-import { Sentry } from '../integrations';
 
-const { REACTOTRON_ENABLED, SENTRY_ENABLED, STORAGE_TYPE } = appConfig;
+const { REACTOTRON_ENABLED, STORAGE_TYPE } = appConfig;
 
 let storage: Storage;
 
@@ -38,10 +36,6 @@ if (STORAGE_TYPE === 'MMKV') {
 
 const getEnhancers = () => {
   let enhancers: StoreEnhancer[] = [];
-
-  SENTRY_ENABLED &&
-    Sentry?.createReduxEnhancer &&
-    enhancers.push(Sentry.createReduxEnhancer());
 
   REACTOTRON_ENABLED &&
     Reactotron?.createEnhancer &&

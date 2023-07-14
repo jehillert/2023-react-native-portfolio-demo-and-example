@@ -13,7 +13,6 @@
 - light/dark mode
 - testing
   - mock dependencies where needed.
-- TODO: Sentry crash reporting
 - TODO:mixpanel analytics
 - TODO: developoment, testing, production environments
 

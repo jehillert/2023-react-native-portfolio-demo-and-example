@@ -3,8 +3,7 @@ import React from 'react';
 import codePush from 'react-native-code-push';
 import { LogBox } from 'react-native';
 
-import { initSentry, Sentry } from './integrations';
-import { codePushOptions, useCodePush } from './integrations/useCodePush';
+import { codePushOptions, useCodePush } from './hooks';
 import AppCore from './AppCore';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { Provider } from 'react-redux';
@@ -14,25 +13,21 @@ import { useShare } from './hooks';
 
 LogBox.ignoreAllLogs();
 
-initSentry();
-
 let App = () => {
   useCodePush();
   useShare();
 
   return (
-    <Sentry.TouchEventBoundary>
-      <Provider store={store}>
-        <PersistGate loading={null} persistor={persistor}>
-          <GestureHandlerRootView style={{ flex: 1 }}>
-            <AppCore />
-          </GestureHandlerRootView>
-        </PersistGate>
-      </Provider>
-    </Sentry.TouchEventBoundary>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <GestureHandlerRootView style={{ flex: 1 }}>
+          <AppCore />
+        </GestureHandlerRootView>
+      </PersistGate>
+    </Provider>
   );
 };
 
-App = codePush(codePushOptions)(Sentry.wrap(App));
+App = codePush(codePushOptions)(App);
 
 export default App;
