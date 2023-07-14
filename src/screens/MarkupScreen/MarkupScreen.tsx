@@ -6,7 +6,7 @@ import BaseWebView, { WebViewMessageEvent } from 'react-native-webview';
 import { selectActiveNoteId, selectNoteById } from '../../store/selectors';
 import { ColorCallback } from '../../components/palettes/ColorPalette';
 import { highlight2Colors, shadeColors } from '../../constants';
-import { listener, initInject, markupGlobally } from './webviewUtils';
+import { initInject, markupGlobally } from './markupUtils';
 import { useAppSelector } from '../../hooks/useRedux';
 import { MarkupScreenProps } from '../../navigation';
 import { useTheme } from 'styled-components/native';
@@ -33,7 +33,7 @@ const MarkupScreen = ({}: Props) => {
   const webviewRef = useRef<BaseWebView>(null);
   const webview = webviewRef.current;
 
-  const getWebViewContent = () => `
+  const getWebViewContent = `
   (function() {
     const content = document.getElementsByTagName("body")[0].innerHTML;
     window.ReactNativeWebView.postMessage(JSON.stringify(content));
@@ -46,39 +46,11 @@ const MarkupScreen = ({}: Props) => {
   margin: 32px;
 `;
 
-  const getInjectableJSMessage = (message: string) => `
-          (() => {
-            document.dispatchEvent(new MessageEvent('message', ${JSON.stringify(
-              {
-                data: message,
-              },
-            )}));
-          })();
-        `;
-
-  const sendDataToWebView = () => {
-    webviewRef.current?.injectJavaScript(getInjectableJSMessage('Hello'));
-  };
-
-  const handleLoadEnd = () => {
-    console.log('load ended');
-    webview?.injectJavaScript(listener);
-    sendDataToWebView();
-  };
-
   const clearSelection = () =>
     webviewRef.current?.postMessage(JSON.stringify({ what: 'clearSelection' }));
 
-  const handlePressShade: ColorCallback = ({ backgroundColor }) =>
-    webview?.injectJavaScript(getWebViewContent());
-
-  const handlePressHighlight: ColorCallback = ({ backgroundColor, color }) => {
-    const styles: CSSProp = {
-      backgroundColor,
-      color,
-    };
-
-    webviewRef.current?.injectJavaScript(markupGlobally(styles));
+  const handleColorPress: ColorCallback = props => {
+    webviewRef.current?.injectJavaScript(markupGlobally(props));
   };
 
   const handleMessage = ({ nativeEvent: { data } }: WebViewMessageEvent) => {
@@ -87,19 +59,12 @@ const MarkupScreen = ({}: Props) => {
 
   return (
     <MarkupScreenContainer>
-      <Button
-        title="press me"
-        onPress={() => {
-          console.log('I was pressed');
-          webview?.injectJavaScript(getWebViewContent);
-        }}
-      />
       <WebView
         ref={webviewRef}
-        source={{ html: initInject(content, bodyStyle, listener) }}
+        source={{ html: initInject(content, bodyStyle) }}
         automaticallyAdjustContentInsets={false}
         menuItems={[]}
-        onLoadEnd={handleLoadEnd}
+        onLoadEnd={() => console.log('onLoadEnd')}
         onMessage={handleMessage}
         onError={(event: WebViewErrorEvent) => {
           const { code, description, domain } = event.nativeEvent;
@@ -110,7 +75,7 @@ const MarkupScreen = ({}: Props) => {
       />
       <ColorPalette
         colors={highlight2Colors}
-        onPressColor={handlePressHighlight}
+        onPressColor={handleColorPress}
         positioning={{
           quadrant: 1,
           offsetX: 8,
@@ -118,7 +83,7 @@ const MarkupScreen = ({}: Props) => {
       />
       <ColorPalette
         colors={shadeColors}
-        onPressColor={handlePressShade}
+        onPressColor={handleColorPress}
         positioning={{ isRichToolbar: true, quadrant: 3 }}
         row
       />

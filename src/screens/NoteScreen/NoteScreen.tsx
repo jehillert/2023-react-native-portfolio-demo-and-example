@@ -25,6 +25,7 @@ import ColorPalette, {
 } from '../../components/palettes/ColorPalette';
 import { NoteScreenProps } from '../../navigation';
 import { BaseDrawer } from '../../components';
+import { getTime } from 'date-fns';
 
 type Props = {} & NoteScreenProps;
 
@@ -40,18 +41,6 @@ const NoteScreen = (props: Props) => {
   const activeNoteId = useAppSelector(selectActiveNoteId);
   const activeNote = useAppSelector(() => selectNoteById(activeNoteId));
   const themeId = useAppSelector(selectThemeId);
-  /*
-document.body.style.webkitTapHighlightColor = 'rgba(0, 0, 0, 0)';
-document.body.style.webkitLineClamp = 'none';
-document.body.style.userSelect = 'none';
-
-editor?.commandDOM(
-  `$('body').style.webkitTapHighlightColor='rgba(0, 0, 0, 0)'`,
-);
-editor?.commandDOM(`$('body').style.webkitLineClamp='none'`);
-editor?.commandDOM(`$('body').style.userSelect='none'`);
-*/
-  // editor?.commandDOM(`$('body').style.webkitTouchCallout='none'`);
   const savedContent = activeNote?.content ?? '';
   const contentRef = useRef(savedContent);
   const editorRef = useRef<RichEditor>(null);
@@ -74,7 +63,13 @@ editor?.commandDOM(`$('body').style.userSelect='none'`);
   };
 
   const debouncedRequest = useDebounce(() =>
-    dispatch(updateNote({ id: activeNoteId, content: content })),
+    dispatch(
+      updateNote({
+        id: activeNoteId,
+        content: content,
+        dateUpdated: getTime(new Date()),
+      }),
+    ),
   );
 
   useEffect(() => {

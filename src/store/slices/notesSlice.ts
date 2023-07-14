@@ -16,6 +16,7 @@ type Note = {
   title?: string;
   dateCreated?: number;
   dateUpdated?: number | null;
+  markups?: string[];
 };
 
 export const notesAdapter = createEntityAdapter<Note>({
@@ -31,7 +32,6 @@ const notesSlice = createSlice({
   }),
   reducers: {
     addNewNote: notesAdapter.addOne,
-    addNewNotes: notesAdapter.addMany,
     addProps2Note: notesAdapter.updateOne,
     addProps2Notes: notesAdapter.updateMany,
     removeAllNotes: notesAdapter.removeAll,
@@ -41,16 +41,13 @@ const notesSlice = createSlice({
     replaceNotes: notesAdapter.setMany,
     updateNote: notesAdapter.upsertOne,
     updateNotes: notesAdapter.upsertMany,
-    allNotesReplaced(state, action) {
-      notesAdapter.setAll(state, action.payload.notes);
-    },
     setActiveNoteId(state, { payload }: PayloadAction<string>) {
       state.activeNoteId = payload;
     },
     setIds(state, { payload }: PayloadAction<string[]>) {
       state.ids = payload;
     },
-    untitledNoteCountSet(state, { payload }: PayloadAction<number>) {
+    setUntitledNoteCount(state, { payload }: PayloadAction<number>) {
       state.untitledNoteCount = payload;
     },
   },
@@ -64,7 +61,7 @@ const createNote =
     const newUntitledNoteCount = untitledNoteCount + 1;
     const title = `note-${newUntitledNoteCount}`;
     const timeStamp = new Date().getTime();
-    dispatch(untitledNoteCountSet(newUntitledNoteCount));
+    dispatch(setUntitledNoteCount(newUntitledNoteCount));
     dispatch(setActiveNoteId(id));
 
     const newNote = {
@@ -81,7 +78,6 @@ const createNote =
 
 export const {
   addNewNote,
-  addNewNotes,
   addProps2Note,
   addProps2Notes,
   removeAllNotes,
@@ -91,7 +87,7 @@ export const {
   replaceNotes,
   setActiveNoteId,
   setIds,
-  untitledNoteCountSet,
+  setUntitledNoteCount,
   updateNote,
   updateNotes,
 } = notesSlice.actions;

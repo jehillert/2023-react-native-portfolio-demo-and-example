@@ -1,8 +1,14 @@
 import { combineReducers } from '@reduxjs/toolkit';
-import { globalUiReducer, notesReducer, settingsReducer } from './slices';
+import {
+  globalUiReducer,
+  markupsReducer,
+  notesReducer,
+  settingsReducer,
+} from './slices';
 
 const rootReducer = combineReducers({
   globalUi: globalUiReducer,
+  markups: markupsReducer,
   notes: notesReducer,
   settings: settingsReducer,
 });

@@ -1,14 +1,20 @@
-const getMarkupId = /*javascript*/ `
-  const getMarkupId = (styles, searchText) =>
-    Object.keys(styles)
-      .sort()
-      .reduce((accum, keyName) => {
-        return accum + '-' + keyName;
-      }, \`[\${searchText}]\`);
-`;
+import { CSSProperties } from 'react';
+import { defaultSearchConfig } from './markupConstants';
 
-const getMarkupNode = /*javascript*/ `
-  const getMarkupNode = (markupId, styles) => {
+const markupGlobally = (
+  styles: CSSProperties,
+  searchConfig = defaultSearchConfig,
+) => /*javascript*/ `
+  ((styles = ${JSON.stringify(styles)}) => {
+
+    const getMarkupId = (searchText) =>
+      Object.keys(styles)
+        .sort()
+        .reduce((accum, keyName) => {
+          return accum + '-' + keyName;
+        }, [searchText]);
+
+  const getMarkupNode = (markupId) => {
     spanNode = document.createElement('SPAN');
     spanNode.setAttribute('class', markupId);
     for (property in styles) {
@@ -16,16 +22,10 @@ const getMarkupNode = /*javascript*/ `
     }
     return spanNode;
   };
-`;
 
-const globalHighlight = /*javascript*/ `
-  ${getMarkupNode}
-  ${getMarkupId}
-
-  (const globalHighlight) = ({ styles, searchConfig }) => {
     let count = 0;
     let selectedText = document.getSelection().toString();
-
+window.ReactNativeWebView.postMessage(JSON.stringify(selectedText));
     if (!selectedText) return;
 
     const markupId = getMarkupId(styles, selectedText);
@@ -44,7 +44,6 @@ const globalHighlight = /*javascript*/ `
       if (isTextNode) {
         const pos = node.data.toUpperCase().indexOf(searchText);
         if (pos >= 0) {
-          // const spanNode = getMarkupNode(markupId, styles);
           const spanNode = markupNode.cloneNode(true);
           const middlebit = node.splitText(pos);
           const endbit = middlebit.splitText(searchText.length);
@@ -64,52 +63,16 @@ const globalHighlight = /*javascript*/ `
 
     searchWithinNode(document.body, selectedText.toUpperCase());
 
-    return {
-      count,
-      markupId
-    };
-  };
+    const markupResult = {
+       count,
+       markupId
+     };
+
+    window.ReactNativeWebView.postMessage(JSON.stringify(markupResult));
+  })();
 `;
 
-const listener = /*javascript*/ `
-  const messageEventListenerFn = (e) => {
-    window.ReactNativeWebView.postMessage("I worked the first time");
-
-    ${globalHighlight}
-
-    let result = { isError: false };
-
-    try {
-      if (e.origin === '' && typeof window.ReactNativeWebView === 'object') {
-        const { target, action, args} = JSON.parse(e.data);
-
-        switch (action) {
-          case 'globalHighlight':
-            result.operation = globalHighlight(args);
-            break;
-          case 'clearSelection':
-            // window.getSelection()?.removeAllRanges()
-            break;
-          default:
-            break;
-        }
-      }
-    } catch (error) {
-      result.errorMsg = error.message;
-      result.isError = true;
-    } finally {
-      window.ReactNativeWebView.postMessage(JSON.stringify(result));
-    }
-  };
-  window.addEventListener('message', (e) => messageEventListenerFn(e));
-  document.addEventListener('message', (e) => messageEventListenerFn(e));
-`;
-
-const initInject = (
-  document: string,
-  bodyStyle: string,
-  listener: string,
-) => `<!DOCTYPE html>\n
+const initInject = (document: string, bodyStyle: string) => `<!DOCTYPE html>\n
   <html>
     <head>
       <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -118,10 +81,9 @@ const initInject = (
       style="${bodyStyle}">
       ${document}
       <script>
-        ${listener}
       </script>
     </body>
   </html>
 `;
 
-export { initInject, listener };
+export { initInject, markupGlobally };
