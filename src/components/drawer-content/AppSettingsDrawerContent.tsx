@@ -24,8 +24,8 @@ const ThemeSettingContainer = styled(View)`
 
 const AppSettingsDrawerContent = ({ drawerId }: Props) => {
   const dispatch = useAppDispatch();
-  const themeId = useAppSelector(selectThemeId);
-  const themeIdTxt = toTitleCase(themeId);
+  const _themeId = useAppSelector(selectThemeId);
+  const themeIdTxt = toTitleCase(_themeId);
 
   const handleSelect = (themeId: ThemeSelection) => {
     dispatch(setThemeId((themeId as string).toLowerCase() as ThemeSelection));

@@ -7,10 +7,10 @@ import {
 } from './slices';
 
 const rootReducer = combineReducers({
-  globalUi: globalUiReducer,
   markups: markupsReducer,
   notes: notesReducer,
   settings: settingsReducer,
+  globalUi: globalUiReducer,
 });
 
 export default rootReducer;

@@ -60,7 +60,8 @@ const StackNavigator = () => {
           name={ScreensEnum.DIRECTORY}
           component={DirectoryScreen}
           options={{
-            title: 'Notes',
+            title: 'Documents',
+            headerStyle: { backgroundColor: '#ffffff' },
             headerTitleAlign: 'center',
             headerLeft: settingsDrawerButton,
             headerRight: undefined,
@@ -71,7 +72,8 @@ const StackNavigator = () => {
           name={ScreensEnum.NOTE}
           component={NoteScreen}
           options={{
-            title: 'Notes',
+            title: 'Edit',
+            headerStyle: { backgroundColor: '#43BFE4' },
             headerTitleAlign: 'center',
             headerRight: markupScreenDrawerButtons,
             animation: 'slide_from_right',
@@ -81,7 +83,8 @@ const StackNavigator = () => {
           name={ScreensEnum.MARKUP}
           component={MarkupScreen}
           options={{
-            title: 'Notes',
+            title: 'Markup',
+            headerStyle: { backgroundColor: 'tomato' },
             headerTitleAlign: 'center',
             headerRight: markupScreenDrawerButtons,
             animation: 'slide_from_right',

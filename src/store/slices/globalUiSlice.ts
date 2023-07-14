@@ -55,7 +55,5 @@ const globalUiSlice = createSlice({
 
 export const { setDrawer, setHeaderHeight, setInitialUrl } =
   globalUiSlice.actions;
-
 export { DrawerId };
-
 export default globalUiSlice.reducer;

@@ -7,7 +7,7 @@ import {
   PayloadAction,
 } from '@reduxjs/toolkit';
 import { SearchConfig } from '../../screens/MarkupScreen/markupTypes';
-import { selectActiveNoteId, selectNoteById } from '../selectors';
+import { selectActiveNoteId } from '../selectors';
 import { AppThunk } from '../store';
 import { updateNote } from './notesSlice';
 
@@ -39,14 +39,16 @@ const markupsSlice = createSlice({
   },
 });
 
-const addMarkup =
-  ({ searchText, ...rest }: Markup): AppThunk =>
-  (dispatch, getState) => {
-    const activeNoteId = selectActiveNoteId(getState());
-    const activeNote = selectNoteById(activeNoteId);
-
-    activeNote && updateNote(activeNote);
-  };
+// const addMarkup =
+//   ({ searchText, ...rest }: Markup): AppThunk =>
+//   (dispatch, getState) => {
+//     const activeNoteId = selectActiveNoteId(getState());
+//     const activeNoteMarkups = getState().notes.entities.activeNoteId.markups;
+//     if (!activeNoteMarkups?.includes(searchText)) {
+//       const markups = [...activeNoteMarkups, searchText];
+//       dispatch(updateNote({ markups }));
+//     }
+//   };
 
 export const {
   removeAllMarkups,

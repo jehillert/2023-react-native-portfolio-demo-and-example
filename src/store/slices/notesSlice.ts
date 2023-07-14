@@ -16,7 +16,7 @@ type Note = {
   title?: string;
   dateCreated?: number;
   dateUpdated?: number | null;
-  markups?: string[];
+  markups: string[];
 };
 
 export const notesAdapter = createEntityAdapter<Note>({
@@ -71,6 +71,7 @@ const createNote =
       dateCreated: timeStamp,
       dateUpdated: null,
       content: '',
+      markups: [],
     };
 
     dispatch(addNewNote(newNote));
