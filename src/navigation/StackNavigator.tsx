@@ -63,8 +63,8 @@ const StackNavigator = () => {
           options={{
             title: 'Notes',
             headerTitleAlign: 'center',
-            headerRight: settingsDrawerButton,
-            headerLeft: undefined,
+            headerLeft: settingsDrawerButton,
+            headerRight: undefined,
             animation: 'slide_from_right',
           }}
         />

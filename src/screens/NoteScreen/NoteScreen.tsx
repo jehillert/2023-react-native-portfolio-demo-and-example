@@ -1,6 +1,6 @@
 // testing
 // https://coolsoftware.dev/blog/testing-react-native-webview-with-react-native-testing-library/
-import React, { useEffect, useLayoutEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useIsFocused } from '@react-navigation/native';
 import { Text as RNText, ColorValue, StyleProp, ViewStyle } from 'react-native';
@@ -10,21 +10,13 @@ import {
   RichToolbar,
 } from 'react-native-pell-rich-editor';
 
+import { selectActiveNoteId, selectNoteById } from '../../store/selectors';
 import { useAppDispatch, useAppSelector } from '../../hooks/useRedux';
 import { useDebounce, useKeyboard } from '../../hooks';
-import { highlight2Colors, isAndroid, shadeColors } from '../../constants';
-import {
-  selectActiveNoteId,
-  selectNoteById,
-  selectThemeId,
-} from '../../store/selectors';
-import { DrawerId, updateNote } from '../../store/slices';
 import { useTheme } from 'styled-components/native';
-import ColorPalette, {
-  ColorCallback,
-} from '../../components/palettes/ColorPalette';
 import { NoteScreenProps } from '../../navigation';
-import { BaseDrawer } from '../../components';
+import { updateNote } from '../../store/slices';
+import { isAndroid } from '../../constants';
 import { getTime } from 'date-fns';
 
 type Props = {} & NoteScreenProps;
@@ -40,7 +32,6 @@ const NoteScreen = (props: Props) => {
   const isFocused = useIsFocused();
   const activeNoteId = useAppSelector(selectActiveNoteId);
   const activeNote = useAppSelector(() => selectNoteById(activeNoteId));
-  const themeId = useAppSelector(selectThemeId);
   const savedContent = activeNote?.content ?? '';
   const contentRef = useRef(savedContent);
   const editorRef = useRef<RichEditor>(null);
@@ -88,56 +79,40 @@ const NoteScreen = (props: Props) => {
     debouncedRequest();
   };
 
-  const handlePressShade: ColorCallback = ({ bg }) => {
-    editor?.setHiliteColor(bg);
-    if (themeId === 'dark') {
-      editor?.setForeColor(colors.commonBlack);
-    }
-  };
-
-  const handlePressHighlight: ColorCallback = ({ bg, fg }) => {
-    fg && editor?.setForeColor(fg);
-    editor?.setHiliteColor(bg);
-  };
-
   return (
     <>
-      <BaseDrawer drawerId={DrawerId.MARKUP_TOOLS} drawerPosition="left">
-        <BaseDrawer drawerId={DrawerId.DOCUMENT_MAP} drawerPosition="right">
-          <KeyboardAwareScrollView contentContainerStyle={kbAwareSVStyles}>
-            <RichEditor
-              ref={editorRef}
-              useContainer={false}
-              onChange={handleContentChange}
-              initialContentHTML={savedContent}
-              editorStyle={contentStyle}
-              initialFocus
-            />
-            {!!editorRef?.current?.isKeyboardOpen && (
-              <RichToolbar
-                editor={editorRef}
-                actions={[
-                  actions.insertImage,
-                  actions.undo,
-                  actions.redo,
-                  actions.setBold,
-                  actions.setItalic,
-                  actions.setUnderline,
-                  actions.outdent,
-                  actions.indent,
-                  actions.alignLeft,
-                  actions.alignCenter,
-                  actions.alignRight,
-                  actions.blockquote,
-                  actions.checkboxList,
-                  actions.heading1,
-                ]}
-                iconMap={{ [actions.heading1]: handleHead }}
-              />
-            )}
-          </KeyboardAwareScrollView>
-        </BaseDrawer>
-      </BaseDrawer>
+      <KeyboardAwareScrollView contentContainerStyle={kbAwareSVStyles}>
+        <RichEditor
+          ref={editorRef}
+          useContainer={false}
+          onChange={handleContentChange}
+          initialContentHTML={savedContent}
+          editorStyle={contentStyle}
+          initialFocus
+        />
+        {!!editorRef?.current?.isKeyboardOpen && (
+          <RichToolbar
+            editor={editorRef}
+            actions={[
+              actions.insertImage,
+              actions.undo,
+              actions.redo,
+              actions.setBold,
+              actions.setItalic,
+              actions.setUnderline,
+              actions.outdent,
+              actions.indent,
+              actions.alignLeft,
+              actions.alignCenter,
+              actions.alignRight,
+              actions.blockquote,
+              actions.checkboxList,
+              actions.heading1,
+            ]}
+            iconMap={{ [actions.heading1]: handleHead }}
+          />
+        )}
+      </KeyboardAwareScrollView>
     </>
   );
 };

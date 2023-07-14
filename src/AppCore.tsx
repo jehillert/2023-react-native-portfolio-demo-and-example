@@ -10,6 +10,8 @@ import { useAppSelector } from './hooks/useRedux';
 import { StackNavigator } from './navigation';
 import { selectThemeId } from './store/selectors';
 import { theme } from './theme';
+import { AppSettingsDrawerContent, BaseDrawer } from './components';
+import { DrawerId } from './store/slices';
 
 let AppCore = () => {
   const systemThemeId = useColorScheme() ?? 'light';
@@ -23,7 +25,16 @@ let AppCore = () => {
     <ThemeProvider theme={theme[appThemeId]}>
       <PaperProvider theme={isDark ? MD3DarkTheme : MD3LightTheme}>
         <StatusBar barStyle={barStyle} backgroundColor={backgroundColor} />
-        <StackNavigator />
+        <BaseDrawer drawerId={DrawerId.MARKUP_TOOLS} drawerPosition="left">
+          <BaseDrawer drawerId={DrawerId.DOCUMENT_MAP} drawerPosition="right">
+            <BaseDrawer
+              drawerId={DrawerId.APP_SETTINGS}
+              drawerPosition="left"
+              renderDrawerContent={() => <AppSettingsDrawerContent />}>
+              <StackNavigator />
+            </BaseDrawer>
+          </BaseDrawer>
+        </BaseDrawer>
       </PaperProvider>
     </ThemeProvider>
   );

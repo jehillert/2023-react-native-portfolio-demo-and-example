@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
-import { CSSProp, styled } from 'styled-components';
-import { Alert, Button, View } from 'react-native';
+import { styled } from 'styled-components';
+import { Alert, View } from 'react-native';
 import BaseWebView, { WebViewMessageEvent } from 'react-native-webview';
 
 import { selectActiveNoteId, selectNoteById } from '../../store/selectors';
@@ -45,9 +45,6 @@ const MarkupScreen = ({}: Props) => {
   font-size: 20px;
   margin: 32px;
 `;
-
-  const clearSelection = () =>
-    webviewRef.current?.postMessage(JSON.stringify({ what: 'clearSelection' }));
 
   const handleColorPress: ColorCallback = props => {
     webviewRef.current?.injectJavaScript(markupGlobally(props));
