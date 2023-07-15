@@ -61,7 +61,6 @@ const StackNavigator = () => {
           component={DirectoryScreen}
           options={{
             title: 'Documents',
-            headerStyle: { backgroundColor: '#ffffff' },
             headerTitleAlign: 'center',
             headerLeft: settingsDrawerButton,
             headerRight: undefined,
@@ -73,7 +72,6 @@ const StackNavigator = () => {
           component={NoteScreen}
           options={{
             title: 'Edit',
-            headerStyle: { backgroundColor: '#43BFE4' },
             headerTitleAlign: 'center',
             headerRight: markupScreenDrawerButtons,
             animation: 'slide_from_right',
@@ -84,7 +82,6 @@ const StackNavigator = () => {
           component={MarkupScreen}
           options={{
             title: 'Markup',
-            headerStyle: { backgroundColor: 'tomato' },
             headerTitleAlign: 'center',
             headerRight: markupScreenDrawerButtons,
             animation: 'slide_from_right',

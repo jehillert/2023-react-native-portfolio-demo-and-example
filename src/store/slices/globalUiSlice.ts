@@ -8,7 +8,7 @@ enum DrawerId {
 
 interface IglobalUi {
   initialUrl: string | null;
-  headerHeight: number | null;
+  headerHeight: number;
   drawerState: { [key in DrawerId]: boolean };
   leftDrawerOpen: boolean;
   rightDrawerOpen: boolean;
@@ -16,7 +16,7 @@ interface IglobalUi {
 
 const initialState: IglobalUi = {
   initialUrl: null,
-  headerHeight: null,
+  headerHeight: 91,
   leftDrawerOpen: false,
   rightDrawerOpen: false,
   drawerState: {
@@ -44,7 +44,7 @@ const globalUiSlice = createSlice({
         }
       }
     },
-    setHeaderHeight(state, { payload }: PayloadAction<number | null>) {
+    setHeaderHeight(state, { payload }: PayloadAction<number>) {
       state.headerHeight = payload;
     },
     setInitialUrl(state, { payload }: PayloadAction<string | null>) {
