@@ -8,6 +8,7 @@ import { DrawerId } from '../../store/slices';
 import { useAppSelector } from '../../hooks';
 import { store } from '../../store/store';
 import DrawerToggle from '../drawer/DrawerToggle';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const DrawerHeader = styled(View)<{
   height: number;
@@ -32,10 +33,11 @@ type Props = {
 
 const BaseDrawerContent = ({ children, drawerId, style }: Props) => {
   const headerHeight = useAppSelector(selectHeaderHeight);
+  const { top } = useSafeAreaInsets();
 
   return (
     <Provider store={store}>
-      <DrawerHeader height={headerHeight}>
+      <DrawerHeader height={headerHeight - top}>
         <DrawerToggle drawerId={drawerId} />
       </DrawerHeader>
       <DrawerContentContainer style={style}>{children}</DrawerContentContainer>

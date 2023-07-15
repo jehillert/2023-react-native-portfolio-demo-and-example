@@ -33,7 +33,6 @@ const DirectoryScreen = ({ navigation }: Props) => {
   const rnHeaderHeight = useHeaderHeight();
 
   useEffect(() => {
-    console.log(rnHeaderHeight);
     if (headerHeight !== rnHeaderHeight) {
       dispatch(setHeaderHeight(rnHeaderHeight));
     }

@@ -10,6 +10,7 @@ import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { store, persistor } from './store/store';
 import { useShare } from './hooks';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 LogBox.ignoreAllLogs();
 
@@ -21,7 +22,9 @@ let App = () => {
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <GestureHandlerRootView style={{ flex: 1 }}>
-          <AppCore />
+          <SafeAreaProvider>
+            <AppCore />
+          </SafeAreaProvider>
         </GestureHandlerRootView>
       </PersistGate>
     </Provider>
