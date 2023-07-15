@@ -3,9 +3,9 @@ import { View } from 'react-native';
 import { styled } from 'styled-components/native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
 import { RootStackParamList, ScreensEnum } from './types';
 import { DirectoryScreen, MarkupScreen, NoteScreen } from '../screens';
-
 import navigationRef from './root-navigation';
 import DrawerToggle from '../components/drawer/DrawerToggle';
 import { DrawerId } from '../store/slices';
