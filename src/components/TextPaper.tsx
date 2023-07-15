@@ -5,7 +5,8 @@ const BaseText = styled(RNText).attrs({
   allowFontScaling: false,
 })`
   color: ${({ theme }) => theme.colors.textPrimary};
-  font-family: sans-serif;
+  /* font-family: sans-serif; */
+  ${({ theme }) => theme.typography.fontFamily}
   font-weight: 400;
   letter-spacing: 0;
   text-align-vertical: center;
@@ -47,7 +48,7 @@ const TitleLarge = styled(BaseText)`
 `;
 
 const TitleMedium = styled(BaseText)`
-  font-family: sans-serif-medium;
+  /* font-family: sans-serif-medium; */
   letter-spacing: 0.15px;
   font-weight: 500;
   line-height: 24;
@@ -55,7 +56,7 @@ const TitleMedium = styled(BaseText)`
 `;
 
 const TitleSmall = styled(BaseText)`
-  font-family: sans-serif-medium;
+  /* font-family: sans-serif-medium; */
   letter-spacing: 0.1px;
   font-weight: 500;
   line-height: 20;
@@ -63,7 +64,7 @@ const TitleSmall = styled(BaseText)`
 `;
 
 const LabelLarge = styled(BaseText)`
-  font-family: sans-serif-medium;
+  /* font-family: sans-serif-medium; */
   letter-spacing: 0.1px;
   font-weight: 500;
   line-height: 20;
@@ -71,7 +72,7 @@ const LabelLarge = styled(BaseText)`
 `;
 
 const LabelMedium = styled(BaseText)`
-  font-family: sans-serif-medium;
+  /* font-family: sans-serif-medium; */
   letter-spacing: 0.5px;
   font-weight: 500;
   line-height: 16;
@@ -79,7 +80,7 @@ const LabelMedium = styled(BaseText)`
 `;
 
 const LabelSmall = styled(BaseText)`
-  font-family: sans-serif-medium;
+  /* font-family: sans-serif-medium; */
   letter-spacing: 0.5px;
   font-weight: 500;
   line-height: 16;

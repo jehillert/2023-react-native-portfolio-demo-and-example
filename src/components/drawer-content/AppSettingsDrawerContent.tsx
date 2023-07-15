@@ -2,12 +2,12 @@ import React from 'react';
 import { View } from 'react-native';
 import { styled } from 'styled-components';
 
-import { DrawerId, ThemeSelection, setThemeId } from '../../store/slices';
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { selectThemeId } from '../../store/selectors';
-import { toTitleCase } from '../../utils';
-import _BaseDrawerContent from './BaseDrawerContent';
 import RadioPanel from '../RadioPanel';
+import _BaseDrawerContent from './BaseDrawerContent';
+import { toTitleCase } from '../../utils';
+import { selectThemeId } from '../../store/selectors';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { DrawerId, ThemeSelection, setThemeId } from '../../store/slices';
 
 type Props = {
   drawerId: DrawerId;

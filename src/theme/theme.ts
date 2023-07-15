@@ -36,8 +36,8 @@ const shadow = {
 };
 
 const typography = {
-  fontFamily: 'sans-serif',
-  // fontFamily: 'Roboto- Regular',
+  // fontFamily: 'sans-serif',
+  fontFamily: 'Roboto-Regular',
   fontWeightLight: 300,
   fontWeightRegular: 400,
   fontWeightMedium: 500,

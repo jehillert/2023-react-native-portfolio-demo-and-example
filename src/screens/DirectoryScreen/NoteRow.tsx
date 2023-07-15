@@ -7,10 +7,10 @@ import { useNavigation } from '@react-navigation/native';
 import { IconButton } from 'react-native-paper';
 import { View } from 'react-native';
 
-import { Note, removeNote, setActiveNoteId } from '../../store/slices';
-import { ScreensEnum } from '../../navigation';
-import { useAppDispatch } from '../../hooks';
 import { Text } from '../../components';
+import { useAppDispatch } from '../../hooks';
+import { ScreensEnum } from '../../navigation';
+import { Note, removeNote, setActiveNoteId } from '../../store/slices';
 
 type Props = RenderItemParams<Note>;
 
