@@ -1,6 +1,6 @@
 import React from 'react';
 import { View } from 'react-native';
-import { styled } from 'styled-components/native';
+import { styled, useTheme } from 'styled-components/native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
@@ -31,6 +31,7 @@ const StackNavigator = () => {
   useLinking();
   useInitialURL();
   const navTheme = useCustomNavTheme();
+  const { colors } = useTheme();
 
   const backButton = () => <IconPressable name="chevron-left" />;
 
@@ -52,7 +53,7 @@ const StackNavigator = () => {
       theme={navTheme}>
       <Stack.Navigator
         screenOptions={{
-          headerStyle: { backgroundColor: 'tomato' },
+          headerStyle: { backgroundColor: colors.primaryMain },
           headerLeft: backButton,
           presentation: 'card',
         }}>

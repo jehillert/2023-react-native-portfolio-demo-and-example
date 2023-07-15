@@ -10,7 +10,7 @@ import NoteRow from './NoteRow';
 import { DirectoryScreenProps, ScreensEnum } from '../../navigation';
 import { selectHeaderHeight, selectSortedNotes } from '../../store/selectors';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { Fab } from '../../components';
+import { Fab, SvgFab } from '../../components';
 import {
   Note,
   createNote,
@@ -18,6 +18,7 @@ import {
   setHeaderHeight,
   setIds,
 } from '../../store/slices';
+import { CircledPlusSign } from '../../assets';
 
 type Props = {} & DirectoryScreenProps;
 
@@ -26,7 +27,7 @@ const SpacerView = styled(View)`
 `;
 
 const DirectoryScreen = ({ navigation }: Props) => {
-  const { colors, shadow } = useTheme();
+  const { colors, dimensions, shadow } = useTheme();
   const dispatch = useAppDispatch();
   const sortedNotes = useAppSelector(selectSortedNotes);
   const headerHeight = useAppSelector(selectHeaderHeight);
@@ -64,15 +65,17 @@ const DirectoryScreen = ({ navigation }: Props) => {
         ItemSeparatorComponent={SpacerView}
         bounces={false}
       />
-      <Fab
+      <SvgFab
+        SvgIcon={CircledPlusSign}
+        positioning={{ quadrant: 2 }}
         onPress={handleCreateNote}
         iconProps={{
-          name: 'plus-circle',
-          size: 56,
+          height: dimensions.iconFab,
+          width: dimensions.iconFab,
           color: colors.primaryMain,
+          fill: colors.textPrimary,
           style: shadow.fabObj,
         }}
-        positioning={{ quadrant: 2 }}
       />
     </View>
   );

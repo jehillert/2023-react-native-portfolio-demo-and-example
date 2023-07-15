@@ -2,8 +2,9 @@ import { DefaultTheme } from 'styled-components/native';
 import { isAndroid, isIos } from '../constants';
 
 const dimensions = {
-  iconMedium: 32,
   iconSmall: 16,
+  iconMedium: 32,
+  iconFab: 56,
 };
 
 const fabShadow = `
@@ -72,9 +73,9 @@ const lightTheme = {
     infoLight: '#03a9f4',
     infoMain: '#0288d1',
     primaryContrastText: '#ffffff',
-    primaryDark: '#1565c0',
-    primaryLight: '#42a5f5',
-    primaryMain: '#1976d2',
+    primaryDark: '#51150a',
+    primaryLight: '#e57373',
+    primaryMain: 'tomato',
     secondaryContrastText: '#ffffff',
     secondaryDark: '#7b1fa2',
     secondaryLight: '#ba68c8',
@@ -133,9 +134,9 @@ const darkTheme: DefaultTheme = {
     infoLight: '#4fc3f7',
     infoMain: '#29b6f6',
     primaryContrastText: 'rgba(0, 0, 0, 0.87)',
-    primaryDark: '#42a5f5',
-    primaryLight: '#e3f2fd',
-    primaryMain: '#90caf9',
+    primaryDark: '#51150a',
+    primaryLight: '#e57373',
+    primaryMain: 'tomato',
     secondaryContrastText: 'rgba(0, 0, 0, 0.87)',
     secondaryDark: '#ab47bc',
     secondaryLight: '#f3e5f5',

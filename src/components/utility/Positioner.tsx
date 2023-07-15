@@ -73,7 +73,7 @@ const Positioner = ({
   offsetY = 16,
   style,
 }: Props) => {
-  const { bottom } = useSafeAreaInsets();
+  const bottom = 0;
   const { keyboardShown } = useKeyboard();
   const toolbarOffset = isRichToolbar ? richToolbarHeight : 0;
   const isBottom = quadrant === 2 || quadrant === 3;

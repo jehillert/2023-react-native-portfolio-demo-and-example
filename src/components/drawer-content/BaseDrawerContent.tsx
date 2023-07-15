@@ -18,7 +18,7 @@ const DrawerHeader = styled(View)<{
   justify-content: flex-start;
   height: ${({ height }) => height}px;
   padding-horizontal: 12px;
-  background-color: #51150a;
+  background-color: ${({ theme }) => theme.colors.primaryDark};
 `;
 
 const DrawerContentContainer = styled(View)`

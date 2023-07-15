@@ -2,6 +2,7 @@
 // https://github.com/react-native-community/hooks/blob/master/src/useKeyboard.ts
 import { useEffect, useState } from 'react';
 import { Keyboard, KeyboardEventListener, KeyboardMetrics } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const emptyCoordinates = Object.freeze({
   screenX: 0,
@@ -16,6 +17,8 @@ const initialValue = {
 };
 
 const useKeyboard = () => {
+  const { bottom } = useSafeAreaInsets();
+
   const [shown, setShown] = useState(false);
 
   const [coordinates, setCoordinates] = useState<{
@@ -65,7 +68,7 @@ const useKeyboard = () => {
   return {
     keyboardShown: shown,
     coordinates,
-    keyboardHeight,
+    keyboardHeight: keyboardHeight - bottom,
   };
 };
 
