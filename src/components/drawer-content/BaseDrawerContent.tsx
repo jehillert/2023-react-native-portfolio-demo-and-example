@@ -9,11 +9,13 @@ import { useAppSelector } from '../../hooks';
 import { store } from '../../store/store';
 import DrawerToggle from '../drawer/DrawerToggle';
 
-const DrawerHeader = styled(View)<{ height: number | null }>`
+const DrawerHeader = styled(View)<{
+  height: number;
+}>`
+  flex-direction: row;
   align-items: center;
   justify-content: flex-start;
-  flex-direction: row;
-  height: ${({ height }) => (height ? height : 150)}px;
+  height: ${({ height }) => height}px;
   padding-horizontal: 12px;
   background-color: #51150a;
 `;
