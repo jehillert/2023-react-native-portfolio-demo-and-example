@@ -5,7 +5,13 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import { RootStackParamList, ScreensEnum } from './types';
-import { DirectoryScreen, MarkupScreen, NoteScreen } from '../screens';
+import {
+  DirectoryScreen,
+  MarkupScreen,
+  NoteScreen,
+  PrivacyPolicyScreen,
+  TermsOfServiceScreen,
+} from '../screens';
 import navigationRef from './root-navigation';
 import DrawerToggle from '../components/drawer/DrawerToggle';
 import { DrawerId } from '../store/slices';
@@ -56,38 +62,54 @@ const StackNavigator = () => {
           headerStyle: { backgroundColor: colors.primaryMain },
           headerLeft: backButton,
           presentation: 'card',
+          headerTitleAlign: 'center',
         }}>
-        <Stack.Screen
-          name={ScreensEnum.DIRECTORY}
-          component={DirectoryScreen}
-          options={{
-            title: 'Documents',
-            headerTitleAlign: 'center',
-            headerLeft: settingsDrawerButton,
-            headerRight: undefined,
-            animation: 'slide_from_right',
-          }}
-        />
-        <Stack.Screen
-          name={ScreensEnum.NOTE}
-          component={NoteScreen}
-          options={{
-            title: 'Edit',
-            headerTitleAlign: 'center',
-            headerRight: markupScreenDrawerButtons,
-            animation: 'slide_from_right',
-          }}
-        />
-        <Stack.Screen
-          name={ScreensEnum.MARKUP}
-          component={MarkupScreen}
-          options={{
-            title: 'Markup',
-            headerTitleAlign: 'center',
-            headerRight: markupScreenDrawerButtons,
-            animation: 'slide_from_right',
-          }}
-        />
+        <Stack.Group>
+          <Stack.Screen
+            name={ScreensEnum.DIRECTORY}
+            component={DirectoryScreen}
+            options={{
+              title: 'Documents',
+              headerLeft: settingsDrawerButton,
+              headerRight: undefined,
+              animation: 'slide_from_right',
+            }}
+          />
+          <Stack.Screen
+            name={ScreensEnum.NOTE}
+            component={NoteScreen}
+            options={{
+              title: 'Edit',
+              headerRight: markupScreenDrawerButtons,
+              animation: 'slide_from_right',
+            }}
+          />
+          <Stack.Screen
+            name={ScreensEnum.MARKUP}
+            component={MarkupScreen}
+            options={{
+              title: 'Markup',
+              headerRight: markupScreenDrawerButtons,
+              animation: 'slide_from_right',
+            }}
+          />
+        </Stack.Group>
+        <Stack.Group>
+          <Stack.Screen
+            name={ScreensEnum.PRIVACY_POLICY}
+            component={PrivacyPolicyScreen}
+            options={{
+              title: 'Privacy Policy',
+            }}
+          />
+          <Stack.Screen
+            name={ScreensEnum.TERMS_OF_SERVICE}
+            component={TermsOfServiceScreen}
+            options={{
+              title: 'Terms of Service',
+            }}
+          />
+        </Stack.Group>
       </Stack.Navigator>
     </NavigationContainer>
   );

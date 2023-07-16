@@ -1,7 +1,7 @@
 import React from 'react';
 import WebView from 'react-native-webview';
 import { View } from 'react-native';
-import { styled } from 'styled-components';
+import { styled } from 'styled-components/native';
 
 const ScreenContainer = styled(View)<{}>`
   flex: 1;

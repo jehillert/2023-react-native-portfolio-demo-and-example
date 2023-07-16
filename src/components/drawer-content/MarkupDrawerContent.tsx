@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text } from 'react-native';
-import { styled } from 'styled-components';
+import { styled } from 'styled-components/native';
 import { useAppSelector } from '../../hooks';
 import { selectThemeId } from '../../store/selectors';
 import { DrawerId } from '../../store/slices';

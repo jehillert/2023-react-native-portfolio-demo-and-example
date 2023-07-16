@@ -4,8 +4,8 @@ enum ScreensEnum {
   DIRECTORY = 'Directory',
   NOTE = 'Note',
   MARKUP = 'Markup',
-  PRIVACY_POLICY = 'PrivacyPolicy',
-  TERMS_OF_SERVICE = 'TermsofService',
+  PRIVACY_POLICY = 'Privacy Policy',
+  TERMS_OF_SERVICE = 'Terms of Service',
 }
 
 type CommonNavParams = { id?: string } | undefined;
@@ -33,6 +33,16 @@ type MarkupScreenProps = NativeStackScreenProps<
   ScreensEnum.MARKUP
 >;
 
+type PrivacyPolicyScreenProps = NativeStackScreenProps<
+  RootStackParamList,
+  ScreensEnum.PRIVACY_POLICY
+>;
+
+type TermsOfServiceScreenProps = NativeStackScreenProps<
+  RootStackParamList,
+  ScreensEnum.TERMS_OF_SERVICE
+>;
+
 declare global {
   namespace ReactNavigation {
     interface RootParamList extends RootStackParamList {}
@@ -40,10 +50,12 @@ declare global {
 }
 
 export type {
-  MarkupScreenProps,
-  RootStackParamList,
   DirectoryScreenProps,
+  MarkupScreenProps,
   NoteScreenProps,
+  PrivacyPolicyScreenProps,
+  RootStackParamList,
+  TermsOfServiceScreenProps,
 };
 
 export { ScreensEnum };

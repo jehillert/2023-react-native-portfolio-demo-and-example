@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import BaseWebView, { WebViewMessageEvent } from 'react-native-webview';
 import { WebViewErrorEvent } from 'react-native-webview/lib/WebViewTypes';
 import { Alert, View } from 'react-native';
-import { styled } from 'styled-components';
+import { styled } from 'styled-components/native';
 
 import {
   selectActiveNote,
