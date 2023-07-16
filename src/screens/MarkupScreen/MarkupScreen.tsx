@@ -1,10 +1,14 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import BaseWebView, { WebViewMessageEvent } from 'react-native-webview';
 import { WebViewErrorEvent } from 'react-native-webview/lib/WebViewTypes';
 import { Alert, View } from 'react-native';
 import { styled } from 'styled-components';
 
-import { selectActiveNoteId, selectNoteById } from '../../store/selectors';
+import {
+  selectActiveNote,
+  selectActiveNoteId,
+  selectNoteById,
+} from '../../store/selectors';
 import { ColorCallback } from '../../components/palettes/ColorPalette';
 import { highlight2Colors, shadeColors } from '../../constants';
 import { initInject, markupGlobally } from './markupUtils';
@@ -12,7 +16,11 @@ import { MarkupScreenProps } from '../../navigation';
 import { useTheme } from 'styled-components/native';
 import { ColorPalette } from '../../components';
 import { hScale } from '../../theme/themeUtils';
-import { useAppSelector } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { setMarkup } from '../../store/slices';
+import { MarkupTag } from './markupTypes';
+import { useIsFocused } from '@react-navigation/native';
+import { selectActiveMarkups } from '../../store/selectors/markupSelectors';
 
 type Props = {} & MarkupScreenProps;
 
@@ -27,11 +35,12 @@ const WebView = styled(BaseWebView)`
 
 const MarkupScreen = ({}: Props) => {
   const { colors } = useTheme();
-  const activeNoteId = useAppSelector(selectActiveNoteId);
-  const activeNote = useAppSelector(() => selectNoteById(activeNoteId));
+  const isFocused = useIsFocused();
+  const dispatch = useAppDispatch();
+  const activeMarkups = useAppSelector(selectActiveMarkups);
+  const activeNote = useAppSelector(selectActiveNote);
   const content = activeNote?.content ?? '';
   const webviewRef = useRef<BaseWebView>(null);
-  const webview = webviewRef.current;
 
   const getWebViewContent = `
   (function() {
@@ -46,12 +55,24 @@ const MarkupScreen = ({}: Props) => {
   margin: 32px;
 `;
 
-  const handleColorPress: ColorCallback = props => {
-    webviewRef.current?.injectJavaScript(markupGlobally(props));
-  };
+  useEffect(() => {
+    if (isFocused) {
+      console.log(
+        'The active NOTE:',
+        JSON.stringify(activeMarkups, undefined, 2),
+      );
+    }
+  }, [isFocused]);
+
+  const handleColorPress =
+    (tag: MarkupTag): ColorCallback =>
+    styles => {
+      webviewRef.current?.injectJavaScript(markupGlobally({ tag, styles }));
+    };
 
   const handleMessage = ({ nativeEvent: { data } }: WebViewMessageEvent) => {
-    Alert.alert('Message received from JS: ', data);
+    dispatch(setMarkup(JSON.parse(data)));
+    console.log(JSON.stringify(JSON.parse(data), undefined, 2));
   };
 
   return (
@@ -72,7 +93,7 @@ const MarkupScreen = ({}: Props) => {
       />
       <ColorPalette
         colors={highlight2Colors}
-        onPressColor={handleColorPress}
+        onPressColor={handleColorPress('global-highlight')}
         positioning={{
           quadrant: 1,
           offsetX: 8,
@@ -80,7 +101,7 @@ const MarkupScreen = ({}: Props) => {
       />
       <ColorPalette
         colors={shadeColors}
-        onPressColor={handleColorPress}
+        onPressColor={handleColorPress('shade')}
         positioning={{ isRichToolbar: true, quadrant: 3 }}
         row
       />

@@ -3,4 +3,6 @@ type SearchConfig = {
   caseSensitive: boolean;
 };
 
-export type { SearchConfig };
+type MarkupTag = 'global-highlight' | 'local-highlight' | 'shade';
+
+export type { MarkupTag, SearchConfig };

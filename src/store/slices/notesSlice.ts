@@ -8,6 +8,7 @@ import {
 import { uuid } from '../../utils';
 import { AppThunk } from '../store';
 import { selectUntitledNoteCount } from '../selectors/notesSelectors';
+import { setMarkup } from './markupsSlice';
 
 type Note = {
   content?: string;
@@ -50,6 +51,16 @@ const notesSlice = createSlice({
     setUntitledNoteCount(state, { payload }: PayloadAction<number>) {
       state.untitledNoteCount = payload;
     },
+  },
+  extraReducers: builder => {
+    builder.addCase(setMarkup, (state, action) => {
+      const { parentNoteId, id } = action.payload;
+      if (parentNoteId) {
+        id && state.entities[parentNoteId]?.markups.push(id);
+      } else {
+        id && state.entities[state.activeNoteId]?.markups.push(id);
+      }
+    });
   },
 });
 

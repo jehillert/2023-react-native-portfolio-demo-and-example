@@ -20,6 +20,14 @@ const selectUntitledNoteCount = (state: RootState) =>
 
 const selectNoteById = (id: string) => selectById(store.getState(), id);
 
+const selectActiveNote = createSelector(
+  selectActiveNoteId,
+  selectAll,
+  (activeNoteId, notes) => {
+    return notes.find(note => note.id === activeNoteId);
+  },
+);
+
 const selectSortedNotes = createSelector(
   selectIds,
   selectAll,
@@ -30,9 +38,15 @@ const selectSortedNotes = createSelector(
   },
 );
 
+const selectActiveMarkupIds = createSelector(
+  selectActiveNote,
+  activeNote => activeNote?.markups ?? [],
+);
+
 export {
+  selectActiveMarkupIds,
+  selectActiveNote,
   selectActiveNoteId,
-  selectEntities,
   selectNoteById,
   selectNoteIds,
   selectNotes,

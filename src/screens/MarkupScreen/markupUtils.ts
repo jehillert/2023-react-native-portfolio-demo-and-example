@@ -1,35 +1,44 @@
 import { CSSProperties } from 'react';
 import { defaultSearchConfig } from './markupConstants';
+import { MarkupTag, SearchConfig } from './markupTypes';
+import { uuid } from '../../utils';
 
-const markupGlobally = (
-  styles: CSSProperties,
+type MarkupGlobally = {
+  tag: MarkupTag;
+  styles: CSSProperties;
+  searchConfig?: SearchConfig;
+};
+
+const markupGlobally = ({
+  tag,
+  styles,
   searchConfig = defaultSearchConfig,
-) => /*javascript*/ `
-  ((styles = ${JSON.stringify(styles)}) => {
+}: MarkupGlobally) => {
+  const id = uuid();
+  const markupId = `${tag}-${id}`;
 
-    const getMarkupId = (searchText) =>
-      Object.keys(styles)
-        .sort()
-        .reduce((accum, keyName) => {
-          return accum + '-' + keyName;
-        }, [searchText]);
+  return /*javascript*/ `
+    ((
+      id = ${JSON.stringify(id)},
+      markupId = ${JSON.stringify(markupId)},
+      styles = ${JSON.stringify(styles)},
+      searchConfig = ${JSON.stringify(searchConfig)},
+      tag = ${JSON.stringify(tag)}
+    ) => {
+    const getMarkupNode = (markupId) => {
+      spanNode = document.createElement('SPAN');
+      spanNode.setAttribute('class', markupId);
+      for (property in styles) {
+        spanNode.style[property] = styles[property];
+      }
+      return spanNode;
+    };
 
-  const getMarkupNode = (markupId) => {
-    spanNode = document.createElement('SPAN');
-    spanNode.setAttribute('class', markupId);
-    for (property in styles) {
-      spanNode.style[property] = styles[property];
-    }
-    return spanNode;
-  };
-
-    let count = 0;
     let selectedText = document.getSelection().toString();
-window.ReactNativeWebView.postMessage(JSON.stringify(selectedText));
+
     if (!selectedText) return;
 
-    const markupId = getMarkupId(styles, selectedText);
-    const markupNode = getMarkupNode(markupId, styles);
+    const markupNode = getMarkupNode(markupId);
 
     const searchWithinNode = (node, searchText) => {
       let skip = 0;
@@ -50,7 +59,6 @@ window.ReactNativeWebView.postMessage(JSON.stringify(selectedText));
           const middleclone = middlebit.cloneNode(true);
           spanNode.appendChild(middleclone);
           middlebit.parentNode.replaceChild(spanNode, middlebit);
-          ++count;
           skip = 1;
         }
       } else if (hasSearchableChildren) {
@@ -64,13 +72,17 @@ window.ReactNativeWebView.postMessage(JSON.stringify(selectedText));
     searchWithinNode(document.body, selectedText.toUpperCase());
 
     const markupResult = {
-       count,
-       markupId
-     };
+      id,
+      searchConfig,
+      searchText: selectedText,
+      styles,
+      tag,
+    };
 
     window.ReactNativeWebView.postMessage(JSON.stringify(markupResult));
   })();
 `;
+};
 
 const initInject = (document: string, bodyStyle: string) => `<!DOCTYPE html>\n
   <html>

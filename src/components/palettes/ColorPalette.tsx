@@ -13,7 +13,7 @@ import { PaletteColorProp } from '../../constants';
 import Text from '../Text';
 import { Surface as BaseSurface } from 'react-native-paper';
 
-type ColorCallback = (props: {
+type ColorCallback = (styles: {
   backgroundColor: string;
   color?: string;
 }) => void;
