@@ -10,3 +10,4 @@ export { default as DrawerToggle } from './drawer/DrawerToggle';
 export { default as IconPressable } from './buttons/IconPressable';
 export { default as RadioPanel } from './RadioPanel';
 export { default as Text } from './Text';
+export { default as TextPaper } from './TextPaper';
