@@ -55,14 +55,10 @@ const MarkupScreen = ({}: Props) => {
   margin: 32px;
 `;
 
-  useEffect(() => {
-    if (isFocused) {
-      console.log(
-        'The active NOTE:',
-        JSON.stringify(activeMarkups, undefined, 2),
-      );
-    }
-  }, [isFocused]);
+  // useEffect(() => {
+  //   if (isFocused) {
+  //   }
+  // }, [isFocused]);
 
   const handleColorPress =
     (tag: MarkupTag): ColorCallback =>

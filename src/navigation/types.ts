@@ -4,6 +4,8 @@ enum ScreensEnum {
   DIRECTORY = 'Directory',
   NOTE = 'Note',
   MARKUP = 'Markup',
+  PRIVACY_POLICY = 'PrivacyPolicy',
+  TERMS_OF_SERVICE = 'TermsofService',
 }
 
 type CommonNavParams = { id?: string } | undefined;
@@ -12,6 +14,8 @@ type RootStackParamList = {
   [ScreensEnum.DIRECTORY]: CommonNavParams;
   [ScreensEnum.NOTE]: CommonNavParams;
   [ScreensEnum.MARKUP]: CommonNavParams;
+  [ScreensEnum.PRIVACY_POLICY]: undefined;
+  [ScreensEnum.TERMS_OF_SERVICE]: undefined;
 };
 
 type DirectoryScreenProps = NativeStackScreenProps<

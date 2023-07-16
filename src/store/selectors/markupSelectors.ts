@@ -1,8 +1,7 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { RootState, store } from '../store';
-import { Markup, markupsAdapter } from '../slices';
-import { selectActiveMarkupIds, selectActiveNote } from './notesSelectors';
-import { jogger } from '../../utils/jogger';
+import { markupsAdapter } from '../slices';
+import { selectActiveMarkupIds } from './notesSelectors';
 
 const markupSelectors = markupsAdapter.getSelectors<RootState>(
   state => state.markups,
@@ -21,13 +20,9 @@ const selectMarkupById = (id: string) => selectById(store.getState(), id);
 
 const selectActiveMarkups = createSelector(
   selectActiveMarkupIds,
-  selectAll,
-  (activeMarkupIds, markups) => {
-    jogger.orange(JSON.stringify(activeMarkupIds, undefined, 2));
-    return activeMarkupIds.map(markupId =>
-      markups.find(markup => markup.id === markupId),
-    );
-  },
+  selectEntities,
+  (activeMarkupIds, entities) =>
+    activeMarkupIds.map(markupId => entities[markupId]),
 );
 
 export {

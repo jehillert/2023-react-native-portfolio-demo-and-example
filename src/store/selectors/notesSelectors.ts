@@ -22,10 +22,8 @@ const selectNoteById = (id: string) => selectById(store.getState(), id);
 
 const selectActiveNote = createSelector(
   selectActiveNoteId,
-  selectAll,
-  (activeNoteId, notes) => {
-    return notes.find(note => note.id === activeNoteId);
-  },
+  selectEntities,
+  (activeNoteId, entities) => entities[activeNoteId],
 );
 
 const selectSortedNotes = createSelector(
