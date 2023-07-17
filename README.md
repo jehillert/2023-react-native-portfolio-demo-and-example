@@ -1,101 +1,27 @@
-# Features & Integrations
-- Universal links (to open the app, test here [text](https://))
-- Push notifications
-- redux state management (local storage, mmkv, with redux-persist)
-- react-native-pell-rich-editor
-- react navigation
-- CSS-in-JS styling
-- Bitrise
-  - CI/CD Pipeline
-  - integration tests
-  - end-to-end tests
-  - Apple App Store & Google Play Store deployment
-- light/dark mode
-- testing
-  - mock dependencies where needed.
-- TODO:mixpanel analytics
-- TODO: developoment, testing, production environments
+# Welcome
+Chances are you have come to this repository by way of my resume.  That's great.  What you should know is this project represents my skills as a mobile developer in July of 2023. By reviewing these files, you should get a sense of at least the following:
+- my proficiency with React Native, typescript, redux state management and the react ecosystem;
+- my coding style and adoption of best practices;
+- my aptitude for making native configurations and integrating 3rd party services;
+- a working knowledge of mobile devops and deployment.
 
-# Codebase Reminders
+Please note, I have left the git history intact only to show that this project is 100% my original work. However, it is not repreresentative of how I approach version control in a team environment.  Which is to say, my commits here are a mess, but my habit is to leave short concise commit messages and follow the procedures and practices for merging code set forth by the team.
 
-## [REACT-NATIVE-VECTOR-ICONS](https://github.com/oblador/react-native-vector-icons#upgrading)
-> Upgrading this package often requires the font files linked to your projects to be updated as well. If the automatic linking works for you, running this again should update the fonts. Otherwise you need to follow the steps outlined in the installation section.
+Please also note, I have not included a license with this repository.  Neither my making this material publically available, nor using it as an employment demo, constitutes or should be construed as a waiver of my intellectual property rights with respect to same. Prospective employers have my permission to clone and review this material solely for the purpose of evaluating my qualifications as a candidate for positions of employment in the area of software development.
 
-## [JEST MOCKS](https://jestjs.io/docs/manual-mocks)
-
-### Mocking Node Modules
-- Mocks of node modules should be placed in the __mocks__ directory adjacent to node_modules
-- Automatically mocked. There's no need to explicitly call jest.mock('module_name')
-  - FOR THIS TO WORK, THE EXACT NAME OF THE DEPENDENCY IN NODE_MODULES HAS TO BE USED.
-  - For nested dependencies, recreate the folder structure leading to the module.
-  - Otherwise, the mock needs to be referenced in `setupFiles[]` or `setupFilesAfterEnv[]` in `jest.config.js`.
-
-### Mocking Built-in Node Modules
-- explicitly call (e.g. `jest.mock('path')`, `jest.mock('fs')`) is required, because build-in modules are not mocked by default.
-
-###  Manual Mocks
-- Manual mocks are defined by writing a module in a __mocks__/ subdirectory immediately adjacent to the module
-
-# § Setting Up
-Untracked files to add locally:
-
-## Add appcenter-config.json file
-```shell
-# Create appcenter-config.json at `android/app/src/main/assets/appcenter-config.json`
-{
-  "app_secret": "APPCENTER_APP_SECRET_ANDROID"
-}
-
-
-```
-
-## Enabling Reactotron
-```shell
-  # 0 - set REACTOTRON_ENABLED in src/AppConfig to true
-  # 1 - Open Reactotron
-  # 2 - start metro server (if not already)
-  # 3 - run android or ios device
-  # 4 - run the following ADB command:
-  adb reverse tcp:9090 tcp:9090
-  # 5 - Force close and repoen the app.
-```
-
-# § Bitrise
-```shell
-jnotes
-cd android && ./gradlew bundleRelease && cd ..
-```
-
-# § CodePush
-
-```shell
-# IOS - Release an update using the "release-react" command:
-appcenter codepush release-react -a jehillert/jnoter -d Staging
-
-```
-```shell
-# ANDROID - Release an update using the "release-react" command:
-appcenter codepush release-react -a jehillert/jnotes -d Staging
-```
-```shell
-# Set the app to deploy
-appcenter apps set-current jehillert/__app-name__
-```
-
-```shell
-# View CodePush Deployment Keys
-appcenter codepush deployment list --app -k
-```
-
-## iOS Code Signing Key Generation
-```shell
-# generate private RSA key and write it to private.pem file
-cd path/to/save/location
-openssl genrsa -out private.pem
-```
-
-```shell
-# export public key from private.pem into public.pem
-cd path/to/save/location
-openssl rsa -pubout -in private.pem -out public.pem
-```
+# Highlights
+The following is a non-exhaustive list of features, technologies and 3rd party integrations used in this project:
+- Redux and redux-toolkit: thunk-slice-selector architecture with normalized data types (via redux-toolkit's createEntityAdapter);
+- State persistance using MMKV (prod) and asyncStorage (for dev), redux and redux-persist;
+- CodePush integration for over-the-air updates;
+- Sentry crashalytics integration;
+- Use of react-native-config for managing environment variables across the project;
+- Bitrise CI/CD deployment chain (bitrise.yaml). Pipeline currently builds, tests and deploys to both Google Play and Apple App Store platforms (currently just the internal testing stage);
+- Firebase Cloud Messaging for push notifications;
+- Use of webviews (react-native-webview) for viewing the Privacy Policy and Terms of Service; for implementating a rich text notes editor; and for globally highlighting text in rich text and html documents;
+- App navigation via React Navigation's native stack navigator component;
+- The app is configured for debugging using React-native-debugger and Reactotron;
+- Svg icon support via react-native-svg;
+- Custom svg icons via react-native-svg-transformer;
+- Configured for testing using Jest and react-native-testing-library.  All major integrations have been successfully mocked (testing not blocked).  However, please note so far there is only one test, and an issue mocking sentry, which wraps the whole app.
+- Deep linking and ability to receive urls, text and files from other apps using the share sheet (react-native-receive-sharing-intent);

@@ -32,7 +32,6 @@
     "appcenter": "4.4.5",
     "appcenter-analytics": "4.4.5",
     "appcenter-crashes": "4.4.5",
-    "compromise": "^14.9.0",
     "date-fns": "^2.30.0",
     "html-to-json-parser": "^1.1.0",
     "lodash.debounce": "^4.0.8",
