@@ -9,6 +9,7 @@ const config = {
   setupFilesAfterEnv: [
     '<rootDir>/jest/setup-jest-after-env.js',
     './__mocks__/react-navigation-mocks.js',
+    './__mocks__/sentryMocks.js',
   ],
   transformIgnorePatterns: [
     'node_modules/(?!(jest-)?react-native|@react-native-community|@react-navigation|@react-native)',
