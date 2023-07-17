@@ -7,9 +7,14 @@ import Text from '../TextPaper';
 import RadioPanel from '../RadioPanel';
 import _BaseDrawerContent from './BaseDrawerContent';
 import { toTitleCase } from '../../utils';
-import { selectThemeId } from '../../store/selectors';
+import { selectDrawerStateById, selectThemeId } from '../../store/selectors';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { DrawerId, ThemeSelection, setThemeId } from '../../store/slices';
+import {
+  DrawerId,
+  ThemeSelection,
+  setDrawer,
+  setThemeId,
+} from '../../store/slices';
 import { ScreensEnum, navigate } from '../../navigation';
 
 type Props = {
@@ -39,7 +44,10 @@ const AppSettingsDrawerContent = ({ drawerId }: Props) => {
   const _themeId = useAppSelector(selectThemeId);
   const themeIdTxt = toTitleCase(_themeId);
 
-  const handlePress = (screen: ScreensEnum) => () => navigate(screen, {});
+  const handlePress = (screen: ScreensEnum) => () => {
+    navigate(screen, {});
+    dispatch(setDrawer({ drawerId, newState: false }));
+  };
 
   const handleSelect = (themeId: ThemeSelection) => {
     dispatch(setThemeId((themeId as string).toLowerCase() as ThemeSelection));
@@ -59,10 +67,10 @@ const AppSettingsDrawerContent = ({ drawerId }: Props) => {
         />
       </ThemeSettingContainer>
       <Divider />
-      <PressableLink>
+      <PressableLink onPress={handlePress(ScreensEnum.TERMS_OF_SERVICE)}>
         <Text.BodyMedium>{ScreensEnum.TERMS_OF_SERVICE}</Text.BodyMedium>
       </PressableLink>
-      <PressableLink>
+      <PressableLink onPress={handlePress(ScreensEnum.PRIVACY_POLICY)}>
         <Text.BodyMedium>{ScreensEnum.PRIVACY_POLICY}</Text.BodyMedium>
       </PressableLink>
     </BaseDrawerContent>
