@@ -36,6 +36,6 @@ let App = () => {
   );
 };
 
-AppApp = codePush(codePushOptions)(Sentry.wrap(App));
+App = codePush(codePushOptions)(Sentry.wrap(App));
 
 export default App;

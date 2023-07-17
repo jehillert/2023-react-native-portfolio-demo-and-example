@@ -177,7 +177,7 @@ const RadioPanel = ({
         renderPanel({ value, onChange })
       }
     />
-  ) : !!setSelectedValue ? (
+  ) : setSelectedValue ? (
     <>
       {!!title && <TitleText>{title}</TitleText>}
       {!!setSelectedValue &&

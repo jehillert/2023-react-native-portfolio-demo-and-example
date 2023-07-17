@@ -1,4 +1,4 @@
-import { SearchConfig } from './MarkupTags';
+import { SearchConfig } from './markupTypes';
 
 const defaultSearchConfig: SearchConfig = {
   wholeWordOnly: false,

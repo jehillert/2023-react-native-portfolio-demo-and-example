@@ -25,3 +25,4 @@ The following is a non-exhaustive list of features, technologies and 3rd party i
 - Custom svg icons via react-native-svg-transformer;
 - Configured for testing using Jest and react-native-testing-library.  All major integrations have been successfully mocked (testing not blocked).  However, please note so far there is only one test, and an issue mocking sentry, which wraps the whole app.
 - Deep linking and ability to receive urls, text and files from other apps using the share sheet (react-native-receive-sharing-intent);
+- Theming and styling via styled-components (CSS-in-JS)

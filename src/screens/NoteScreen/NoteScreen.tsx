@@ -63,6 +63,7 @@ const NoteScreen = (props: Props) => {
         id: activeNoteId,
         content: content,
         dateUpdated: getTime(new Date()),
+        markups: [],
       }),
     ),
   );
