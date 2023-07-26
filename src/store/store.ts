@@ -8,9 +8,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Reactotron from '../../ReactotronConfig';
 import rootReducer from './root-reducer';
 import appConfig from '../appConfig';
-import { Sentry } from '../integrations';
 
-const { REACTOTRON_ENABLED, SENTRY_ENABLED, STORAGE_TYPE } = appConfig;
+const { REACTOTRON_ENABLED, STORAGE_TYPE } = appConfig;
 
 let storage: Storage;
 
@@ -37,10 +36,6 @@ if (STORAGE_TYPE === 'MMKV') {
 
 const getEnhancers = () => {
   let enhancers: StoreEnhancer[] = [];
-
-  SENTRY_ENABLED &&
-    Sentry?.createReduxEnhancer &&
-    enhancers.push(Sentry.createReduxEnhancer());
 
   REACTOTRON_ENABLED &&
     Reactotron?.createEnhancer &&

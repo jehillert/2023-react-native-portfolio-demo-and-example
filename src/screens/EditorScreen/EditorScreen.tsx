@@ -12,8 +12,8 @@ import {
 
 import { selectActiveNoteId, selectNoteById } from '../../store/selectors';
 import { useTheme } from 'styled-components/native';
-import { NoteScreenProps } from '../../navigation';
 import { updateNote } from '../../store/slices';
+import { EditorScreenProps } from '../../navigation/types';
 import { isAndroid } from '../../constants';
 import { getTime } from 'date-fns';
 import {
@@ -23,13 +23,13 @@ import {
   useKeyboard,
 } from '../../hooks';
 
-type Props = {} & NoteScreenProps;
+type Props = {} & EditorScreenProps;
 
 const handleHead = ({ tintColor }: { tintColor: ColorValue }) => (
   <RNText style={{ color: tintColor }}>H1</RNText>
 );
 
-const NoteScreen = (props: Props) => {
+const EditorScreen = (props: Props) => {
   const { colors } = useTheme();
   const { keyboardHeight } = useKeyboard();
   const dispatch = useAppDispatch();
@@ -43,10 +43,10 @@ const NoteScreen = (props: Props) => {
   let content = contentRef?.current;
 
   const contentStyle = {
-    backgroundColor: colors.backgroundPaper,
-    color: colors.textPrimary,
-    caretColor: colors.textPrimary,
-    placeholderColor: colors.textSecondary,
+    backgroundColor: colors.surface,
+    color: colors.onSurface,
+    caretColor: colors.onPrimary,
+    placeholderColor: colors.onSecondary,
   };
 
   const kbAwareSVStyles: StyleProp<ViewStyle> = {
@@ -60,10 +60,9 @@ const NoteScreen = (props: Props) => {
   const debouncedRequest = useDebounce(() =>
     dispatch(
       updateNote({
-        id: activeNoteId,
-        content: content,
+        noteId: activeNoteId,
+        content,
         dateUpdated: getTime(new Date()),
-        markups: [],
       }),
     ),
   );
@@ -122,4 +121,4 @@ const NoteScreen = (props: Props) => {
   );
 };
 
-export default NoteScreen;
+export default EditorScreen;

@@ -8,12 +8,12 @@ type PaletteColorProp = {
 };
 
 const shadeColors: PaletteColorProp[] = [
-  { backgroundColor: '#B499D3' },
-  { backgroundColor: '#9AB9EE' },
-  { backgroundColor: '#DFF399' },
-  { backgroundColor: '#FEF799' },
-  { backgroundColor: '#FCD599' },
-  { backgroundColor: '#F399D2' },
+  { backgroundColor: '#B499D3', color: black },
+  { backgroundColor: '#9AB9EE', color: black },
+  { backgroundColor: '#DFF399', color: black },
+  { backgroundColor: '#FEF799', color: black },
+  { backgroundColor: '#FCD599', color: black },
+  { backgroundColor: '#F399D2', color: black },
 ];
 
 const highlightColors: PaletteColorProp[] = [

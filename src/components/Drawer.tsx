@@ -3,9 +3,9 @@ import styled, { useTheme } from 'styled-components/native';
 import { StyleProp, Text, ViewStyle } from 'react-native';
 import { DrawerProps } from 'react-native-drawer-layout/lib/typescript/src/types';
 import { Drawer as _Drawer } from 'react-native-drawer-layout';
-import { selectDrawerStateById } from '../../store/selectors';
-import { DrawerId, setDrawer } from '../../store/slices';
-import { useAppDispatch, useAppSelector } from '../../hooks';
+import { selectDrawerStateById } from '../store/selectors';
+import { DrawerId, setDrawer } from '../store/slices';
+import { useAppDispatch, useAppSelector } from '../hooks';
 
 type Props = {
   children: ReactNode;
@@ -14,7 +14,7 @@ type Props = {
   renderDrawerContent?: () => React.ReactNode;
 } & Partial<DrawerProps>;
 
-const Drawer = styled(_Drawer)`
+const BaseDrawer = styled(_Drawer)`
   z-index: 10;
   elevation: 10;
   flex: 1;
@@ -22,7 +22,7 @@ const Drawer = styled(_Drawer)`
 
 const DummyDrawerContent = () => <Text>Drawer content</Text>;
 
-const BaseDrawer = ({
+const Drawer = ({
   drawerId,
   children,
   drawerType = 'front',
@@ -33,14 +33,14 @@ const BaseDrawer = ({
   const dispatch = useAppDispatch();
   const open = useAppSelector(state => selectDrawerStateById(state, drawerId));
   const drawerStyle: StyleProp<ViewStyle> = {
-    backgroundColor: colors.backgroundPaper,
+    backgroundColor: colors.surface,
   };
 
   const handleOpen = () => dispatch(setDrawer({ drawerId, newState: true }));
   const handleClose = () => dispatch(setDrawer({ drawerId, newState: false }));
 
   return (
-    <Drawer
+    <BaseDrawer
       drawerStyle={drawerStyle}
       drawerType="front"
       onClose={handleClose}
@@ -48,10 +48,12 @@ const BaseDrawer = ({
       open={open}
       renderDrawerContent={renderDrawerContent}
       useLegacyImplementation={false}
+      swipeEnabled={false}
       {...rest}>
       {children}
-    </Drawer>
+    </BaseDrawer>
   );
 };
 
-export default BaseDrawer;
+export type { Props as DrawerProps };
+export { Drawer };

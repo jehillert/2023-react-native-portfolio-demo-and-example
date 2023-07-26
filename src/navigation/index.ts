@@ -1,8 +1,7 @@
-export { default as StackNavigator } from './StackNavigator';
-export { default as navigationRef } from './root-navigation';
-
 export * as RootNavigation from './root-navigation';
 
 export * from './StackNavigator';
 export * from './root-navigation';
-export * from './types';
+
+export { default as StackNavigator } from './StackNavigator';
+export { default as navigationRef } from './root-navigation';

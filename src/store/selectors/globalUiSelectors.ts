@@ -1,6 +1,6 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { RootState } from '../store';
-import { DrawerId } from '../slices';
+import { DrawerId } from '../slices/globalUiSlice';
 
 const selectInitialUrl = (state: RootState) => state.globalUi.initialUrl;
 

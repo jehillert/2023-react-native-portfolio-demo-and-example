@@ -2,12 +2,13 @@ import React from 'react';
 import WebView from 'react-native-webview';
 import { View } from 'react-native';
 import { styled } from 'styled-components/native';
+import { PrivacyPolicyScreenProps } from '../../navigation/types';
 
 const ScreenContainer = styled(View)<{}>`
   flex: 1;
 `;
 
-const PrivacyPolicyScreen = () => {
+const PrivacyPolicyScreen = (props: PrivacyPolicyScreenProps) => {
   return (
     <ScreenContainer>
       <WebView

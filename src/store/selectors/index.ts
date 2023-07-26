@@ -1,4 +1,5 @@
 export * from './globalUiSelectors';
 export * from './notesSelectors';
 export * from './settingsSelectors';
-export * from './markupSelectors';
+export * from './projectSelectors';
+export * from './webpageSelectors';

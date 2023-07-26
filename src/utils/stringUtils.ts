@@ -23,4 +23,6 @@ const toTitleCase = (inputString: string) =>
       return t.charAt(0).toUpperCase() + t.substring(1).toLowerCase();
     });
 
+const isAlphaNumeric = (str: string) => /[a-z0-9]/gi.test(str[str.length - 1]);
+
 export { toTitleCase };

@@ -9,11 +9,22 @@ type Quadrant = 1 | 2 | 3 | 4;
 
 type OffsetUnit = '%' | 'px';
 
+type Position = 'relative' | 'absolute';
+
 type FloatingContainerProps = {
   quadrant: Quadrant;
+  position: Position;
   offsetX: number;
   offsetY: number;
+  zIndex: number;
 };
+
+type Props = {
+  children?: ReactNode;
+  containerStyle?: StyleProp<ViewStyle>;
+  isRichToolbar?: boolean;
+  style?: StyleProp<ViewStyle>;
+} & Partial<FloatingContainerProps>;
 
 const FabContainer = styled(View)<FloatingContainerProps>`
   position: absolute;
@@ -45,7 +56,7 @@ const FabContainer = styled(View)<FloatingContainerProps>`
   }}
   justify-content: flex-end;
   align-items: flex-end;
-  z-index: 1000;
+  z-index: ${({ zIndex }) => zIndex};
 `;
 
 /**
@@ -55,22 +66,14 @@ const FabContainer = styled(View)<FloatingContainerProps>`
  * @prop offsetY - the vertical offset from the nearest side (top/bottom)
  * @prop isRichToolbar - is element meant to rest above a richToolbar at bottom of screen
  */
-type Props = {
-  children?: ReactNode;
-  quadrant?: Quadrant;
-  isRichToolbar?: boolean;
-  offsetX?: number;
-  offsetY?: number;
-  containerStyle?: StyleProp<ViewStyle>;
-  style?: StyleProp<ViewStyle>;
-};
-
 const Positioner = ({
   children,
-  quadrant = 1,
   isRichToolbar = false,
   offsetX = 16,
   offsetY = 16,
+  position = 'absolute',
+  quadrant = 1,
+  zIndex = 1000,
   style,
 }: Props) => {
   const bottom = 0;
@@ -85,6 +88,8 @@ const Positioner = ({
       quadrant={quadrant}
       offsetX={offsetX}
       offsetY={_offsetY}
+      position={position}
+      zIndex={zIndex}
       style={style}>
       {children}
     </FabContainer>

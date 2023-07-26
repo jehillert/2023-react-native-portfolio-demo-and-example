@@ -10,8 +10,9 @@ import {
 } from 'react-native';
 import { Positioner, PositionerProps } from '../utility';
 import { PaletteColorProp } from '../../constants';
-import Text from '../Text';
+import { TextPaper } from '../TextPaper';
 import { Surface as BaseSurface } from 'react-native-paper';
+import { hScale } from '../../theme/themeUtils';
 
 type ColorCallback = (styles: {
   backgroundColor: string;
@@ -45,8 +46,10 @@ const PaletteView = styled(View)<{ row: boolean }>`
   flex-flow: ${({ row }) => (row ? `row` : `column`)} nowrap;
 `;
 
-const ColorText = styled(Text.AvatarInitials)<{ color?: string }>`
-  color: ${({ color, theme }) => color ?? theme.colors.textPrimary};
+const ColorText = styled(TextPaper.BodyLarge)<{ color?: string }>`
+  color: ${({ color, theme }) => color ?? theme.colors.onPrimary};
+  font-weight: ${({ theme }) => theme.fontWeight.medium};
+  line-height: ${hScale(16)}px;
 `;
 
 const Surface = styled(BaseSurface)<{ size: number }>`
@@ -72,10 +75,7 @@ const ColorPalette = ({
       ? `${backgroundColor}-${color}-${txt}`
       : `${backgroundColor}-${color}`;
 
-    const handlePress = () =>
-      isText
-        ? onPressColor({ backgroundColor, color })
-        : onPressColor({ backgroundColor });
+    const handlePress = () => onPressColor({ backgroundColor, color });
 
     return (
       <Surface key={id} style={style} size={size} mode="elevated" elevation={3}>

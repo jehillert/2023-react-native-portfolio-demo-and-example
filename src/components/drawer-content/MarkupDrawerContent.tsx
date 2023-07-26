@@ -4,13 +4,13 @@ import { styled } from 'styled-components/native';
 import { useAppSelector } from '../../hooks';
 import { selectThemeId } from '../../store/selectors';
 import { DrawerId } from '../../store/slices';
-import _BaseDrawerContent from './BaseDrawerContent';
+import _DrawerContent from '../DrawerContent';
 
 type Props = {
   drawerId: DrawerId;
 };
 
-const BaseDrawerContent = styled(_BaseDrawerContent)`
+const DrawerContent = styled(_DrawerContent)`
   padding: 8px;
 `;
 
@@ -18,9 +18,9 @@ const MarkupDrawerContent = ({ drawerId }: Props) => {
   const themeId = useAppSelector(selectThemeId);
 
   return (
-    <BaseDrawerContent drawerId={drawerId}>
+    <DrawerContent drawerId={drawerId}>
       <Text>Document Map</Text>
-    </BaseDrawerContent>
+    </DrawerContent>
   );
 };
 

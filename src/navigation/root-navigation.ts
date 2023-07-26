@@ -1,9 +1,9 @@
 import { createNavigationContainerRef } from '@react-navigation/native';
-import { ScreensEnum } from './types';
+import { ScreenEnum } from '../constants';
 
 const navigationRef = createNavigationContainerRef();
 
-const navigate = (name: ScreensEnum, params: any) => {
+const navigate = (name: ScreenEnum, params: any) => {
   if (navigationRef.isReady()) {
     navigationRef.navigate(name, params);
   }

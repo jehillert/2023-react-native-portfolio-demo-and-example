@@ -1,42 +1,40 @@
 import React from 'react';
 import { Pressable, View } from 'react-native';
-import { Divider } from 'react-native-paper';
 import { styled } from 'styled-components/native';
 
-import Text from '../TextPaper';
+import Divider from '../Divider';
+import { TextPaper } from '../TextPaper';
 import RadioPanel from '../RadioPanel';
-import _BaseDrawerContent from './BaseDrawerContent';
-import { toTitleCase } from '../../utils';
-import { selectDrawerStateById, selectThemeId } from '../../store/selectors';
+import _DrawerContent from '../DrawerContent';
 import { useAppDispatch, useAppSelector } from '../../hooks';
+import { selectThemeId } from '../../store/selectors';
+import { navigate } from '../../navigation';
+import { toTitleCase } from '../../utils';
 import {
   DrawerId,
   ThemeSelection,
   setDrawer,
   setThemeId,
 } from '../../store/slices';
-import { ScreensEnum, navigate } from '../../navigation';
+import { ScreenEnum } from '../../constants';
 
 type Props = {
   drawerId: DrawerId;
 };
 
-const BaseDrawerContent = styled(_BaseDrawerContent)`
+const DrawerContent = styled(_DrawerContent)`
   flex: 1;
 `;
 
-const PressableLink = styled(Pressable)`
-  margin: 8px;
+const PressableLink = styled(Pressable)``;
+
+const LinksContainer = styled(View)`
+  padding: 8px 16px 18px 16px;
+  row-gap: 18px;
 `;
 
 const ThemeSettingContainer = styled(View)`
-  padding: 8px;
-  margin: 8px;
-`;
-
-const LinksContainer = styled(View)`
-  padding: 8px;
-  margin: 8px;
+  margin: 24px 16px 0px 16px;
 `;
 
 const AppSettingsDrawerContent = ({ drawerId }: Props) => {
@@ -44,7 +42,7 @@ const AppSettingsDrawerContent = ({ drawerId }: Props) => {
   const _themeId = useAppSelector(selectThemeId);
   const themeIdTxt = toTitleCase(_themeId);
 
-  const handlePress = (screen: ScreensEnum) => () => {
+  const handlePress = (screen: ScreenEnum) => () => {
     navigate(screen, {});
     dispatch(setDrawer({ drawerId, newState: false }));
   };
@@ -54,7 +52,7 @@ const AppSettingsDrawerContent = ({ drawerId }: Props) => {
   };
 
   return (
-    <BaseDrawerContent drawerId={drawerId}>
+    <DrawerContent drawerId={drawerId}>
       <ThemeSettingContainer>
         <RadioPanel
           title={'Appearance'}
@@ -66,14 +64,20 @@ const AppSettingsDrawerContent = ({ drawerId }: Props) => {
           variant="check"
         />
       </ThemeSettingContainer>
-      <Divider />
-      <PressableLink onPress={handlePress(ScreensEnum.TERMS_OF_SERVICE)}>
-        <Text.BodyMedium>{ScreensEnum.TERMS_OF_SERVICE}</Text.BodyMedium>
-      </PressableLink>
-      <PressableLink onPress={handlePress(ScreensEnum.PRIVACY_POLICY)}>
-        <Text.BodyMedium>{ScreensEnum.PRIVACY_POLICY}</Text.BodyMedium>
-      </PressableLink>
-    </BaseDrawerContent>
+      <Divider marginVertical={16} />
+      <LinksContainer>
+        <PressableLink onPress={handlePress(ScreenEnum.TERMS_OF_SERVICE)}>
+          <TextPaper.BodyMedium>
+            {ScreenEnum.TERMS_OF_SERVICE}
+          </TextPaper.BodyMedium>
+        </PressableLink>
+        <PressableLink onPress={handlePress(ScreenEnum.PRIVACY_POLICY)}>
+          <TextPaper.BodyMedium>
+            {ScreenEnum.PRIVACY_POLICY}
+          </TextPaper.BodyMedium>
+        </PressableLink>
+      </LinksContainer>
+    </DrawerContent>
   );
 };
 

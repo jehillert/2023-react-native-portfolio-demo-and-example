@@ -20,7 +20,7 @@ const DrawerToggle = ({ drawerId, name = 'close' }: DrawerProps) => {
   return name === 'close' ? (
     <CloseX
       onPress={handlePress}
-      stroke={colors.textPrimary}
+      stroke={colors.onTertiary}
       height={28}
       width={28}
     />
@@ -29,4 +29,4 @@ const DrawerToggle = ({ drawerId, name = 'close' }: DrawerProps) => {
   );
 };
 
-export default DrawerToggle;
+export { DrawerToggle };

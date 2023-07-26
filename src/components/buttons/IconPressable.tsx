@@ -45,11 +45,7 @@ const BackButton = (props: Props) => {
 
   return (
     <IconPressable style={style} onPress={handleBackPress} {...rest}>
-      <Icon
-        name={name}
-        size={size}
-        color={color ? color : colors.textPrimary}
-      />
+      <Icon name={name} size={size} color={color ? color : colors.onPrimary} />
     </IconPressable>
   );
 };

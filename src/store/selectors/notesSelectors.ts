@@ -1,4 +1,4 @@
-import { createSelector } from '@reduxjs/toolkit';
+import { EntityId, createSelector } from '@reduxjs/toolkit';
 import { RootState, store } from '../store';
 import { Note, notesAdapter } from '../slices/notesSlice';
 
@@ -18,7 +18,7 @@ const selectNotes = () => selectAll(store.getState());
 const selectUntitledNoteCount = (state: RootState) =>
   state.notes.untitledNoteCount;
 
-const selectNoteById = (id: string) => selectById(store.getState(), id);
+const selectNoteById = (id: EntityId) => selectById(store.getState(), id);
 
 const selectActiveNote = createSelector(
   selectActiveNoteId,
@@ -36,19 +36,18 @@ const selectSortedNotes = createSelector(
   },
 );
 
-const selectActiveMarkupIds = createSelector(
+const selectActiveNoteMarkupIds = createSelector(
   selectActiveNote,
   activeNote => activeNote?.markups ?? [],
 );
 
 export {
-  selectActiveMarkupIds,
+  selectActiveNoteMarkupIds,
   selectActiveNote,
   selectActiveNoteId,
   selectNoteById,
   selectNoteIds,
   selectNotes,
   selectSortedNotes,
-  selectTotal,
   selectUntitledNoteCount,
 };

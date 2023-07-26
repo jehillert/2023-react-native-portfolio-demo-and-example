@@ -5,7 +5,7 @@ import { Pressable, StyleProp, TextStyle, View, ViewStyle } from 'react-native';
 import { RadioButton, RadioButtonAndroidProps } from 'react-native-paper';
 import { Controller, ControllerProps } from 'react-hook-form';
 
-import Text from './Text';
+import { TextPaper } from './TextPaper';
 import { VoidCallback } from '../types';
 
 type RenderRadioButtons = {
@@ -70,9 +70,11 @@ const CheckmarkPressable = styled(Pressable)<{
 
 const RadioPanelContainer = styled(View)``;
 
-const RadioPanelLabel = styled(Text.Body1)<{ checkmarkSize: number }>``;
+const RadioPanelLabel = styled(TextPaper.BodyMedium)<{
+  checkmarkSize: number;
+}>``;
 
-const TitleText = styled(Text.H6)`
+const TitleText = styled(TextPaper.TitleMedium)`
   margin-bottom: 2px;
 `;
 
@@ -81,7 +83,7 @@ type Props = {
   controllerProps?: Omit<ControllerProps, 'render'>;
   labelPosition?: 'left' | 'right';
   labels: string[];
-  setSelectedValue?: VoidCallback<any>;
+  setSelectedValue?: (val: any) => void;
   selectedValue?: string;
   style?: StyleProp<ViewStyle>;
   styleCheckbox?: StyleProp<ViewStyle>;
@@ -136,8 +138,8 @@ const RadioPanel = ({
               {label}
               <RadioButton.Android
                 {...radioButtonProps}
-                color={colors.primaryMain}
-                uncheckedColor={colors.actionDisabled}
+                color={colors.primary}
+                uncheckedColor={colors.onSurfaceDisabled}
                 value={labelValue}
                 status={status}
                 onPress={handlePress(labelValue)}
@@ -158,7 +160,7 @@ const RadioPanel = ({
                   <Icon
                     name="check-bold"
                     size={checkmarkSize}
-                    color={colors.textPrimary}
+                    color={colors.onPrimary}
                   />
                 )}
               </Checkbox>

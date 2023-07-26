@@ -1,109 +1,67 @@
-// redux-toolkit.js.org/api/createEntityAdapter#selectid
 // https://redux.js.org/usage/structuring-reducers/normalizing-state-shape
+import { getTime } from 'date-fns';
 import {
+  EntityId,
   createSlice,
-  createEntityAdapter,
   PayloadAction,
+  createEntityAdapter,
 } from '@reduxjs/toolkit';
-import { uuid } from '../../utils';
-import { AppThunk } from '../store';
-import { selectUntitledNoteCount } from '../selectors/notesSelectors';
-import { setMarkup } from './markupsSlice';
+import { addProject } from './projectsSlice';
 
 type Note = {
   content?: string;
-  id: string;
-  path?: string;
+  noteId: EntityId;
   title?: string;
   dateCreated?: number;
-  dateUpdated?: number | null;
-  markups: string[];
+  dateUpdated: number;
 };
 
 export const notesAdapter = createEntityAdapter<Note>({
-  sortComparer: ({ title: aTitle = '' }: Note, { title: bTitle = '' }: Note) =>
-    aTitle.localeCompare(bTitle),
+  selectId: note => note.noteId,
 });
 
 const notesSlice = createSlice({
   name: 'notes',
-  initialState: notesAdapter.getInitialState({
-    activeNoteId: '',
-    untitledNoteCount: 0,
-  }),
+  initialState: notesAdapter.getInitialState({}),
   reducers: {
-    addNewNote: notesAdapter.addOne,
-    addProps2Note: notesAdapter.updateOne,
-    addProps2Notes: notesAdapter.updateMany,
-    removeAllNotes: notesAdapter.removeAll,
     removeNote: notesAdapter.removeOne,
-    removeNotes: notesAdapter.removeMany,
     replaceNote: notesAdapter.setOne,
     replaceNotes: notesAdapter.setMany,
     updateNote: notesAdapter.upsertOne,
     updateNotes: notesAdapter.upsertMany,
-    setActiveNoteId(state, { payload }: PayloadAction<string>) {
-      state.activeNoteId = payload;
+    deleteNote(state, { payload: note }: PayloadAction<Note>) {
+      notesAdapter.removeOne(state, note.noteId);
     },
-    setIds(state, { payload }: PayloadAction<string[]>) {
+    setNoteIds(state, { payload }: PayloadAction<EntityId[]>) {
       state.ids = payload;
-    },
-    setUntitledNoteCount(state, { payload }: PayloadAction<number>) {
-      state.untitledNoteCount = payload;
     },
   },
   extraReducers: builder => {
-    builder.addCase(setMarkup, (state, action) => {
-      const { parentNoteId, id } = action.payload;
-      if (parentNoteId) {
-        id && state.entities[parentNoteId]?.markups.push(id);
-      } else {
-        id && state.entities[state.activeNoteId]?.markups.push(id);
-      }
+    builder.addCase(addProject, (state, { payload }) => {
+      const { noteId } = payload ?? {};
+      const dateCreated = getTime(new Date());
+
+      notesAdapter.addOne(state, {
+        noteId,
+        title: 'Notes',
+        dateCreated,
+        dateUpdated: dateCreated,
+        content: '',
+      });
     });
   },
 });
 
-const createNote =
-  (path: string = '/'): AppThunk =>
-  (dispatch, getState) => {
-    const id = uuid() as string;
-    const untitledNoteCount = selectUntitledNoteCount(getState());
-    const newUntitledNoteCount = untitledNoteCount + 1;
-    const title = `note-${newUntitledNoteCount}`;
-    const timeStamp = new Date().getTime();
-    dispatch(setUntitledNoteCount(newUntitledNoteCount));
-    dispatch(setActiveNoteId(id));
-
-    const newNote = {
-      id,
-      title,
-      path,
-      dateCreated: timeStamp,
-      dateUpdated: null,
-      content: '',
-      markups: [],
-    };
-
-    dispatch(addNewNote(newNote));
-  };
-
 export const {
-  addNewNote,
-  addProps2Note,
-  addProps2Notes,
-  removeAllNotes,
+  addNote,
+  deleteNote,
   removeNote,
-  removeNotes,
   replaceNote,
   replaceNotes,
-  setActiveNoteId,
-  setIds,
-  setUntitledNoteCount,
+  setNoteIds,
   updateNote,
   updateNotes,
 } = notesSlice.actions;
 
 export type { Note };
-export { createNote };
 export default notesSlice.reducer;

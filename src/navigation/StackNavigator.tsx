@@ -1,27 +1,30 @@
 import React from 'react';
+
 import { View } from 'react-native';
+
 import { styled, useTheme } from 'styled-components/native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import { RootStackParamList, ScreensEnum } from './types';
-import {
-  DirectoryScreen,
-  MarkupScreen,
-  NoteScreen,
-  PrivacyPolicyScreen,
-  TermsOfServiceScreen,
-} from '../screens';
-import navigationRef from './root-navigation';
-import DrawerToggle from '../components/drawer/DrawerToggle';
 import { DrawerId } from '../store/slices';
-import { IconPressable, Text } from '../components';
+import { ScreenEnum } from '../constants';
+import { RootStackParamList } from './types';
+import navigationRef from './root-navigation';
+import { DrawerToggle, TextPaper } from '../components';
 import { useLinking, useInitialURL } from '../linking';
+import TitledBackButton from './nav-buttons/TitledBackButton';
 import {
-  useCustomNavTheme,
+  useAppTheme,
   useMessagingSubscribe,
   useNotificationsPermission,
 } from '../hooks';
+import {
+  EditorScreen,
+  MarkupScreen,
+  DirectoryScreen,
+  PrivacyPolicyScreen,
+  TermsOfServiceScreen,
+} from '../screens';
 
 const DrawerButtonGroupContainer = styled(View)`
   flex-direction: row;
@@ -36,10 +39,8 @@ const StackNavigator = () => {
   useMessagingSubscribe();
   useLinking();
   useInitialURL();
-  const navTheme = useCustomNavTheme();
+  const { navTheme } = useAppTheme();
   const { colors } = useTheme();
-
-  const backButton = () => <IconPressable name="chevron-left" />;
 
   const settingsDrawerButton = () => (
     <DrawerToggle drawerId={DrawerId.APP_SETTINGS} name="menu" />
@@ -54,56 +55,60 @@ const StackNavigator = () => {
 
   return (
     <NavigationContainer
-      fallback={<Text.H6>Loading...</Text.H6>}
+      fallback={<TextPaper.TitleMedium>Loading...</TextPaper.TitleMedium>}
       ref={navigationRef}
       theme={navTheme}>
       <Stack.Navigator
         screenOptions={{
-          headerStyle: { backgroundColor: colors.primaryMain },
-          headerLeft: backButton,
+          headerStyle: { backgroundColor: colors.primaryContainer },
+          contentStyle: { backgroundColor: colors.background },
           presentation: 'card',
-          headerTitleAlign: 'center',
         }}>
         <Stack.Group>
           <Stack.Screen
-            name={ScreensEnum.DIRECTORY}
+            name={ScreenEnum.DIRECTORY}
             component={DirectoryScreen}
             options={{
-              title: 'Documents',
+              title: 'Inquiries',
               headerLeft: settingsDrawerButton,
               headerRight: undefined,
               animation: 'slide_from_right',
+              headerTitleAlign: 'center',
             }}
           />
           <Stack.Screen
-            name={ScreensEnum.NOTE}
-            component={NoteScreen}
+            name={ScreenEnum.EDITOR}
+            component={EditorScreen}
             options={{
-              title: 'Edit',
+              headerLeft: TitledBackButton,
               headerRight: markupScreenDrawerButtons,
+              headerBackVisible: false,
               animation: 'slide_from_right',
+              title: '',
             }}
           />
           <Stack.Screen
-            name={ScreensEnum.MARKUP}
+            name={ScreenEnum.MARKUP}
             component={MarkupScreen}
             options={{
-              title: 'Markup',
+              headerLeft: TitledBackButton,
               headerRight: markupScreenDrawerButtons,
+              headerBackVisible: false,
               animation: 'slide_from_right',
+              title: '',
             }}
           />
         </Stack.Group>
         <Stack.Group>
           <Stack.Screen
-            name={ScreensEnum.PRIVACY_POLICY}
+            name={ScreenEnum.PRIVACY_POLICY}
             component={PrivacyPolicyScreen}
             options={{
               title: 'Privacy Policy',
             }}
           />
           <Stack.Screen
-            name={ScreensEnum.TERMS_OF_SERVICE}
+            name={ScreenEnum.TERMS_OF_SERVICE}
             component={TermsOfServiceScreen}
             options={{
               title: 'Terms of Service',

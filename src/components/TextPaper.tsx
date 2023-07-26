@@ -4,103 +4,102 @@ import styled from 'styled-components/native';
 const BaseText = styled(RNText).attrs({
   allowFontScaling: false,
 })`
-  color: ${({ theme }) => theme.colors.textPrimary};
-  font-family: ${({ theme }) => theme.typography.fontFamily};
-  font-weight: 400;
-  letter-spacing: 0;
+  color: ${({ theme }) => theme.colors.onPrimary};
+  font-family: ${({ theme }) => theme.baseTypography.fontFamily};
+  font-weight: ${({ theme }) => theme.fontWeight.medium};
   text-align-vertical: center;
-`;
-
-const DisplayLarge = styled(BaseText)`
-  line-height: 64px;
-  font-size: 57px;
-`;
-
-const DisplayMedium = styled(BaseText)`
-  line-height: 52px;
-  font-size: 45px;
-`;
-
-const DisplaySmall = styled(BaseText)`
-  line-height: 44px;
-  font-size: 36px;
-`;
-
-const HeadlineLarge = styled(BaseText)`
-  line-height: 40px;
-  font-size: 32px;
-`;
-
-const HeadlineMedium = styled(BaseText)`
-  line-height: 36px;
-  font-size: 28px;
-`;
-
-const HeadlineSmall = styled(BaseText)`
-  line-height: 32px;
-  font-size: 24px;
-`;
-
-const TitleLarge = styled(BaseText)`
-  line-height: 28px;
-  font-size: 22px;
-`;
-
-const TitleMedium = styled(BaseText)`
-  letter-spacing: 0.15px;
-  font-weight: 500;
-  line-height: 24px;
-  font-size: 16px;
-`;
-
-const TitleSmall = styled(BaseText)`
-  letter-spacing: 0.1px;
-  font-weight: 500;
-  line-height: 20px;
-  font-size: 14px;
-`;
-
-const LabelLarge = styled(BaseText)`
-  letter-spacing: 0.1px;
-  font-weight: 500;
-  line-height: 20px;
-  font-size: 14px;
-`;
-
-const LabelMedium = styled(BaseText)`
-  letter-spacing: 0.5px;
-  font-weight: 500;
-  line-height: 16px;
-  font-size: 12px;
-`;
-
-const LabelSmall = styled(BaseText)`
-  letter-spacing: 0.5px;
-  font-weight: 500;
-  line-height: 16px;
-  font-size: 11px;
+  letter-spacing: 0px;
 `;
 
 const BodyLarge = styled(BaseText)`
-  letter-spacing: 0.15px;
-  line-height: 24px;
-  font-size: 16px;
+  line-height: ${({ theme }) => theme.typography.bodyLarge.lineHeight};
+  font-size: ${({ theme }) => theme.typography.bodyLarge.fontSize};
+  letter-spacing: ${({ theme }) => theme.typography.bodyLarge.letterSpacing};
 `;
 
 const BodyMedium = styled(BaseText)`
-  letter-spacing: 0.25px;
-  line-height: 20px;
-  font-size: 14px;
+  line-height: ${({ theme }) => theme.typography.bodyMedium.lineHeight};
+  font-size: ${({ theme }) => theme.typography.bodyMedium.fontSize};
+  letter-spacing: ${({ theme }) => theme.typography.bodyMedium.letterSpacing};
 `;
 
 const BodySmall = styled(BaseText)`
-  letter-spacing: 0.4px;
-  line-height: 16px;
-  font-size: 12px;
+  line-height: ${({ theme }) => theme.typography.bodySmall.lineHeight};
+  font-size: ${({ theme }) => theme.typography.bodySmall.fontSize};
+  letter-spacing: ${({ theme }) => theme.typography.bodySmall.letterSpacing};
 `;
 
-const Text = {
-  Default: BaseText,
+const DisplayLarge = styled(BaseText)`
+  line-height: ${({ theme }) => theme.typography.displayLarge.lineHeight};
+  font-size: ${({ theme }) => theme.typography.displayLarge.fontSize};
+`;
+
+const DisplayMedium = styled(BaseText)`
+  line-height: ${({ theme }) => theme.typography.displayMedium.lineHeight};
+  font-size: ${({ theme }) => theme.typography.displayMedium.fontSize};
+`;
+
+const DisplaySmall = styled(BaseText)`
+  line-height: ${({ theme }) => theme.typography.displaySmall.lineHeight};
+  font-size: ${({ theme }) => theme.typography.displaySmall.fontSize};
+`;
+
+const HeadlineLarge = styled(BaseText)`
+  line-height: ${({ theme }) => theme.typography.headlineLarge.lineHeight};
+  font-size: ${({ theme }) => theme.typography.headlineLarge.fontSize};
+`;
+
+const HeadlineMedium = styled(BaseText)`
+  line-height: ${({ theme }) => theme.typography.headlineMedium.lineHeight};
+  font-size: ${({ theme }) => theme.typography.headlineMedium.fontSize};
+`;
+
+const HeadlineSmall = styled(BaseText)`
+  line-height: ${({ theme }) => theme.typography.headlineSmall.lineHeight};
+  font-size: ${({ theme }) => theme.typography.headlineSmall.fontSize};
+`;
+
+const LabelLarge = styled(BaseText)`
+  line-height: ${({ theme }) => theme.typography.labelLarge.lineHeight};
+  font-size: ${({ theme }) => theme.typography.labelLarge.fontSize};
+  letter-spacing: ${({ theme }) => theme.typography.labelLarge.letterSpacing};
+  font-weight: ${({ theme }) => theme.typography.labelLarge.fontWeight};
+`;
+
+const LabelMedium = styled(BaseText)`
+  line-height: ${({ theme }) => theme.typography.labelMedium.lineHeight};
+  font-size: ${({ theme }) => theme.typography.labelMedium.fontSize};
+  letter-spacing: ${({ theme }) => theme.typography.labelMedium.letterSpacing};
+  font-weight: ${({ theme }) => theme.typography.labelMedium.fontWeight};
+`;
+
+const LabelSmall = styled(BaseText)`
+  line-height: ${({ theme }) => theme.typography.labelSmall.lineHeight};
+  font-size: ${({ theme }) => theme.typography.labelSmall.fontSize};
+  letter-spacing: ${({ theme }) => theme.typography.labelSmall.letterSpacing};
+  font-weight: ${({ theme }) => theme.typography.labelSmall.fontWeight};
+`;
+
+const TitleLarge = styled(BaseText)`
+  line-height: ${({ theme }) => theme.typography.titleLarge.lineHeight};
+  font-size: ${({ theme }) => theme.typography.titleLarge.fontSize};
+`;
+
+const TitleMedium = styled(BaseText)`
+  line-height: ${({ theme }) => theme.typography.titleMedium.lineHeight};
+  font-size: ${({ theme }) => theme.typography.titleMedium.fontSize};
+  letter-spacing: ${({ theme }) => theme.typography.titleMedium.letterSpacing};
+  font-weight: ${({ theme }) => theme.typography.titleMedium.fontWeight};
+`;
+
+const TitleSmall = styled(BaseText)`
+  line-height: ${({ theme }) => theme.typography.titleSmall.lineHeight};
+  font-size: ${({ theme }) => theme.typography.titleSmall.fontSize};
+  letter-spacing: ${({ theme }) => theme.typography.titleSmall.letterSpacing};
+  font-weight: ${({ theme }) => theme.typography.titleSmall.fontWeight};
+`;
+
+const TextPaper = {
   BodyLarge,
   BodyMedium,
   BodySmall,
@@ -118,4 +117,4 @@ const Text = {
   TitleSmall,
 };
 
-export default Text;
+export { TextPaper };

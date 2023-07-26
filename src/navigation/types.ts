@@ -1,46 +1,44 @@
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { EntityEnum, ScreenEnum } from '../constants';
+import { EntityId } from '@reduxjs/toolkit';
 
-enum ScreensEnum {
-  DIRECTORY = 'Directory',
-  NOTE = 'Note',
-  MARKUP = 'Markup',
-  PRIVACY_POLICY = 'Privacy Policy',
-  TERMS_OF_SERVICE = 'Terms of Service',
-}
-
-type CommonNavParams = { id?: string } | undefined;
+type CommonNavParams = { projectId?: EntityId } | undefined;
 
 type RootStackParamList = {
-  [ScreensEnum.DIRECTORY]: CommonNavParams;
-  [ScreensEnum.NOTE]: CommonNavParams;
-  [ScreensEnum.MARKUP]: CommonNavParams;
-  [ScreensEnum.PRIVACY_POLICY]: undefined;
-  [ScreensEnum.TERMS_OF_SERVICE]: undefined;
+  [ScreenEnum.DIRECTORY]: CommonNavParams;
+  [ScreenEnum.EDITOR]:
+    | { projectId?: EntityId; targetEntity: EntityEnum }
+    | undefined;
+  [ScreenEnum.MARKUP]:
+    | { projectId?: EntityId; targetEntity: EntityEnum }
+    | undefined;
+  [ScreenEnum.PRIVACY_POLICY]: undefined;
+  [ScreenEnum.TERMS_OF_SERVICE]: undefined;
 };
 
 type DirectoryScreenProps = NativeStackScreenProps<
   RootStackParamList,
-  ScreensEnum.DIRECTORY
+  ScreenEnum.DIRECTORY
 >;
 
-type NoteScreenProps = NativeStackScreenProps<
+type EditorScreenProps = NativeStackScreenProps<
   RootStackParamList,
-  ScreensEnum.NOTE
+  ScreenEnum.EDITOR
 >;
 
 type MarkupScreenProps = NativeStackScreenProps<
   RootStackParamList,
-  ScreensEnum.MARKUP
+  ScreenEnum.MARKUP
 >;
 
 type PrivacyPolicyScreenProps = NativeStackScreenProps<
   RootStackParamList,
-  ScreensEnum.PRIVACY_POLICY
+  ScreenEnum.PRIVACY_POLICY
 >;
 
 type TermsOfServiceScreenProps = NativeStackScreenProps<
   RootStackParamList,
-  ScreensEnum.TERMS_OF_SERVICE
+  ScreenEnum.TERMS_OF_SERVICE
 >;
 
 declare global {
@@ -52,10 +50,10 @@ declare global {
 export type {
   DirectoryScreenProps,
   MarkupScreenProps,
-  NoteScreenProps,
+  EditorScreenProps,
   PrivacyPolicyScreenProps,
   RootStackParamList,
   TermsOfServiceScreenProps,
 };
 
-export { ScreensEnum };
+export { ScreenEnum };
