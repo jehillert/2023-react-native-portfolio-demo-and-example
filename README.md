@@ -1,4 +1,8 @@
+<details>
+<summary>🔥 DEMO</summary>
+
 https://github.com/jehillert/2023-react-native-portfolio-demo-and-example/assets/25601296/637a935c-ef57-4438-89c7-ff41e1ac4691
+</details>
 
 # Welcome
 Chances are you have come to this repository by way of my resume.  That's great.  What you should know is this project represents my skills as a mobile developer in July of 2023. By reviewing these files, you should get a sense of at least the following:
